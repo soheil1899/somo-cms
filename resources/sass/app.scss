@@ -1,0 +1,218 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+
+@import '~vue-select/dist/vue-select.css';
+
+
+
+
+// Font Awesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+
+table th,td{
+  text-align: center;
+}
+
+//--------------------------------------------------------dashboard
+#dashboard .list-group-item{
+  background-color: transparent;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+#dashboard .mylist{
+  border-right: 4px solid;
+}
+
+#admin-header{
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 1px 15px #3490dc;
+}
+#sidebar-wrapper{
+  margin-top: 56px;
+}
+
+#app{
+  margin-top: 75px;
+}
+.sidebar-brand a{
+  opacity: 0.8 !important;
+}
+.sidebar-brand a:hover{
+  opacity: 1 !important;
+}
+
+
+
+
+
+//---------------------------------------------------------user
+.admin-title {
+  background: linear-gradient(#3490DC, #80AFE8);
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 1px 3px 6px 2px #ccc;
+}
+
+.btn-change {
+  font-size: 9pt;
+}
+
+#Modal .close {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.modal-footer {
+  justify-content: flex-start !important;
+}
+
+.modal-footer button {
+  margin-left: 5px;
+}
+
+.modal-header {
+  background: linear-gradient(#3490DC, #80AFE8);
+  color: #fff;
+}
+
+.border-green {
+  border: 2px solid #2a9055;
+  box-shadow: 0 0 0 0.2rem rgba(29, 220, 11, 0.25);
+}
+
+
+
+//----------------------------------------------------------- category
+.back-btn{
+  float: left;
+}
+#errorDelete .modal-header{
+  padding: 10px 30px;
+  background: linear-gradient(#ff5353, #ff8a8a);
+}
+#errorDelete .modal-footer{
+  padding: 5px 10px;
+  justify-content: flex-end !important;
+}
+
+
+//---------------------------------------------------------------- article
+.publish-checkbox{
+  height: 20px;
+  width: 16px;
+}
+
+.order-arrow{
+  background-color: #cbe5ff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.order-arrow:hover{
+  background-color: #edf3f8;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.order-arrow .fa-long-arrow-alt-up{
+  color: #13ae54;
+}
+.order-arrow .fa-long-arrow-alt-down{
+  color: #cf2823;
+}
+
+.right-0 {
+  right: 0 !important;
+  font-size: 13px;
+  background: linear-gradient(#ecffec, #fff);
+}
+
+.right-0 input:hover {
+  background-color: #7ef1ae;
+}
+
+.card-header .icons {
+  text-align: end;
+}
+.icons i {
+  opacity: 0.7;
+  cursor: pointer;
+}
+.icons i:hover {
+  opacity: 1;
+}
+
+.delete-filemanager {
+  border-radius: 50%;
+  text-align: center;
+  top: 2px;
+  left: 2px;
+  background-color: white;
+  color: #EB3E37;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.delete-filemanager:hover{
+  opacity: 1;
+}
+
+
+
+////////////////////////////////////////////////
+
+#subattr-form i {
+  top: 10px;
+  left: 7px;
+  color: #EB3E37;
+  cursor: pointer;
+}
+
+.my-modal-footer .row {
+  width: 107%;
+}
+
+
+////////////////////////////////
+.my-color{
+  top: 6px;
+  left: 310px;
+}
+.color-circle{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #999;
+  display: block;
+  margin: auto;
+}
+
+
+//-------------------------------product
+
+.english-text {
+  direction: ltr;
+}
+
+.group-title {
+  font-weight: bold;
+  width: 100%;
+  background: linear-gradient(#eee, #fff);
+}
