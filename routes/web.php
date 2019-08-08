@@ -156,6 +156,7 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
     	Route::post('deleteslider', 'SliderController@deleteslider')->name('delete.slider');
     	Route::post('changepublishslider', 'SliderController@changepublishslider')->name('changepublish.slider');
     	Route::post('saveimagedetails', 'SliderController@saveimagedetails')->name('saveimage.details');
+    	Route::post('sliderchange', 'SliderController@sliderchange')->name('sliderchange');
 
 
         // guarantee

@@ -81,13 +81,7 @@
                         <a href="{{route('color.list')}}">مدیریت رنگ</a>
                     </li>
                     <li>
-                        <a href="{{route('slider')}}">مدیریت اسلایدر</a>
-                    </li>
-                    <li>
                         <a href="{{route('brand.list')}}">مدیریت برند</a>
-                    </li>
-                    <li>
-                        <a href="{{route('tag.list')}}">مدیریت تگ</a>
                     </li>
                     <li>
                         <a href="{{route('guarantee.list')}}">مدیریت گارانتی</a>
@@ -118,25 +112,34 @@
             </div>
         </li>
     @endif
-<li class="sidebar-dropdown">
-        <a href="{{route('customer.list')}}">
-            <i class="fas fa-cogs ml-1"></i>
-            <span>مدیریت مشتریان</span>
-        </a>
-    </li>
+
+
+
 
     <li class="sidebar-dropdown">
-        <a href="{{route('posts')}}">
+        <a href="#">
             <i class="fas fa-cogs ml-1"></i>
-            <span>مدیریت پیام ها</span>
+            <span>مدیریت سایت</span>
         </a>
-    </li>
-
-    <li class="sidebar-dropdown">
-        <a href="{{route('setting')}}">
-            <i class="fas fa-cogs ml-1"></i>
-            <span>تنظیمات سایت</span>
-        </a>
+        <div class="sidebar-submenu">
+            <ul>
+                <li>
+                    <a href="{{route('setting')}}">تنظیمات سایت</a>
+                </li>
+                <li>
+                    <a href="{{route('customer.list')}}">مدیریت مشتریان</a>
+                </li>
+                <li>
+                    <a href="{{route('posts')}}">مدیریت پیام ها</a>
+                </li>
+                <li>
+                    <a href="{{route('slider')}}">مدیریت اسلایدر</a>
+                </li>
+                <li>
+                    <a href="{{route('tag.list')}}">مدیریت تگ</a>
+                </li>
+            </ul>
+        </div>
     </li>
 
 </ul>

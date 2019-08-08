@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Article;
 use App\Gallery;
 use App\Image;
+use App\Lang;
 use App\Slider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,8 +23,9 @@ class SliderController extends Controller
     {
         $articles = Article::select('id', 'title')->get();
         $sliders =  Slider::with('images')->get();
+        $langs = Lang::all();
 
-        return [$sliders, $articles];
+        return [$sliders, $articles, $langs];
     }
 
     public function savesliderimage(Request $request)
@@ -33,34 +35,49 @@ class SliderController extends Controller
             'title' => 'required',
         ]);
 
-        if ($request->sliderid == 'null'){
-            $slider = Slider::create([
-                'title' => $request->title,
+        $find =  Slider::where('title', $request->title)->first();
+
+        if ($find == null){
+
+
+            if ($request->sliderid == 'null'){
+                $slider = Slider::create([
+                    'title' => $request->title,
+                    'lang_id' => $request->lang,
+                ]);
+                Storage::disk('media')->makeDirectory('slider/' . $slider['id']);
+            }
+            else{
+                $slider = Slider::where('id', $request->sliderid)->first();
+                $slider->title = $request->title;
+                $slider->lang_id = $request->lang;
+                $slider->save();
+            }
+
+            $imagename = rand(10000,99999);
+
+            $image = new ImageManager();
+            $image->make($request->image->getRealPath())->save(public_path() . '/media/slider/'.$slider['id'].'/original_'. $imagename .'.png');
+            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() .'/media/slider/'.$slider['id'].'/small_'. $imagename .'.png');
+
+            $image = Image::create([
+                'image' => $imagename,
+                'slider_id' => $slider['id'],
             ]);
-            Storage::disk('media')->makeDirectory('slider/' . $slider['id']);
+
+            return [$slider['id'], $imagename, $image['id']];
+
+
+
+
+        }else{
+
+
+            abort('422', "you can't add a new slider with same name");
+
+
         }
-        else{
-            $slider = Slider::where('id', $request->sliderid)->first();
-            $slider->title = $request->title;
-            $slider->save();
-        }
 
-
-
-        $imagename = rand(10000,99999);
-
-        $image = new ImageManager();
-        $image->make($request->image->getRealPath())->save(public_path() . '/media/slider/'.$slider['id'].'/original_'. $imagename .'.png');
-        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() .'/media/slider/'.$slider['id'].'/small_'. $imagename .'.png');
-
-        $image = Image::create([
-            'image' => $imagename,
-            'slider_id' => $slider['id'],
-        ]);
-
-
-
-        return [$slider['id'], $imagename, $image['id']];
     }
 
 
@@ -85,10 +102,6 @@ class SliderController extends Controller
     public function changepublishslider(Request $request)
     {
         Slider::where('id', $request->id)->update(['publish'=> $request->publish]);
-
-        if ($request->publish == 'true'){
-            Slider::whereNotIn('id', [$request->id])->update(['publish' => 'false']);
-        }
     }
 
     public function saveimagedetails(Request $request)
@@ -100,5 +113,21 @@ class SliderController extends Controller
 
         $save->save();
     }
+
+    public function sliderchange(Request $request)
+    {
+        $save = Slider::where('id', $request->sliderid)->first();
+        $save->title = $request->title;
+        $save->lang_id = $request->lang;
+
+        $save->save();
+    }
+
+
+
+
+
+
+
 
 }

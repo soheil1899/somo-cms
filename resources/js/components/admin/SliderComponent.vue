@@ -12,7 +12,11 @@
                     {{slider.title}}
                 </div>
                 <div class="col-6 icons">
-                    <i title="ویرایش" @click="editslider(slider.id, slider.images, slider.title)"
+                    <label class="ml-3">
+                        زبان :
+                        {{slider.lang}}
+                    </label>
+                    <i title="ویرایش" @click="editslider(slider.id, slider.images, slider.title, slider.lang_id)"
                        class="fas fa-edit ml-2 fa-lg"></i>
                     <i title="حذف" @click="deleteslider(slider.id)" class="fas fa-trash ml-3 fa-lg"></i>
                 </div>
@@ -47,9 +51,21 @@
 
                     <div class="modal-body">
                         <error :error="error"></error>
-                        <div class="form-group ">
-                            <input type="text" class="form-control" v-model="slidertitle" placeholder="عنوان اسلایدر" name="title">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group ">
+                                    <input type="text" class="form-control" v-model="slidertitle" placeholder="عنوان اسلایدر" name="title">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <v-select v-model="langselect" :options="langs" label="title"
+                                          :clearable="false"
+                                          placeholder="یکی از زبان ها را انتخاب کنید" class="mb-2"></v-select>
+                            </div>
                         </div>
+
+
+
                         <div class="card" v-if="slidertitle != null && slidertitle != ''">
                             <div class="card-header row m-0 p-1 pt-2">
                                 <div class="col-8">
@@ -77,7 +93,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="closeslidermodal">بستن</button>
+                        <button type="button" class="btn btn-success" @click="closeslidermodal">ذخیره</button>
                     </div>
                 </div>
             </div>
@@ -144,6 +160,17 @@
                 imagesubtext: null,
                 imagelink: null,
                 imagetitle: null,
+
+                langselect: {
+                    'id': 1,
+                    'title': 'فارسی',
+                    'lang': 'fa',
+                },
+                langs: [],
+
+
+                oldslidertitle: null,
+                oldlangselectid: null,
             }
         },
 
@@ -210,13 +237,6 @@
                     });
             },
 
-            editslider(id, images, title){
-                this.sliderid = id;
-                this.imagelist = images;
-                this.slidertitle = title;
-                $('#addModal').modal('show');
-            },
-
             createsliderurl(image, sliderid) {
                 return '/media/slider/'+ sliderid +'/small_' + image + '.png';
             },
@@ -227,6 +247,19 @@
                     .then(function (response) {
                         that.sliderlist = response.data[0];
                         that.articles = response.data[1];
+                        that.langs = response.data[2];
+
+                        for (var i=0; i<that.sliderlist.length; i++){
+                            for (var j=0; j<that.langs.length; j++){
+                                if(that.sliderlist[i]['lang_id'] == that.langs[j]['id']){
+                                    that.sliderlist[i]['lang'] = that.langs[j]['title'];
+                                }
+                            }
+
+                        }
+
+
+
                     });
             },
 
@@ -242,6 +275,7 @@
                 formData.append('image', this.$refs.slider.files[0]);
                 formData.append('editflag', this.editflag);
                 formData.append('sliderid', this.sliderid);
+                formData.append('lang', this.langselect['id']);
 
                 axios.post('/dashboard/savesliderimage'
                     , formData
@@ -261,6 +295,9 @@
                         newfile['link'] = null;
                         newfile['subtext'] = null;
 
+                        that.oldlangselectid = that.langselect['id'];
+                        that.oldslidertitle = that.slidertitle;
+
                         that.imagelist.push(newfile);
 
 
@@ -272,12 +309,49 @@
                 this.slidertitle = null;
                 this.imagelist = [];
 
+                this.langselect['id'] = 1;
+                this.langselect['title'] = 'فارسی';
+                this.langselect['lang'] = 'fa';
+
+                this.langselect['id'] = null;
+                this.langselect['lang'] = null;
+
+            },
+
+            editslider(id, images, title, lang){
+                this.sliderid = id;
+                this.imagelist = images;
+                this.slidertitle = title;
+
+                for (var i=0; i<this.langs.length; i++){
+                    if(lang == this.langs[i]['id']){
+                        this.langselect['id'] = lang;
+                        this.langselect['title'] = this.langs[i]['title'];
+                        this.langselect['lang'] = this.langs[i]['lang'];
+                    }
+                }
+
+                this.oldlangselectid = lang;
+                this.oldslidertitle = title;
+                $('#addModal').modal('show');
             },
 
             closeslidermodal(){
-                this.reloadpage();
                 $('#addModal').modal('toggle');
 
+                if(this.oldslidertitle != this.slidertitle || this.oldlangselectid != this.langselect['id']){
+                    let data = {
+                        'sliderid': this.sliderid,
+                        'title': this.slidertitle,
+                        'lang': this.langselect['id'],
+                    };
+                    axios.post('/dashboard/sliderchange', data)
+                        .then(function (response) {
+
+                        });
+                }
+
+                this.reloadpage();
             },
 
 

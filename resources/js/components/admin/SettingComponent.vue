@@ -180,9 +180,9 @@
 
                 langs: [],
                 langselect: {
-                    'id': null,
-                    'title': null,
-                    'lang': null,
+                    'id': 1,
+                    'title': 'فارسی',
+                    'lang': 'fa',
                 },
             }
         },

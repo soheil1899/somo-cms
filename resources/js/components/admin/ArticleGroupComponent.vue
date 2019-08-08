@@ -60,7 +60,7 @@
                             <div class="form-group mb-1">
                                 <input type="text" v-model="grouptitle" class="form-control" placeholder="عنوان گروه">
                             </div>
-                            <v-select v-model="langselect" :options="langs" label="lang"
+                            <v-select v-model="langselect" :options="langs" label="title"
                                       :clearable="false"
                                       placeholder="یکی از زبان ها را انتخاب کنید" class="mb-2"></v-select>
                             <div class="form-group mb-1">
@@ -118,8 +118,9 @@
 
                 langs: [],
                 langselect: {
-                    'id': null,
-                    'lang': null,
+                    'id': 1,
+                    'title': 'فارسی',
+                    'lang': 'fa',
                 },
             }
         },
@@ -146,8 +147,9 @@
                 this.groupid = null;
 
 
-                this.langselect['id'] = null;
-                this.langselect['lang'] = null;
+                this.langselect['id'] = 1;
+                this.langselect['title'] = 'فارسی';
+                this.langselect['lang'] = 'fa';
             },
 
             editgroup(id, name, title, url, description, keywords, lang){
@@ -166,6 +168,7 @@
                 }
 
                 this.langselect['id'] = lang['id'];
+                this.langselect['title'] = lang['title'];
                 this.langselect['lang'] = lang['lang'];
             },
 
