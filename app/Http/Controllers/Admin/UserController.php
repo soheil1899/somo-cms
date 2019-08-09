@@ -38,13 +38,30 @@ class UserController extends Controller
                     }
                 }
             }
-            if($userrole['id'] == 4){
-                $myrole = 'useradmin';
-                foreach ($users as $key=>$user){
-                    if($user['roles'][0]['id'] != 2){
-                        unset($users[$key]);
+            else{
+
+                $roles = auth()->user()->roles()->get();
+                $permissions = array();
+                foreach ($roles as $role){
+                    array_push($permissions, $role->permissions()->get());
+                }
+                for ($i=0; $i<count($permissions); $i++){
+                    for($j=0; $j<count($permissions[$i]);$j++){
+                        $per = $permissions[$i][$j]['permission'];
+
+                        if($per == 'add_user' or
+                            $per == 'edit_user' or $per == 'delete_user'){
+
+                            $myrole = 'useradmin';
+                            foreach ($users as $key=>$user){
+                                if($user['roles'][0]['id'] != 2){
+                                    unset($users[$key]);
+                                }
+                            }
+                        }
                     }
                 }
+
             }
         }
 

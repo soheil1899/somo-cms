@@ -38,25 +38,19 @@
                         عزیز خوش آمدید
                     </label>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/">صفحه اصلی سایت</a>
                         <a class="dropdown-item" href="{{route('changemyinfo')}}">تغییر رمز عبور</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                             خروج
                         </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="/">صفحه اصلی سایت <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                    خروج
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
             </li>
         </ul>
         <form class="form-inline my-2 my-md-0"></form>
