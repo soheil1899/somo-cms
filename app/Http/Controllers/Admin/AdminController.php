@@ -8,6 +8,7 @@ use App\User;
 use App\Userinfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -56,19 +57,52 @@ class AdminController extends Controller
 
     public function getmyinfo()
     {
-        $userid = auth()->user()->id;
-        return view('admin.myinfo', compact('userid'));
+        return view('admin.myinfo');
     }
 
     public function getmyinfos(Request $request)
     {
-        $user = User::where('id', $request->userid)->first();
-        $userinfo = Userinfo::where('user_id', $request->userid)->first();
-
-        $city = file_get_contents("Province.json");
-        $city = json_decode($city, true);
-
-        return [$user, $userinfo, $city];
+        return auth()->user();
     }
+
+
+    public function savemyinfo(Request $request)
+    {
+        $this->validate($request,[
+            'name' => 'required',
+            'email' => 'required|email',
+            'oldpass' => 'required|min:8',
+            'newpass' => 'required|min:8',
+            'repass' => 'required|min:8',
+        ]);
+        if(Hash::check($request->oldpass, auth()->user()->password))
+        {
+            if ($request->newpass == $request->repass) {
+                $save = User::where('id', auth()->user()->id)->first();
+
+                $save->name = $request->name;
+                $save->email = $request->email;
+                $save->password = bcrypt($request->newpass);
+
+                $save->save();
+
+                $action = 'true';
+                return $action;
+            }else{
+                return 'foo';
+            }
+        }else{
+            return 'bar';
+        }
+
+
+
+
+
+    }
+
+
+
+
 
 }

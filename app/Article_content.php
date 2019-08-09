@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article_content extends Model
 {
     protected $fillable = [
-        'order', 'article_id', 'article_type_id',
+        'ordered', 'article_id', 'article_type_id',
     ];
 
 

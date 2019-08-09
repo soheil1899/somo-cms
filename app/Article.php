@@ -28,7 +28,7 @@ class Article extends Model
 
     public function contents()
     {
-        return $this->hasMany(Article_content::class)->orderBy('order', 'asc');
+        return $this->hasMany(Article_content::class)->orderBy('ordered', 'asc');
     }
 
     public function user()

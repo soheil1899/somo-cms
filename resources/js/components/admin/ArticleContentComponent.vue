@@ -36,10 +36,10 @@
                            data-target="#Modal"
                            class="fas fa-edit ml-2 fa-lg"></i>
                         <i title="حذف" @click="deletecontent(item.id)" class="fas fa-trash ml-3 fa-lg"></i>
-                        <i title="برو پایین"  @click="changeorder(item.id, item.order, 'down')"
+                        <i title="برو پایین"  @click="changeorder(item.id, item.ordered, 'down')"
                            v-if="item.id != contentlist[contentlistlength-1]['id']"
                            class="fas fa-arrow-circle-down ml-1 fa-lg"></i>
-                        <i title="برو بالا"  @click="changeorder(item.id, item.order, 'up')" v-if="item.id != contentlist[0]['id']"
+                        <i title="برو بالا"  @click="changeorder(item.id, item.ordered, 'up')" v-if="item.id != contentlist[0]['id']"
                            class="fas fa-arrow-circle-up fa-lg"></i>
                     </div>
                 </div>
@@ -292,7 +292,7 @@
             changeorder(id, order, action) {
                 let counter = 0;
                 for (var i = 0; i < this.contentlist.length; i++) {
-                    if (this.contentlist[i]['order'] == order) {
+                    if (this.contentlist[i]['ordered'] == order) {
                         counter = i;
                     }
                 }
@@ -302,10 +302,10 @@
 
                 if (action == 'up') {
                     replaceid = this.contentlist[counter - 1]['id'];
-                    replaceorder = this.contentlist[counter - 1]['order'];
+                    replaceorder = this.contentlist[counter - 1]['ordered'];
                 } else {
                     replaceid = this.contentlist[counter + 1]['id'];
-                    replaceorder = this.contentlist[counter + 1]['order'];
+                    replaceorder = this.contentlist[counter + 1]['ordered'];
                 }
                 let that = this;
                 let data = {

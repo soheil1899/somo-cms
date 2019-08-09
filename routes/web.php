@@ -26,12 +26,9 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
     Route::get('/', 'AdminController@index')->name('admin');
 
 
-    Route::get('/changemyinfo', 'AdminController@getmyinfo')->name('changemyinfo');
-    Route::post('/getmyinfo', 'AdminController@getmyinfos')->name('get.myinfo');
-    Route::post('saveuserinfo', 'UserController@saveuserinfo')->name('saveuser.info');
-
-
-
+    Route::get('changemyinfo', 'AdminController@getmyinfo')->name('changemyinfo');
+    Route::post('getmyinfo', 'AdminController@getmyinfos')->name('get.myinfo');
+    Route::post('savemyinfo', 'AdminController@savemyinfo')->name('savemy.info');
 
 
     Route::group(['middleware' => 'CheckUseradmin'], function () {
@@ -51,16 +48,17 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
 
     Route::group(['middleware' => 'CheckSuperadmin'], function () {
 
- Route::get('setting', 'SettingController@index')->name('setting');
+        Route::get('posts', 'PostController@index')->name('posts');
+        Route::post('getpost', 'PostController@getpost')->name('get.post');
+
+
+
+        Route::get('setting', 'SettingController@index')->name('setting');
         Route::post('getsetting', 'SettingController@getsetting')->name('get.setting');
         Route::post('savelogoimage', 'SettingController@savelogoimage')->name('save.logoimage');
         Route::post('savebannerimage', 'SettingController@savebannerimage')->name('save.bannerimage');
         Route::post('savesetting', 'SettingController@savesetting')->name('save.setting');
         Route::post('savecompanycatalog', 'SettingController@savecompanycatalog')->name('save.companycatalog');
-
-
-
-
 
 
         // role
@@ -69,11 +67,21 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('saverole', 'RoleController@saverole')->name('save.roles');
         Route::post('savepermission', 'RoleController@savepermission')->name('save.permission');
         Route::post('deleterole', 'RoleController@deleterole')->name('delete.role');
+
+
+
+        // slider
+        Route::get('slider', 'SliderController@index')->name('slider');
+        Route::post('getslider', 'SliderController@getslider')->name('getslider');
+        Route::post('savesliderimage', 'SliderController@savesliderimage')->name('save.sliderimage');
+        Route::post('deletesliderimage', 'SliderController@deletesliderimage')->name('delete.sliderimage');
+        Route::post('deleteslider', 'SliderController@deleteslider')->name('delete.slider');
+        Route::post('changepublishslider', 'SliderController@changepublishslider')->name('changepublish.slider');
+        Route::post('saveimagedetails', 'SliderController@saveimagedetails')->name('saveimage.details');
+        Route::post('sliderchange', 'SliderController@sliderchange')->name('sliderchange');
+
+
     });
-
-
-
-
 
 
     Route::group(['middleware' => 'CheckWriteradmin'], function () {
@@ -111,14 +119,6 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
     });
 
 
-
-
-
-
-
-
-
-
     Route::group(['middleware' => 'CheckStoreadmin'], function () {
 
         // category
@@ -148,16 +148,6 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('deletecolor', 'ColorController@deletecolor')->name('delete.color');
 
 
-	 // slider
-    	Route::get('slider', 'SliderController@index')->name('slider');
-    	Route::post('getslider', 'SliderController@getslider')->name('getslider');
-    	Route::post('savesliderimage', 'SliderController@savesliderimage')->name('save.sliderimage');
-    	Route::post('deletesliderimage', 'SliderController@deletesliderimage')->name('delete.sliderimage');
-    	Route::post('deleteslider', 'SliderController@deleteslider')->name('delete.slider');
-    	Route::post('changepublishslider', 'SliderController@changepublishslider')->name('changepublish.slider');
-    	Route::post('saveimagedetails', 'SliderController@saveimagedetails')->name('saveimage.details');
-    	Route::post('sliderchange', 'SliderController@sliderchange')->name('sliderchange');
-
 
         // guarantee
         Route::get('guarantee', 'GuaranteeController@index')->name('guarantee.list');
@@ -170,11 +160,6 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('getbrands', 'BrandController@getbrands')->name('get.brands');
         Route::post('savebrand', 'BrandController@savebrand')->name('save.brand');
 
-
-        // tag
-        Route::get('tag', 'TagController@index')->name('tag.list');
-        Route::post('gettags', 'TagController@gettags')->name('get.tags');
-        Route::post('savetag', 'TagController@savetag')->name('save.tag');
 
 
         // product
@@ -210,45 +195,26 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::get('comment', 'ProductController@comment')->name('comment.list');
         Route::post('getcomments', 'ProductController@getcomments')->name('get.comments');
 
-    });
 
 
-
-
-
-
- Route::get('customer', 'CustomerController@index')->name('customer.list');
+        // customer
+        Route::get('customer', 'CustomerController@index')->name('customer.list');
         Route::post('getcustomer', 'CustomerController@getcustomer')->name('get.customer');
         Route::post('savecustomer', 'CustomerController@savecustomer')->name('save.customer');
         Route::post('deletecustomer', 'CustomerController@deletecustomer')->name('delete.customer');
 
 
+    });
 
 
-        Route::get('posts', 'PostController@index')->name('posts');
-        Route::post('getpost', 'PostController@getpost')->name('get.post');
+    Route::group(['middleware' => ['CheckStoreadmin' or 'CheckWriteradmin']], function () {
+
+        // tag
+        Route::get('tag', 'TagController@index')->name('tag.list');
+        Route::post('gettags', 'TagController@gettags')->name('get.tags');
+        Route::post('savetag', 'TagController@savetag')->name('save.tag');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    });
 
 });

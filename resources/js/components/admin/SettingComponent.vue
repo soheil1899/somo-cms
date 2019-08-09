@@ -96,7 +96,9 @@
                 <div class="col-3 text-left">لوگو سایت :</div>
                 <div class="row col-9">
                     <div class="col-6">
-                        <button type="button" @click="browselogo" class="btn btn-success btn-sm">تغییر تصویر لوگو
+                        <button v-if="logoimage != null" type="button" @click="browselogo" class="btn btn-success btn-sm">تغییر تصویر لوگو
+                        </button>
+                        <button v-else type="button" @click="browselogo" class="btn btn-success btn-sm">انتخاب تصویر لوگو
                         </button>
                         <input type="file" class="d-none" id="browse" ref="logo"
                                @change="selectlogo" accept=".jpg, .png, .jpeg">
@@ -164,6 +166,8 @@
 
 
     import Editor from '@tinymce/tinymce-vue';
+    import Swal from 'sweetalert2';
+
 
     export default {
         name: "SettingComponent",
@@ -172,7 +176,23 @@
         },
         data() {
             return {
-                settinglist: [],
+                settinglist: {
+                    'mobile': null,
+                    'tellphone': null,
+                    'fax': null,
+                    'email': null,
+                    'address': null,
+                    'aboutus': null,
+                    'company_name': null,
+                    'flag': null,
+                    'header_description': null,
+                    'aboutus_all': null,
+                    'id': null,
+                    'catalog': 0,
+                    'keywords': null,
+                    'lang': 'fa',
+                    'logo_image': null,
+                },
                 error: [],
                 keywords: [],
                 filemanagerids: [],
@@ -186,6 +206,9 @@
                 },
             }
         },
+        comments:{
+            Swal,
+        },
         methods: {
 
             savesetting(){
@@ -196,6 +219,11 @@
                 };
                 axios.post('/dashboard/savesetting', data)
                     .then(function (response) {
+                        Swal.fire({
+                            text: 'اطلاعات شما با موفقیت ثبت شد!',
+                            type: 'success',
+                            confirmButtonText: 'بستن'
+                        });
                         that.reloadPage();
                     });
 
@@ -239,7 +267,41 @@
                 axios.post('/dashboard/getsetting', data)
                     .then(function (response) {
 
-                        that.settinglist = response.data[0];
+                        if(response.data[3] == true) {
+                            that.settinglist['mobile'] = response.data[0]['mobile'];
+                            that.settinglist['tellphone'] = response.data[0]['tellphone'];
+                            that.settinglist['fax'] = response.data[0]['fax'];
+                            that.settinglist['email'] = response.data[0]['email'];
+                            that.settinglist['address'] = response.data[0]['address'];
+                            that.settinglist['aboutus'] = response.data[0]['aboutus'];
+                            that.settinglist['company_name'] = response.data[0]['company_name'];
+                            that.settinglist['flag'] = response.data[0]['flag'];
+                            that.settinglist['header_description'] = response.data[0]['header_description'];
+                            that.settinglist['aboutus_all'] = response.data[0]['aboutus_all'];
+                            that.settinglist['id'] = response.data[0]['id'];
+                            that.settinglist['catalog'] = response.data[0]['catalog'];
+                            that.settinglist['keywords'] = response.data[0]['keywords'];
+                            that.settinglist['lang'] = response.data[0]['lang'];
+                            that.settinglist['logo_image'] = response.data[0]['logo_image'];
+                        }
+                        else if(response.data[3] == false){
+                            that.settinglist['mobile'] = null;
+                            that.settinglist['tellphone'] = null;
+                            that.settinglist['fax'] = null;
+                            that.settinglist['email'] = null;
+                            that.settinglist['address'] = null;
+                            that.settinglist['aboutus'] = null;
+                            that.settinglist['company_name'] = null;
+                            that.settinglist['flag'] = null;
+                            that.settinglist['header_description'] = null;
+                            that.settinglist['aboutus_all'] = null;
+                            that.settinglist['id'] = null;
+                            that.settinglist['catalog'] = null;
+                            that.settinglist['keywords'] = null;
+                            that.settinglist['lang'] = null;
+                            that.settinglist['logo_image'] = null;
+                        }
+
 
                         that.langs = response.data[2];
                         for (var i=0; i<that.langs.length; i++){
@@ -250,7 +312,11 @@
                             }
                         }
 
-                        that.logoimage = '/media/cite/' + that.settinglist['logo_image'] + '.png';
+                        if(that.settinglist['logo_image'] != null){
+                            that.logoimage = '/media/cite/logo/' + that.settinglist['logo_image'] + '.png';
+                        }else{
+                            that.logoimage = null;
+                        }
 
                         that.filemanagerids = [];
                         for (var i = 0; i < response.data[1].length; i++) {
@@ -270,6 +336,8 @@
             selectlogo() {
                 let that = this;
                 let formData = new FormData();
+                formData.append('id', this.settinglist['id']);
+                formData.append('lang', this.langselect['lang']);
                 formData.append('logoimage', this.$refs.logo.files[0]);
 
                 axios.post('/dashboard/savelogoimage'
@@ -281,7 +349,15 @@
 
                     })
                     .then(function (response) {
-                        that.logoimage = '/media/cite/logo.png?'+ response.data;
+                        that.logoimage = '/media/cite/logo/'+ that.langselect['lang'] +'_logo.png?'+ response.data[0];
+                        that.settinglist['id'] = response.data[1];
+                        that.settinglist['logo_image'] = that.langselect['lang'] +'_logo.png';
+                        that.settinglist['lang'] = that.langselect['lang'];
+                        Swal.fire({
+                            text: 'تصویر لوگو با موفقیت ذخیره شد!',
+                            type: 'success',
+                            confirmButtonText: 'بستن'
+                        });
                     });
             },
             browsepdf() {
@@ -291,6 +367,7 @@
             selectpdf() {
                 let that = this;
                 let formData = new FormData();
+                formData.append('id', this.settinglist['id']);
                 formData.append('catalog', this.$refs.pdf.files[0]);
                 formData.append('lang', this.langselect['lang']);
 
@@ -303,7 +380,13 @@
 
                     })
                     .then(function (response) {
-
+                        that.settinglist['id'] = response.data;
+                        that.settinglist['lang'] = that.langselect['lang']
+                        Swal.fire({
+                            text: 'کاتالوگ شرکت با موفقیت ذخیره شد!',
+                            type: 'success',
+                            confirmButtonText: 'بستن'
+                        });
                     });
             },
 

@@ -18,18 +18,24 @@ class SettingController extends Controller
     {
         return view('admin.setting');
     }
+
     public function getsetting(Request $request)
     {
+        $flag = false;
+
         $filemanagerids = Filemanager::all();
-        if($request->lang['lang'] != null){
+        if ($request->lang['lang'] != null) {
             $setting = Setting::where('lang', $request->lang['lang'])->first();
-        }else{
+            if (isset($setting['id'])) {
+                $flag = true;
+            }
+        } else {
             $setting = Setting::first();
         }
 
-        $keywords = Article_keyword::where('setting_id', $setting['id'])->get();
+        $keywords = Article_keyword::where([['setting_id', $setting['id']], ['setting', true]])->get();
         $keywordarray = array();
-        if(count($keywords) > 0) {
+        if (count($keywords) > 0) {
             foreach ($keywords as $key => $value) {
                 $keywordarray[$key] = $value['keyword'];
             }
@@ -38,37 +44,17 @@ class SettingController extends Controller
         $setting['keywords'] = $keywordarray;
         $langs = Lang::all();
 
-        return [$setting , $filemanagerids, $langs];
+
+        return [$setting, $filemanagerids, $langs, $flag];
 
     }
 
-    public function savelogoimage(Request $request)
-    {
-
-        $image = new ImageManager();
-        Storage::disk('media')->delete('/media/cite/logo.png');
-        $image->make($request->logoimage->getRealPath())->save(public_path() . '/media/cite/logo.png');
-
-
-        return [rand(100,999)];
-    }
-
-    public function savebannerimage(Request $request)
-    {
-
-        $image = new ImageManager();
-        Storage::disk('media')->delete('/media/cite/banner.png');
-        $image->make($request->bannerimage->getRealPath())->save(public_path() . '/media/cite/banner.png');
-
-
-        return [rand(100,999)];
-    }
 
     public function savesetting(Request $request)
     {
         $setting = $request->setting;
         $save = Setting::where('lang', $request->langselect['lang'])->first();
-        if(is_null($save)){
+        if (is_null($save)) {
             $save = new Setting();
         }
         $save->mobile = $setting['mobile'];
@@ -88,9 +74,10 @@ class SettingController extends Controller
         $newkeywords = array();
         Article_keyword::where('setting_id', $save->id)->delete();
 
-        if ($setting['keywords'] != null){
+        if ($setting['keywords'] != null) {
             foreach ($setting['keywords'] as $key => $value) {
                 $newkeywords[$key]['setting_id'] = $save->id;
+                $newkeywords[$key]['setting'] = true;
                 $newkeywords[$key]['keyword'] = $value;
             }
             Article_keyword::insert($newkeywords);
@@ -101,22 +88,48 @@ class SettingController extends Controller
 
     public function savecompanycatalog(Request $request)
     {
-        $file =$request->file('catalog');
-        if ($request->lang == 'fa'){
-            $file->move(public_path() . '/media/cite/','TABAMACHINE_fa.pdf');
-        }
-        if ($request->lang == 'en'){
-            $file->move(public_path() . '/media/cite/','TABAMACHINE_en.pdf');
-        }
-        else{
-            $file->move(public_path() . '/media/cite/','TABAMACHINE_ar.pdf');
+        $id = $request->id;
+        if ($id == 'null'){
+            $save = new Setting();
+            $save->lang = $request->lang;
+            $save->catalog = true;
+            $save->save();
+
+            $id = $save['id'];
+        }else{
+            Setting::where('id', $id)->update(['catalog' => true]);
         }
 
-        $save = Setting::where('lang', $request->lang)->first();
-        if ($save->catalog == false){
-            $save->catalog = true;
-        }
-        $save->save();
+
+        $file = $request->file('catalog');
+        $file->move(public_path() . '/media/cite/catalog/', 'catalog_' . $request->lang . '.pdf');
+
+        return $id;
     }
+
+
+
+    public function savelogoimage(Request $request)
+    {
+        $id = $request->id;
+        if ($id == 'null'){
+            $save = new Setting();
+            $save->lang = $request->lang;
+            $save->logo_image = $request->lang.'_logo';
+            $save->save();
+
+            $id = $save['id'];
+        }else{
+            Setting::where('id', $id)->update(['logo_image' => $request->lang.'_logo']);
+        }
+
+        $image = new ImageManager();
+        Storage::disk('media')->delete('/media/cite/logo/'.$request->lang.'_logo.png');
+        $image->make($request->logoimage->getRealPath())->save(public_path() . '/media/cite/logo/'.$request->lang.'_logo.png');
+
+
+        return [rand(100, 999), $id];
+    }
+
 
 }

@@ -100,9 +100,9 @@
                     <div class="modal-body">
                         <div class="list-group">
                             <ul class="pl-0 pr-4">
-                                <li class="list-group-item list-group-item-action pointer row" v-for="item in rolelist" :key="item.id" @click="changeroletick(item.order)">
+                                <li class="list-group-item list-group-item-action pointer row" v-for="item in rolelist" :key="item.id" @click="changeroletick(item.ordered)">
                                     <div class="col-1 px-0 float-right">
-                                        <i class="fas fa-check fa-lg" style="color: #22d83d;" v-if="accessflag[item.order-1]"></i>
+                                        <i class="fas fa-check fa-lg" style="color: #22d83d;" v-if="accessflag[item.ordered-1]"></i>
                                     </div>
                                     <div class="col-10 px-0">
                                         {{item.title}}

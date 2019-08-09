@@ -13,7 +13,7 @@ class Article_group extends Model
 
     public function articles()
     {
-        return $this->hasMany(Article::class)->orderBy('order', 'desc');
+        return $this->hasMany(Article::class)->orderBy('ordered', 'desc');
     }
     public function lang()
     {

@@ -114,8 +114,6 @@
     @endif
 
 
-
-
     <li class="sidebar-dropdown">
         <a href="#">
             <i class="fas fa-cogs ml-1"></i>
@@ -123,24 +121,31 @@
         </a>
         <div class="sidebar-submenu">
             <ul>
-                <li>
-                    <a href="{{route('setting')}}">تنظیمات سایت</a>
-                </li>
-                <li>
-                    <a href="{{route('customer.list')}}">مدیریت مشتریان</a>
-                </li>
-                <li>
-                    <a href="{{route('posts')}}">مدیریت پیام ها</a>
-                </li>
-                <li>
-                    <a href="{{route('slider')}}">مدیریت اسلایدر</a>
-                </li>
-                <li>
-                    <a href="{{route('tag.list')}}">مدیریت تگ</a>
-                </li>
+                @can('permission_access')
+                    <li>
+                        <a href="{{route('setting')}}">تنظیمات سایت</a>
+                    </li>
+                    <li>
+                        <a href="{{route('posts')}}">مدیریت پیام ها</a>
+                    </li>
+                    <li>
+                        <a href="{{route('slider')}}">مدیریت اسلایدر</a>
+                    </li>
+                @endcan
+                @if(Gate::check('edit_product') || Gate::check('add_product') || Gate::check('delete_product'))
+                    <li>
+                        <a href="{{route('customer.list')}}">مدیریت مشتریان</a>
+                    </li>
+                @endif
+                @if(Gate::check('edit_product') || Gate::check('add_product') || Gate::check('delete_product') || Gate::check('edit_article') || Gate::check('add_article') || Gate::check('delete_article'))
+                    <li>
+                        <a href="{{route('tag.list')}}">مدیریت تگ</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </li>
+
 
 </ul>
 

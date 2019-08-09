@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <myinfo-component :userid="{{$userid}}"></myinfo-component>
+    <myinfo-component></myinfo-component>
 
 @stop

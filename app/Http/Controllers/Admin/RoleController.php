@@ -35,8 +35,8 @@ class RoleController extends Controller
             $save = new Role();
         }
 
-        $lastorder = Role::select('order')->orderBy('order','desc')->limit(1)->get();
-        $save->order = $lastorder[0]['order']+1;
+        $lastorder = Role::select('ordered')->orderBy('ordered','desc')->limit(1)->get();
+        $save->ordered = $lastorder[0]['ordered']+1;
         $save->title = $request->roletitle;
         $save->role = $request->role;
         $save->save();

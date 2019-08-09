@@ -37,7 +37,7 @@ class CreateArticlesTable extends Migration
             $table->text('minitext')->nullable();
             $table->boolean('publish')->default(false);
             $table->string('articlevideo')->nullable();
-            $table->integer('order')->default(0);
+            $table->integer('ordered')->default(0);
             $table->string('reference')->nullable();
             $table->bigInteger('article_group_id')->unsigned();
             $table->timestamps();
@@ -78,7 +78,7 @@ class CreateArticlesTable extends Migration
         Schema::create('article_contents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('text')->nullable();
-            $table->integer('order')->default(0);
+            $table->integer('ordered')->default(0);
             $table->boolean('publish')->default(false);
             $table->bigInteger('article_id')->unsigned();
             $table->bigInteger('article_type_id')->unsigned();
@@ -98,6 +98,7 @@ class CreateArticlesTable extends Migration
             $table->string('keyword')->nullable();
             $table->bigInteger('article_id')->unsigned()->nullable();
             $table->bigInteger('article_group_id')->unsigned()->nullable();
+            $table->boolean('setting')->default(false);
             $table->bigInteger('setting_id')->unsigned()->default(1);
             $table->timestamps();
 

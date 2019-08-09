@@ -144,6 +144,9 @@ class UserController extends Controller
                     $per == 'edit_product' or $per == 'delete_product'){
                     $user['act'] = 'seller';
                 }
+                else if(count($per)>0){
+                    $user['act'] = 'admin';
+                }
             }
         }
 

@@ -187,8 +187,8 @@ class ArticleController extends Controller
         }
 
         if ($request->editflag == false) {
-            $lastorder = Article::select('order')->orderBy('order', 'desc')->first();
-            $save->order = $lastorder['order'] + 1;
+            $lastorder = Article::select('ordered')->orderBy('ordered', 'desc')->first();
+            $save->ordered = $lastorder['ordered'] + 1;
         }
 
         $save->save();
@@ -197,7 +197,6 @@ class ArticleController extends Controller
             if ($request->keywords != null){
                 foreach ($request->keywords as $key => $value) {
                     $keywords[$key]['article_id'] = $save->id;
-                    $keywords[$key]['setting'] = false;
                     $keywords[$key]['keyword'] = $value;
                 }
                 Article_keyword::insert($keywords);
@@ -237,8 +236,8 @@ class ArticleController extends Controller
 
     public function changeorder(Request $request)
     {
-        Article::where('id', $request->replaceid)->update(['order' => $request->thisorder]);
-        Article::where('id', $request->thisid)->update(['order' => $request->replaceorder]);
+        Article::where('id', $request->replaceid)->update(['ordered' => $request->thisorder]);
+        Article::where('id', $request->thisid)->update(['ordered' => $request->replaceorder]);
     }
 
     public function deletearticle(Request $request)
@@ -348,8 +347,8 @@ class ArticleController extends Controller
         } else {
             $save = new Article_content();
 
-            $lastorder = Article_content::select('order')->orderBy('order', 'desc')->first();
-            $save->order = $lastorder['order'] + 1;
+            $lastorder = Article_content::select('ordered')->orderBy('ordered', 'desc')->first();
+            $save->ordered = $lastorder['ordered'] + 1;
 
         }
 
@@ -380,8 +379,8 @@ class ArticleController extends Controller
 
     public function changecontentorder(Request $request)
     {
-        Article_content::where('id', $request->replaceid)->update(['order' => $request->thisorder]);
-        Article_content::where('id', $request->thisid)->update(['order' => $request->replaceorder]);
+        Article_content::where('id', $request->replaceid)->update(['ordered' => $request->thisorder]);
+        Article_content::where('id', $request->thisid)->update(['ordered' => $request->replaceorder]);
     }
 
     public function savefile(Request $request)

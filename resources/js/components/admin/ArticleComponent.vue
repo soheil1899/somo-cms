@@ -54,11 +54,11 @@
                 </td>
                 <td class="pt-2">
                     <div class="row justify-content-center icons">
-                        <i title="برو بالا" @click="changeorder(item.id, item.order, 'up')"
+                        <i title="برو بالا" @click="changeorder(item.id, item.ordered, 'up')"
                            v-if="item.id != articlelist[0]['id']"
                            class="fas fa-arrow-circle-up fa-lg mt-2"></i>
 
-                        <i title="برو پایین" @click="changeorder(item.id, item.order, 'down')"
+                        <i title="برو پایین" @click="changeorder(item.id, item.ordered, 'down')"
                            v-if="item.id != articlelist[articlelistlength-1]['id']"
                            class="fas fa-arrow-circle-down fa-lg mt-2"></i>
                     </div>
@@ -501,7 +501,7 @@
             changeorder(id, order, action) {
                 let counter = 0;
                 for (var i = 0; i < this.articlelist.length; i++) {
-                    if (this.articlelist[i]['order'] == order) {
+                    if (this.articlelist[i]['ordered'] == order) {
                         counter = i;
                     }
                 }
@@ -511,10 +511,10 @@
 
                 if (action == 'up') {
                     replaceid = this.articlelist[counter - 1]['id'];
-                    replaceorder = this.articlelist[counter - 1]['order'];
+                    replaceorder = this.articlelist[counter - 1]['ordered'];
                 } else {
                     replaceid = this.articlelist[counter + 1]['id'];
-                    replaceorder = this.articlelist[counter + 1]['order'];
+                    replaceorder = this.articlelist[counter + 1]['ordered'];
                 }
                 let that = this;
                 let data = {

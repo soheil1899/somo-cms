@@ -26,7 +26,7 @@ class CreateSettingsTable extends Migration
             $table->text('aboutus_all')->nullable();
             $table->string('company_name')->nullable();
             $table->string('flag')->nullable();
-            $table->string('logo_image');
+            $table->string('logo_image')->nullable();
             $table->string('header_description')->nullable();
             $table->boolean('catalog')->default(false);
             $table->timestamps();
@@ -45,7 +45,6 @@ class CreateSettingsTable extends Migration
                 'aboutus_all' => 'تست',
                 'company_name' => 'تست',
                 'flag' => 'تست',
-                'logo_image' => 'logo',
                 'header_description' => 'تست',
             )
         );
