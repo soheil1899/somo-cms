@@ -28,7 +28,7 @@
                     </a>
                     <i title="دسترسی" class="fas fa-universal-access fa-2x m-1" style="color: #12c908;" @click="rolechange(item.id, item.name, item.roles)" v-if="accessshow"></i>
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" data-toggle="modal" data-target="#Modal" @click="edituser(item.id, item.name, item.email)"></i>
-                    <i title="حذف" class="fas fa-trash fa-2x m-1" style="color: #EB3E37;" @click="deleteuser(item.id)"></i>
+                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" @click="deleteuser(item.id)"></i>
                 </td>
             </tr>
             </tbody>

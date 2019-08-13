@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Permissions;
 use App\Permission;
 use App\Role;
 use App\User;
@@ -12,40 +13,32 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
+    use Permissions;
 
-    }
 
     public function index()
     {
-
-        $roles = auth()->user()->roles()->get();
-        $permissions = array();
-        foreach ($roles as $role){
-            array_push($permissions, $role->permissions()->get());
-        }
 
         $useraccess = 0;
         $storeaccess = 0;
         $writeraccess = 0;
 
-        for ($i=0; $i<count($permissions); $i++){
-            for($j=0; $j<count($permissions[$i]);$j++){
-                $per = $permissions[$i][$j]['permission'];
-                if($per == 'add_user' or $per == 'edit_user' or $per == 'delete_user'){
-                    $useraccess = 1;
-                }
-                if($per == 'add_article' or $per == 'edit_article' or $per == 'delete_article'){
-                    $writeraccess = 1;
-                }
-                if($per == 'add_product' or $per == 'edit_product' or $per == 'delete_product'){
-                    $storeaccess = 1;
-                }
+        $per = $this->getpermission(auth()->user()->roles()->get());
+
+        for ($i = 0; $i < count($per); $i++) {
+            if ($per[$i] == 'add_user' or $per[$i] == 'edit_user' or $per[$i] == 'delete_user') {
+                $useraccess = 1;
             }
+            if ($per[$i] == 'add_article' or $per[$i] == 'edit_article' or $per[$i] == 'delete_article') {
+                $writeraccess = 1;
+            }
+            if ($per[$i] == 'add_product' or $per[$i] == 'edit_product' or $per[$i] == 'delete_product') {
+                $storeaccess = 1;
+            }
+
         }
 
-        return view('admin.dashboard' , compact('useraccess', 'storeaccess', 'writeraccess'));
+        return view('admin.dashboard', compact('useraccess', 'storeaccess', 'writeraccess'));
     }
 
 
@@ -68,15 +61,14 @@ class AdminController extends Controller
 
     public function savemyinfo(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
             'oldpass' => 'required|min:8',
             'newpass' => 'required|min:8',
             'repass' => 'required|min:8',
         ]);
-        if(Hash::check($request->oldpass, auth()->user()->password))
-        {
+        if (Hash::check($request->oldpass, auth()->user()->password)) {
             if ($request->newpass == $request->repass) {
                 $save = User::where('id', auth()->user()->id)->first();
 
@@ -88,21 +80,15 @@ class AdminController extends Controller
 
                 $action = 'true';
                 return $action;
-            }else{
+            } else {
                 return 'foo';
             }
-        }else{
+        } else {
             return 'bar';
         }
 
 
-
-
-
     }
-
-
-
 
 
 }

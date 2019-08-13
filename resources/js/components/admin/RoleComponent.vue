@@ -24,7 +24,7 @@
                 <td class="py-1 icons">
                     <i title="دسترسی" class="fas fa-universal-access fa-2x m-1" style="color: #12c908;" @click="permissionchange(item.id, item.title, item.permissions)"></i>
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editRole(item.id, item.title, item.role)"  data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" @click="deleteRole(item.id)" class="fas fa-trash fa-2x m-1" style="color: #EB3E37;" ></i>
+                    <i title="حذف" @click="deleteRole(item.id)" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" ></i>
                 </td>
             </tr>
             </tbody>

@@ -31,7 +31,7 @@
                         <i title="مطالب" class="fas fa-stream fa-2x m-1"></i>
                     </a>
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" @click="editgroup(item.id, item.name, item.title, item.url, item.description, item.keywords, item.lang)" data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" class="fas fa-trash fa-2x m-1"></i>
+                    <i title="حذف" class="fas fa-times-circle fa-2x m-1"></i>
                 </td>
             </tr>
             </tbody>

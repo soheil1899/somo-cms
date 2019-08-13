@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Article;
 use App\Article_content;
 use App\Article_group;
-use App\Article_keyword;
 use App\Articleattr;
 use App\Filemanager;
 use App\Gallery;
+use App\Http\Controllers\Permissions;
+use App\Keyword;
 use App\Tag;
 use App\Lang;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ use Intervention\Image\ImageManager;
 
 class ArticleController extends Controller
 {
+    use Permissions;
 
     // group
 
@@ -53,7 +55,7 @@ class ArticleController extends Controller
                 $keywords[$key]['article_group_id'] = $request->groupid;
                 $keywords[$key]['keyword'] = $value;
             }
-            Article_keyword::insert($keywords);
+            Keyword::insert($keywords);
 
         } else {
             $save = new Article_group();
@@ -73,22 +75,10 @@ class ArticleController extends Controller
                 $keywords[$key]['article_group_id'] = $save->id;
                 $keywords[$key]['keyword'] = $value;
             }
-            Article_keyword::insert($keywords);
+            Keyword::insert($keywords);
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // article
@@ -108,31 +98,23 @@ class ArticleController extends Controller
         $myarticlelist = $article[0]['articles'];
 
 
-
         $accessall = false;
-        $roles = auth()->user()->roles()->get();
-        $permissions = array();
-        foreach ($roles as $role){
-            array_push($permissions, $role->permissions()->get());
-        }
-        for ($i=0; $i<count($permissions); $i++){
-            for($j=0; $j<count($permissions[$i]);$j++){
-                $per = $permissions[$i][$j]['permission'];
-                if($per == 'super_article'){
-                    $accessall = true;
-                }
+        $per = $this->getpermission(auth()->user()->roles()->get());
+
+        for ($i = 0; $i < count($per); $i++) {
+            if ($per[$i] == 'super_article') {
+                $accessall = true;
             }
+
         }
 
 
-
-
-        if($accessall == false){
+        if ($accessall == false) {
             $myarticles = array();
 
-            foreach ($myarticlelist as $key=>$value){
-                if($value['user_id'] == auth()->user()->id){
-                    array_push($myarticles, $value );
+            foreach ($myarticlelist as $key => $value) {
+                if ($value['user_id'] == auth()->user()->id) {
+                    array_push($myarticles, $value);
                 }
             }
             $myarticlelist = $myarticles;
@@ -160,13 +142,13 @@ class ArticleController extends Controller
             $save = Article::where('id', $request->articleid)->first();
 
 
-            Article_keyword::where('article_id', $request->articleid)->delete();
+            Keyword::where('article_id', $request->articleid)->delete();
 
             foreach ($request->keywords as $key => $value) {
                 $keywords[$key]['article_id'] = $request->articleid;
                 $keywords[$key]['keyword'] = $value;
             }
-            Article_keyword::insert($keywords);
+            Keyword::insert($keywords);
 
         } else {
             $save = new Article();
@@ -194,23 +176,22 @@ class ArticleController extends Controller
         $save->save();
 
         if ($keywords == null) {
-            if ($request->keywords != null){
+            if ($request->keywords != null) {
                 foreach ($request->keywords as $key => $value) {
                     $keywords[$key]['article_id'] = $save->id;
                     $keywords[$key]['keyword'] = $value;
                 }
-                Article_keyword::insert($keywords);
+                Keyword::insert($keywords);
             }
         }
         if ($tags == null) {
-            if($request->tags != null) {
+            if ($request->tags != null) {
                 foreach ($request->tags as $tag) {
                     array_push($tags, $tag['id']);
                 }
                 $save->tags()->sync($tags);
             }
         }
-
 
 
         Storage::disk('media')->makeDirectory('gallery/' . $save['id']);
@@ -224,13 +205,13 @@ class ArticleController extends Controller
         $articleid = $request->articleid;
 
         $image = new ImageManager();
-        $image->make($request->image->getRealPath())->save(public_path() . '/media/article/'.$articleid.'_original.png');
-        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/'.$articleid.'_medium.png');
-        $image->make($request->image->getRealPath())->resize('300', '220')->save(public_path() . '/media/article/'.$articleid.'_large.png');
+        $image->make($request->image->getRealPath())->save(public_path() . '/media/article/' . $articleid . '_original.png');
+        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/' . $articleid . '_medium.png');
+        $image->make($request->image->getRealPath())->resize('300', '220')->save(public_path() . '/media/article/' . $articleid . '_large.png');
 
         Article::where('id', $articleid)->update(['image' => true]);
 
-        return [rand(100,999)];
+        return [rand(100, 999)];
     }
 
 
@@ -248,15 +229,15 @@ class ArticleController extends Controller
     public function savearticlepdf(Request $request)
     {
 
-        $file =$request->file('pdf');
-        $file->move(public_path() . '/media/pdfs/','pdf_'.$request->articleid. '.pdf');
+        $file = $request->file('pdf');
+        $file->move(public_path() . '/media/pdfs/', 'pdf_' . $request->articleid . '.pdf');
 
         $save = Pdf::where('article_id', $request->articleid)->first();
-        if (is_null($save)){
+        if (is_null($save)) {
             $save = new Pdf();
             $save->article_id = $request->articleid;
         }
-        $save->name = 'pdf_'.$request->articleid.'.pdf';
+        $save->name = 'pdf_' . $request->articleid . '.pdf';
         $save->save();
 
     }
@@ -264,16 +245,16 @@ class ArticleController extends Controller
     public function savearticleattr(Request $request)
     {
         $addflag = false;
-        foreach ($request->attrlist as $key=>$value){
-            if($value['title']!= null and $value['value']!=null){
+        foreach ($request->attrlist as $key => $value) {
+            if ($value['title'] != null and $value['value'] != null) {
                 $addflag = true;
             }
         }
 
-        if ($addflag == true){
+        if ($addflag == true) {
             Articleattr::where('article_id', $request->articleid)->delete();
-            foreach ($request->attrlist as $key=>$value){
-                if($value['title']!= null and $value['value']!=null){
+            foreach ($request->attrlist as $key => $value) {
+                if ($value['title'] != null and $value['value'] != null) {
                     $save = new Articleattr();
                     $save->article_id = $request->articleid;
                     $save->title = $value['title'];
@@ -284,13 +265,6 @@ class ArticleController extends Controller
             }
         }
     }
-
-
-
-
-
-
-
 
 
     // article content
@@ -450,24 +424,12 @@ class ArticleController extends Controller
         Gallery::where('id', $request->id)->delete();
 
 
-
     }
 
     public function changepublisharticle(Request $request)
     {
-        Article_content::where('id', $request->id)->update(['publish'=> $request->publish]);
+        Article_content::where('id', $request->id)->update(['publish' => $request->publish]);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     // new content
@@ -483,38 +445,6 @@ class ArticleController extends Controller
         $tags = Tag::all();
         return [$groups, $tags];
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

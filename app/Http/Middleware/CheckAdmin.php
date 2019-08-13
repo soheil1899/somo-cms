@@ -2,44 +2,42 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\Permissions;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
 class CheckAdmin
 {
+
+    use Permissions;
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
 
-            $roles = auth()->user()->roles()->get();
-            $permissions = array();
-            foreach ($roles as $role){
-                array_push($permissions, $role->permissions()->get());
-            }
-            for ($i=0; $i<count($permissions); $i++){
-                for($j=0; $j<count($permissions[$i]);$j++){
-                    $per = $permissions[$i][$j]['permission'];
-                    if($per == 'add_product' or
-                        $per == 'edit_product' or $per == 'delete_product' or
-                        $per == 'add_article' or $per == 'edit_article' or
-                        $per == 'delete_article' or $per == 'add_user' or
-                        $per == 'edit_user' or $per == 'delete_user'){
-                        return $next($request);
-                    }else{
-                        return redirect('/');
-                    }
+            $per = $this->getpermission(auth()->user()->roles()->get());
+
+            for ($i = 0; $i < count($per); $i++) {
+                if ($per[$i] == 'add_product' or
+                    $per[$i] == 'edit_product' or $per[$i] == 'delete_product' or
+                    $per[$i] == 'add_article' or $per[$i] == 'edit_article' or
+                    $per[$i] == 'delete_article' or $per[$i] == 'add_user' or
+                    $per[$i] == 'edit_user' or $per[$i] == 'delete_user') {
+                    return $next($request);
+                } else {
+                    return redirect('/');
                 }
             }
 
 
-        }else{
+        } else {
             return redirect('/');
 
         }

@@ -10,7 +10,7 @@ class Article extends Model
 
     public function keywords()
     {
-        return $this->hasMany(Article_keyword::class);
+        return $this->hasMany(Keyword::class);
     }
 
 

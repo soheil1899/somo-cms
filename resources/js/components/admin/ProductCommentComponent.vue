@@ -23,7 +23,7 @@
                 <div class="col-6 p-0 icons" style="text-align: left">
                     <i title="پاسخ" @click="answer(item.id, item.title)" class="fas fa-reply fa-lg mr-2"
                        style="color: #00c111;"></i>
-                    <i title="حذف" @click="deletecomment(item.id, item.parent_id)" class="fas fa-trash fa-lg mr-2" style="color: #EB3E37;"></i>
+                    <i title="حذف" @click="deletecomment(item.id, item.parent_id)" class="fas fa-times-circle fa-lg mr-2" style="color: #EB3E37;"></i>
                     <i title="ویرایش" @click="edit(item.id, item.title, item.comment)" class="far fa-edit fa-lg mr-2"
                        style="color: #00B2C9;"></i>
                     <i title="انتشار" v-if="item.publish" @click="changepublish(item.id, item.publish, item.answer_flag)" class="far fa-check-circle fa-lg mr-2"

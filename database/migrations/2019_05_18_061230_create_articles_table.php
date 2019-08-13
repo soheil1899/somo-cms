@@ -93,7 +93,7 @@ class CreateArticlesTable extends Migration
 
 
 
-        Schema::create('article_keywords', function (Blueprint $table) {
+        Schema::create('keywords', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('keyword')->nullable();
             $table->bigInteger('article_id')->unsigned()->nullable();
@@ -120,7 +120,7 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_keywords');
+        Schema::dropIfExists('keywords');
         Schema::dropIfExists('article_contents');
         Schema::dropIfExists('article_types');
         Schema::dropIfExists('articles');

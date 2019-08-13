@@ -35,7 +35,7 @@
                            data-toggle="modal"
                            data-target="#Modal"
                            class="fas fa-edit ml-2 fa-lg"></i>
-                        <i title="حذف" @click="deletecontent(item.id)" class="fas fa-trash ml-3 fa-lg"></i>
+                        <i title="حذف" @click="deletecontent(item.id)" class="fas fa-times-circle ml-3 fa-lg"></i>
                         <i title="برو پایین"  @click="changeorder(item.id, item.ordered, 'down')"
                            v-if="item.id != contentlist[contentlistlength-1]['id']"
                            class="fas fa-arrow-circle-down ml-1 fa-lg"></i>

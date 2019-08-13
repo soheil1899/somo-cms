@@ -40,6 +40,7 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('saveuseraccess', 'UserController@saveuseraccess')->name('saveuser.access');
         Route::get('user/{id}', 'UserController@userinfo')->name('user.info');
         Route::post('getuserinfo', 'UserController@getuserinfo')->name('getuser.info');
+        Route::post('saveuserinfo', 'UserController@saveuserinfo')->name('saveuser.info');
         Route::post('savestoreinfo', 'UserController@savestoreinfo')->name('savestore.info');
 
 

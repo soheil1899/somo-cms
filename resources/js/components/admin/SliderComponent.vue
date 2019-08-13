@@ -18,7 +18,7 @@
                     </label>
                     <i title="ویرایش" @click="editslider(slider.id, slider.images, slider.title, slider.lang_id)"
                        class="fas fa-edit ml-2 fa-lg"></i>
-                    <i title="حذف" @click="deleteslider(slider.id)" class="fas fa-trash ml-3 fa-lg"></i>
+                    <i title="حذف" @click="deleteslider(slider.id)" class="fas fa-times-circle ml-3 fa-lg"></i>
                 </div>
             </div>
             <div class="card-body">

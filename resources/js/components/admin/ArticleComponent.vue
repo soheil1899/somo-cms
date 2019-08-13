@@ -50,7 +50,8 @@
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" data-toggle="modal"
                        data-target="#Modal"
                        @click="editarticle(item.id, item.title, item.url, item.description, item.minitext, item.publish, item.reference, item.keywords, item.articlevideo)"></i>
-                    <i title="حذف" @click="deletearticle(item.id)" class="fas fa-trash fa-2x m-1"></i>
+                    <i title="حذف" @click="deletearticle(item.id)" class="fas fa-times-circle fa-2x m-1"></i>
+
                 </td>
                 <td class="pt-2">
                     <div class="row justify-content-center icons">

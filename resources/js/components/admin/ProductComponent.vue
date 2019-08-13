@@ -37,7 +37,7 @@
                     <i title="گالری تصاویر" class="far fa-images fa-2x m-1" style="color: #5BB760;" @click="showpic(item.id, item.faname, item.image, item.gallery)"></i>
                     <i title="ویژگی" class="fab fa-steam-square fa-2x m-1" style="color: #FF9201;" @click="getattrs(item.id, item.category.id, item.faname)"></i>
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" data-toggle="modal" data-target="#Modal" @click="editproduct(item.id, item.faname, item.enname, item.category, item.guarantees, item.price, item.discount, item.colors, item.brand, item.publish, item.special)"></i>
-                    <i title="حذف" class="fas fa-trash fa-2x m-1" style="color: #EB3E37;" @click="deleteproduct(item.id)"></i>
+                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" @click="deleteproduct(item.id)"></i>
                 </td>
             </tr>
             </tbody>

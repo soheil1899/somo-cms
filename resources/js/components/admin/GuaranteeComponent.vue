@@ -26,7 +26,7 @@
                 <td class="py-2">{{item.description}}</td>
                 <td class="py-1 icons">
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editguarantee(item.id, item.companyname, item.description, item.time)"   data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" class="fas fa-trash fa-2x m-1" style="color: #EB3E37;" ></i>
+                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" ></i>
 
                 </td>
             </tr>

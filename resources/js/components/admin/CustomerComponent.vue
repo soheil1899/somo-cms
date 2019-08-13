@@ -24,7 +24,7 @@
                 <td class="py-2">{{item.company_name_en}}</td>
                 <td class="py-1 icons">
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" @click="editcustomer(item.id, item.company_name, item.company_name_en, item.logo, item.address, item.description)"  data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" @click="deletecustomer(item.id)" class="fas fa-trash fa-2x m-1" ></i>
+                    <i title="حذف" @click="deletecustomer(item.id)" class="fas fa-times-circle fa-2x m-1" ></i>
                 </td>
             </tr>
             </tbody>

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Article_keyword;
 use App\Filemanager;
+use App\Keyword;
 use App\Lang;
 use App\Setting;
-use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +32,7 @@ class SettingController extends Controller
             $setting = Setting::first();
         }
 
-        $keywords = Article_keyword::where([['setting_id', $setting['id']], ['setting', true]])->get();
+        $keywords = Keyword::where([['setting_id', $setting['id']], ['setting', true]])->get();
         $keywordarray = array();
         if (count($keywords) > 0) {
             foreach ($keywords as $key => $value) {
@@ -80,7 +79,7 @@ class SettingController extends Controller
                 $newkeywords[$key]['setting'] = true;
                 $newkeywords[$key]['keyword'] = $value;
             }
-            Article_keyword::insert($newkeywords);
+            Keyword::insert($newkeywords);
         }
 
     }

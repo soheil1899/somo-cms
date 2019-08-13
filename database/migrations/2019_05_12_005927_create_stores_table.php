@@ -32,6 +32,11 @@ class CreateStoresTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
+
+
+
+
+
     }
 
     /**

@@ -68,7 +68,7 @@
     @if (Route::has('login'))
         <div class="top-right links">
             @auth
-                <a href="{{ url('/home') }}">Home</a>
+                <a href="{{ url('/dashboard') }}">Dashboard</a>
             @else
                 <a href="{{ route('login') }}">Login</a>
 
@@ -81,9 +81,7 @@
 
     <div class="content">
         <div class="title m-b-md">
-            <strong style="text-shadow: 0 0 2px">
-            SOMO CMS
-            </strong>
+            <img src="/media/cite/somologo.png" width="300px">
         </div>
     </div>
 </div>

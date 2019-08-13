@@ -32,7 +32,7 @@
                     <i title="زیر ویژگی" class="fab fa-steam fa-2x m-1" style="color: #FF9201;" @click="showsubattr(item.id, item.title)" v-if="subbutton"></i>
                     <i title="تعریف مقادیر" class="fas fa-th-list fa-2x m-1" style="color: #5BB760;" v-if="backbtn" @click="getsubvalue(item.id, item.title)"></i>
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editattr(item.id, item.title, item.description)" data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" class="fas fa-trash fa-2x m-1" v-if="backbtn" @click="deleteattr(item.id)" style="color: #EB3E37;" ></i>
+                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" v-if="backbtn" @click="deleteattr(item.id)" style="color: #EB3E37;" ></i>
 
                 </td>
             </tr>
