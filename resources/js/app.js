@@ -36,6 +36,17 @@ Vue.component('post-component', require('./components/admin/PostComponent.vue').
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 Vue.component('error', require('./components/custom/error.vue').default);
 
 

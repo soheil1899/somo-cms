@@ -13,9 +13,9 @@
                 <th scope="col" width="25%">نام محصول</th>
                 <th scope="col" width="10%">دسته بندی</th>
                 <th scope="col" width="15%">قیمت</th>
-                <th scope="col" width="10%">تخفیف</th>
+                <th scope="col" width="5%">تخفیف</th>
                 <th scope="col" width="10%">موجودی</th>
-                <th scope="col" class="p-0" width="25%">
+                <th scope="col" class="p-0" width="30%">
                     <i class="fas fa-cogs fa-2x mb-2"></i>
                 </th>
             </tr>

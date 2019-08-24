@@ -1,6 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 // Variables
 @import 'variables';
 
@@ -23,6 +22,43 @@
 table th,td{
   text-align: center;
 }
+html *{
+  font-family: Nunito;
+}
+
+//-----------------login
+.loginregisterinput {
+  top: -29px;
+  left: 0;
+  background-color: transparent !important;
+  border: none;
+  color: #eee !important;
+}
+.loginregisterinput:focus , .loginregisterinput:active{
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent !important;
+  color: #eee !important;
+}
+
+.loginregisterinput::placeholder {
+  color: #bbb;
+}
+.logintext{
+  color: #bbb;
+}
+.forgetpass:hover{
+  color: yellow;
+  text-decoration: none;
+}
+.loginregister:hover{
+  color: lawngreen;
+  text-decoration: none;
+}
+
+
+
 
 //--------------------------------------------------------dashboard
 #dashboard .list-group-item{
@@ -217,6 +253,27 @@ table th,td{
   background: linear-gradient(#eee, #fff);
 }
 
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-left: 60px solid #fff;
+  display: inline-block;
+}
+
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-right: 60px solid #fff;
+  display: inline-block;
+}
+
+body, html{
+  height: 100% !important;
+}
 
 body {
   overflow-x: hidden;
@@ -372,8 +429,12 @@ body {
 
 @font-face {
   font-family: 'IranSanse';
-  src: url('/admin/fonts/IranSanse.eot'),
-  url('/admin/fonts/IranSanse.woff') format('woff'), /* Pretty Modern Browsers */ url('/admin/fonts/IranSanse.ttf') format('truetype');/* Safari, Android, iOS */
+  src: url('/fonts/Irans/IranSanse.eot'),
+  url('/fonts/Irans/IranSanse.woff') format('woff'), /* Pretty Modern Browsers */ url('/fonts/Irans/IranSanse.ttf') format('truetype');/* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'Alegria';
+  src: url('/fonts/Alegreya_Sans/AlegreyaSans-Bold.ttf') format('truetype');/* Safari, Android, iOS */
 }
 body {
   direction: rtl;

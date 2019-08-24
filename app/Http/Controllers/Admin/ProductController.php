@@ -8,7 +8,9 @@ use App\Comment;
 use App\Filemanager;
 use App\Gallery;
 use App\Guarantee;
+use App\Http\Controllers\Permissions;
 use App\Product_subattribute;
+use App\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -18,6 +20,9 @@ use Intervention\Image\ImageManager;
 
 class ProductController extends Controller
 {
+
+    use Permissions;
+
     public function index()
     {
         return view('admin.product');
@@ -25,7 +30,22 @@ class ProductController extends Controller
 
     public function getproducts()
     {
-        $product = Product::with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
+        $getall = false;
+
+        $per = $this->getpermission(auth()->user()->roles()->get());
+        for ($i = 0; $i < count($per); $i++) {
+            if ($per[$i] == 'permission_access') {
+                $getall = true;
+            }
+        }
+
+        if ($getall){
+            $product = Product::with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
+        }else{
+            $store = Store::where('user_id', auth()->user()->id)->first();
+            $product = Product::where('store_id', $store['id'])->with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
+        }
+
 
         $categories =  Category::where('last', 1)->with('parent')->get();
         foreach ($categories as $category){
@@ -51,6 +71,10 @@ class ProductController extends Controller
             'discount' => 'numeric | between:0,70',
         ]);
 
+
+        $store = Store::where('user_id', auth()->user()->id)->first();
+
+
         if ($request->editflag != false) {
             $save = Product::where('id', $request->productid)->first();
         } else {
@@ -61,6 +85,7 @@ class ProductController extends Controller
         $save->faname = $request->product_faname;
         $save->enname = $request->product_enname;
         $save->category_id = $request->categoryid;
+        $save->store_id = $store['id'];
         $save->brand_id = $request->brand['id'];
         $save->publish = $request->publish;
         $save->special = $request->special;

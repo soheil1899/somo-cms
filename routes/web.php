@@ -49,6 +49,10 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
 
     Route::group(['middleware' => 'CheckSuperadmin'], function () {
 
+        Route::get('superadmininfo', 'AdminController@superadmininfo')->name('superadmin.info');
+
+
+
         Route::get('posts', 'PostController@index')->name('posts');
         Route::post('getpost', 'PostController@getpost')->name('get.post');
 

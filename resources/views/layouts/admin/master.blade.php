@@ -8,7 +8,6 @@
     <title>AdminPanel</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -39,6 +38,9 @@
                     </label>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="/">صفحه اصلی سایت</a>
+                        @if(auth()->user()->id == 1)
+                        <a class="dropdown-item" href="{{route('superadmin.info')}}">ریزاطلاعات شما</a>
+                        @endif
                         <a class="dropdown-item" href="{{route('changemyinfo')}}">تغییر رمز عبور</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();

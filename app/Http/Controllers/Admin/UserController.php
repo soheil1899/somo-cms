@@ -143,20 +143,24 @@ class UserController extends Controller
         $comments = Comment::where('user_id', $request->userid)->with('product')->orderBy('created_at', 'desc')->get();
 
         $user['act'] = 'user';
-        $per = $this->getpermission($user->roles()->get());
+
+        if ($request->userid == 1) {
+            $user['act'] = 'seller';
+        } else {
+            $per = $this->getpermission($user->roles()->get());
 
 
-        for ($i = 0; $i < count($per); $i++) {
+            for ($i = 0; $i < count($per); $i++) {
 
-            if ($per[$i] == 'add_product' or
-                $per[$i] == 'edit_product' or $per[$i] == 'delete_product') {
-                $user['act'] = 'seller';
-            } else if (count($per) > 0) {
-                $user['act'] = 'admin';
+                if ($per[$i] == 'add_product' or
+                    $per[$i] == 'edit_product' or $per[$i] == 'delete_product') {
+                    $user['act'] = 'seller';
+                } else if (count($per) > 0) {
+                    $user['act'] = 'admin';
+                }
+
             }
-
         }
-
         $storeinfo = null;
         if ($user['act'] == 'seller') {
             $storeinfo = Store::where('user_id', $request->userid)->first();

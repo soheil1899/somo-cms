@@ -2,6 +2,8 @@
     <div>
         <h4 class="admin-title py-3 px-4 mb-4"> کامنتهای مربوط به محصول
             {{product_faname}}
+            <a :href="'../product'" class="back-btn btn btn-dark mr-1">برگشت</a>
+
         </h4>
 
 

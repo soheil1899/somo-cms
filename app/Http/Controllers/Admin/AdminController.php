@@ -91,4 +91,16 @@ class AdminController extends Controller
     }
 
 
+    public function superadmininfo()
+    {
+        $id = 1;
+        return view('admin.userinfo', compact('id'));
+    }
+
+
+
+
+
+
+
 }
