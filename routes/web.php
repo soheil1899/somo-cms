@@ -116,6 +116,8 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('savegallery', 'ArticleController@savegallery')->name('save.gallery');
         Route::post('deletegalleryimage', 'ArticleController@deletegalleryimage')->name('delete.galleryimage');
         Route::post('changepublisharticle', 'ArticleController@changepublisharticle')->name('changepublish.article');
+        Route::post('savecontentimage', 'ArticleController@savecontentimage')->name('save.contentimage');
+
 
         // content new
         Route::get('newcontent', 'ArticleController@newcontent')->name('new.content');

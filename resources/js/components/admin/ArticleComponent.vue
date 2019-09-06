@@ -8,7 +8,7 @@
         <input type="button" @click="addarticle" class="btn btn-success my-2" data-toggle="modal"
                data-target="#Modal" value="افزودن مطلب جدید">
         <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
-        <v-select v-model="groupselect" class="select-group" :options="groups" label="name" @input="reloadPage"
+        <v-select v-model="groupselect" class="select-group mr-3" :options="groups" label="name" @input="reloadPage"
                   :clearable="false" placeholder="یکی از گروه ها را انتخاب کنید"></v-select>
 
 
@@ -102,7 +102,7 @@
 
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <v-select :multiple="true" v-model="keywords" :taggable="true" :no-drop="true"
+                                    <v-select class="mb-2" :multiple="true" v-model="keywords" :taggable="true" :no-drop="true"
                                               :clearable="false" placeholder="کلمات کلیدی" dir="rtl"></v-select>
                                     <v-select :multiple="true" v-model="articletags" :options="tags" label="tag" :clearable="false" placeholder="تگ" class="select-tag"></v-select>
                                     <textarea v-model="minitext" class="form-control mt-2" placeholder="متن کوتاه..." rows="9"></textarea>
@@ -641,5 +641,8 @@
 
 <style scoped>
 
-
+.select-group{
+    width: 250px;
+    display: inline-block;
+}
 </style>

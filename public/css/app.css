@@ -16445,7 +16445,11 @@ td {
 }
 
 html * {
-  font-family: Nunito;
+  font-family: IranSanse;
+}
+
+.fontNunito {
+  font-family: Nunito !important;
 }
 
 .loginregisterinput {

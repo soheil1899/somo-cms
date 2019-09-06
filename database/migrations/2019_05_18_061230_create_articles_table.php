@@ -71,6 +71,13 @@ class CreateArticlesTable extends Migration
                 'updated_at' => Date::now(),
             )
         );
+        DB::table('article_types')->insert(
+            array(
+                'type' => 'تصویر',
+                'created_at' => Date::now(),
+                'updated_at' => Date::now(),
+            )
+        );
 
 
 

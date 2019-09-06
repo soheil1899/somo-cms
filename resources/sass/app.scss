@@ -22,8 +22,15 @@
 table th,td{
   text-align: center;
 }
+//#adminmaster{
+//  font-family:  !important;
+//}
 html *{
-  font-family: Nunito;
+  font-family: IranSanse;
+}
+
+.fontNunito{
+  font-family: Nunito !important;
 }
 
 //-----------------login
@@ -61,6 +68,7 @@ html *{
 
 
 //--------------------------------------------------------dashboard
+
 #dashboard .list-group-item{
   background-color: transparent;
 }

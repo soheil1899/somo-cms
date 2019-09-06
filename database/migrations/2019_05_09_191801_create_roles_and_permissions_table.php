@@ -244,6 +244,7 @@ class CreateRolesAndPermissionsTable extends Migration
                 'user_id' => '1',
             )
         );
+
     }
 
     /**

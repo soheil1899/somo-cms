@@ -48,7 +48,7 @@
                     <textarea v-model="articlesource" class="form-control mt-2 mb-2 mb-lg-0" placeholder="منابع مطلب..." rows="3"></textarea>
                 </div>
                 <div class="col-12 col-lg-6">
-                    <v-select :multiple="true" v-model="articlekeys" :taggable="true" :no-drop="true"
+                    <v-select class="mb-2" :multiple="true" v-model="articlekeys" :taggable="true" :no-drop="true"
                               :clearable="false" placeholder="کلمات کلیدی" dir="ltr"></v-select>
                     <v-select :multiple="true" v-model="articletags" :options="tags" label="tag" :clearable="false" placeholder="تگ" class="select-tag"></v-select>
                     <textarea v-model="articlesubtext" class="form-control mt-2" placeholder="متن کوتاه..." rows="9"></textarea>

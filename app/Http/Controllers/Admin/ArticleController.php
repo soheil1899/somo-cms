@@ -278,24 +278,13 @@ class ArticleController extends Controller
 
     public function getarticlecontent(Request $request)
     {
-        $article = Article::where('id', $request->articleid)->with('contents.article_type')->get();
+        $article = Article::where('id', $request->articleid)->with('contents.article_type')->first();
 
-        $mycontent = array();
 
-        foreach ($article[0]['contents'] as $key => $content) {
-            array_push($mycontent, $content);
-            if ($content['article_type_id'] == 3 || $content['article_type_id'] == 4) {
-                $galleries = Gallery::where('article_content_id', $content['id'])->get();
-                $mycontent[$key]['galleries'] = $galleries;
-                if (count($galleries) == 0) {
-                    array_splice($mycontent, $key, 1);
-                }
-            }
-        }
 
         $filemanager = Filemanager::all();
 
-        return [$article, $filemanager, $mycontent];
+        return [$article, $filemanager];
 
     }
 
@@ -348,6 +337,46 @@ class ArticleController extends Controller
         $content = Article_content::where('id', $request->contentid)->first();
 
         $content->delete();
+    }
+
+
+    public function savecontentimage(Request $request)
+    {
+        $articleid = $request->articleid;
+        $contentid = $request->contentid;
+
+        $reterndata = null;
+        if ($contentid == 'null'){
+            $rand = rand(100000, 999999);
+            $reterndata = $rand;
+
+            $image = new ImageManager();
+            $image->make($request->image->getRealPath())->save(public_path() . '/media/content/' . $articleid . '_' . $rand . '_original.png');
+            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/content/' . $articleid . '_' . $rand . '_medium.png');
+
+            $lastorder = Article_content::select('ordered')->orderBy('ordered', 'desc')->first();
+
+            $save = new Article_content();
+            $save->text = $rand;
+            $save->article_id = $articleid;
+            $save->article_type_id = 3;
+            $save->ordered = $lastorder['ordered']+1;
+
+            $save->save();
+
+
+        }else{
+            $content = Article_content::where('id', $contentid)->first();
+            $reterndata = $content->text;
+
+            $image = new ImageManager();
+            $image->make($request->image->getRealPath())->save(public_path() . '/media/content/' . $articleid . '_' . $content->text . '_original.png');
+            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/content/' . $articleid . '_' . $content->text . '_medium.png');
+
+        }
+
+        return $reterndata;
+
     }
 
 

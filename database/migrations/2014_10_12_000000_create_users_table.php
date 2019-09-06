@@ -27,8 +27,8 @@ class CreateUsersTable extends Migration
 
         DB::table('users')->insert(
             array(
-                'name' => 'مدیر ارشد',
-                'email' => 'a@a.com',
+                'name' => 'پشتیبان',
+                'email' => 'soheil.a1899@gmail.com',
                 'password' => bcrypt('12345678'),
                 'created_at' => Date::now(),
                 'updated_at' => Date::now(),

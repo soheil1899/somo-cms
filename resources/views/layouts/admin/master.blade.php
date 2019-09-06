@@ -16,7 +16,7 @@
 
 
 </head>
-<body>
+<body id="adminmaster">
 
 
 <nav class="navbar navbar-expand navbar-dark bg-primary" id="admin-header"><a href="#menu-toggle" id="menu-toggle"

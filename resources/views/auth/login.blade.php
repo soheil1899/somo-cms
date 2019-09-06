@@ -134,10 +134,10 @@
 
 <div class="position-absolute" style="bottom: 5px; width: 100%">
     <div class="mx-auto logintext" dir="ltr" style="width: fit-content">
-        <small class="d-block d-sm-none">
+        <small class="d-block d-sm-none fontNunito">
         &copy; 2019 <strong>SOMO</strong> Engine. All rights reserved &nbsp;&nbsp;  | &nbsp;&nbsp;  Design by <strong>GelyGroup</strong>
         </small>
-        <div class="d-none d-sm-block">
+        <div class="d-none d-sm-block fontNunito">
         &copy; 2019 <strong>SOMO</strong> Engine. All rights reserved &nbsp;&nbsp;  | &nbsp;&nbsp;  Design by <strong>GelyGroup</strong>
         </div>
 
