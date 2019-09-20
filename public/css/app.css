@@ -16439,17 +16439,36 @@ readers do not read off random characters that represent icons */
   font-family: "Font Awesome 5 Brands";
 }
 
-table th,
-td {
-  text-align: center;
+@font-face {
+  font-family: "IranSanse";
+  src: url("/fonts/Irans/IranSanse.eot"), url("/fonts/Irans/IranSanse.woff") format("woff"), url("/fonts/Irans/IranSanse.ttf") format("truetype");
+  /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: "Alegria";
+  src: url("/fonts/Alegreya_Sans/AlegreyaSans-Bold.ttf") format("truetype");
+  /* Safari, Android, iOS */
+}
+
+html {
+  height: 100% !important;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+  overflow-x: hidden;
+  height: 100% !important;
 }
 
 html * {
   font-family: IranSanse;
 }
 
-.fontNunito {
-  font-family: Nunito !important;
+table th,
+td {
+  text-align: center;
 }
 
 .loginregisterinput {
@@ -16705,13 +16724,8 @@ html * {
   display: inline-block;
 }
 
-body,
-html {
-  height: 100% !important;
-}
-
-body {
-  overflow-x: hidden;
+.fontNunito {
+  font-family: Nunito !important;
 }
 
 #wrapper {
@@ -16841,24 +16855,6 @@ body {
   color: #7edbff !important;
   background-color: rgba(0, 190, 255, 0.4) !important;
   border-radius: 20px;
-}
-
-@font-face {
-  font-family: "IranSanse";
-  src: url("/fonts/Irans/IranSanse.eot"), url("/fonts/Irans/IranSanse.woff") format("woff"), url("/fonts/Irans/IranSanse.ttf") format("truetype");
-  /* Safari, Android, iOS */
-}
-
-@font-face {
-  font-family: "Alegria";
-  src: url("/fonts/Alegreya_Sans/AlegreyaSans-Bold.ttf") format("truetype");
-  /* Safari, Android, iOS */
-}
-
-body {
-  direction: rtl;
-  text-align: right;
-  font-family: IranSanse;
 }
 
 dd {

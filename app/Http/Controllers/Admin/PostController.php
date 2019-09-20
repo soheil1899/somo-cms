@@ -14,7 +14,7 @@ class PostController extends Controller
         return view('admin.post');
     }
 
-    public function getcomment()
+    public function getposts()
     {
         return Contactus::orderBy('id', 'desc')->get();
     }

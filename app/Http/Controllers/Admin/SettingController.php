@@ -71,7 +71,7 @@ class SettingController extends Controller
         $save->save();
 
         $newkeywords = array();
-        Article_keyword::where('setting_id', $save->id)->delete();
+        Keyword::where('setting_id', $save->id)->delete();
 
         if ($setting['keywords'] != null) {
             foreach ($setting['keywords'] as $key => $value) {

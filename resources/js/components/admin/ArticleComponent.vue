@@ -13,23 +13,25 @@
 
 
         <a :href="'../article'" class="back-btn btn btn-dark my-2 mr-1">برگشت</a>
+        <input type="button" class="back-btn btn btn-danger my-2 mr-3" @click="deletearticle" value="حذف">
 
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
                 <th scope="col" width="5%">#</th>
-                <th scope="col" width="30%">عنوان مطلب</th>
-                <th scope="col" width="10%">نویسنده</th>
-                <th scope="col" width="15%">لینک</th>
-                <th scope="col" width="5%">انتشار</th>
-                <th scope="col" class="p-0" width="30%">
+                <th scope="col">عنوان مطلب</th>
+                <th scope="col">نویسنده</th>
+                <th scope="col">لینک</th>
+                <th scope="col">انتشار</th>
+                <th scope="col" class="p-0">
                     <i class="fas fa-cogs fa-2x mb-2"></i>
                 </th>
                 <th scope="col" width="5%"></th>
+                <th scope="col" width="5%">حذف</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in this.articlelist" :key="item.id">
+            <tr v-for="(item, index) in this.articlelist" :key="item.id">
                 <th class="py-2" scope="row">{{item.id}}</th>
                 <td class="py-2">{{item.title}}</td>
                 <td class="py-2" v-if="item.user.userinfo">{{item.user.userinfo.firstname + ' '+  item.user.userinfo.lastname}}</td>
@@ -50,7 +52,7 @@
                     <i title="ویرایش" class="far fa-edit fa-2x m-1" data-toggle="modal"
                        data-target="#Modal"
                        @click="editarticle(item.id, item.title, item.url, item.description, item.minitext, item.publish, item.reference, item.keywords, item.articlevideo)"></i>
-                    <i title="حذف" @click="deletearticle(item.id)" class="fas fa-times-circle fa-2x m-1"></i>
+<!--                    <i title="حذف" @click="deletearticle(item.id)" class="fas fa-times-circle fa-2x m-1"></i>-->
 
                 </td>
                 <td class="pt-2">
@@ -63,6 +65,9 @@
                            v-if="item.id != articlelist[articlelistlength-1]['id']"
                            class="fas fa-arrow-circle-down fa-lg mt-2"></i>
                     </div>
+                </td>
+                <td>
+                    <input type="checkbox" v-model="deleteart[item.id]" class="form-check-input mx-auto">
                 </td>
             </tr>
             </tbody>
@@ -311,6 +316,7 @@
                 articlevideo: null,
 
                 attrlist: [],
+                deleteart: [],
             }
         },
         props: ['articlegroupid'],
@@ -363,7 +369,7 @@
                 for (var i=0; i<galleries.length; i++) {
                     let newfile = [];
                     newfile['id'] = galleries[i]['id'];
-                    newfile['url'] = '/media/gallery/' + id + '/gallerysmall_' + galleries[i]['image'] +'.png';
+                    newfile['url'] = '/media/article/' + id + '/gallery/gallerysmall_' + galleries[i]['image'] +'.png';
                     this.gallerylist.push(newfile);
                 }
 
@@ -391,7 +397,7 @@
                     .then(function (response) {
                         let newfile = [];
                         newfile['id'] = response.data[2];
-                        newfile['url'] = '/media/gallery/' + response.data[1] + '/gallerysmall_' + response.data[0] + '.png';
+                        newfile['url'] = '/media/article/' + response.data[1] + '/gallery/gallerysmall_' + response.data[0] + '.png';
                         that.gallerylist.push(newfile);
                     });
             },
@@ -470,7 +476,7 @@
                     })
                     .then(function (response) {
 
-                        that.articleoriginalimage = '/media/article/'+that.articleid+'_medium.png?'+ response.data[0];
+                        that.articleoriginalimage = '/media/article/'+that.articleid+'/medium.png?'+ response.data[0];
                     });
             },
 
@@ -478,7 +484,7 @@
                 this.articlename = articlename;
                 this.articleoriginalimage = null;
                 if (image == true){
-                    this.articleoriginalimage = '/media/article/'+ id +'_medium.png';
+                    this.articleoriginalimage = '/media/article/'+ id +'/medium.png';
                 }
 
                 this.articleid = id;
@@ -491,7 +497,7 @@
             deletearticle(id){
                 let that = this;
                 let data = {
-                    id: id,
+                    articles: this.deleteart,
                 };
                 axios.post('/dashboard/deletearticle', data)
                     .then(function (response) {

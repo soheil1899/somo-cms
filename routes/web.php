@@ -54,7 +54,7 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
 
 
         Route::get('posts', 'PostController@index')->name('posts');
-        Route::post('getpost', 'PostController@getpost')->name('get.post');
+        Route::post('getposts', 'PostController@getposts')->name('get.posts');
 
 
 

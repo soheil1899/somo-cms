@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('title');
-            $table->string('url');
+            $table->string('url')->unique();
             $table->text('description')->nullable();
             $table->bigInteger('lang_id')->unsigned();
             $table->timestamps();
@@ -32,7 +32,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->bigInteger('user_id')->unsigned();
             $table->boolean('image')->default(false);
-            $table->string('url')->nullable();
+            $table->string('url')->unique();
             $table->text('description')->nullable();
             $table->text('minitext')->nullable();
             $table->boolean('publish')->default(false);

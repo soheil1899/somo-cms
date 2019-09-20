@@ -25,13 +25,12 @@
                 <td class="py-2">{{item.email}}</td>
                 <td class="py-2">{{item.address}}</td>
                 <td class="py-1 icons">
-                    <i title="متن پیام" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="showmessage(item.message)"  data-toggle="modal" data-target="#Modal"></i>
+                    <i title="متن پیام" class="far fa-edit fa-2x m-1" style="color: #00B2C9;"
+                       @click="showmessage(item.message)" data-toggle="modal" data-target="#Modal"></i>
                 </td>
             </tr>
             </tbody>
         </table>
-
-
 
 
         <!-- Add & Edit Modal -->
@@ -49,7 +48,6 @@
                     </div>
 
                     <div class="modal-footer">
-
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
@@ -74,19 +72,17 @@
         },
         methods: {
 
-            showmessage(message){
-                  this.text = message;
+            showmessage(message) {
+                this.text = message;
             },
 
             reloadPage() {
                 let that = this;
-                axios.post('/dashboard/getcomment')
+                axios.post('/dashboard/getposts')
                     .then(function (response) {
                         that.commentlist = response.data;
                     });
             },
-
-
 
 
         }

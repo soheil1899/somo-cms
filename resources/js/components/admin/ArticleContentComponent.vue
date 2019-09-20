@@ -7,7 +7,9 @@
 
         <input type="button" class="btn btn-success" value="افزودن عنوان" @click="addTitle" data-toggle="modal" data-target="#Modal">
         <input type="button" class="btn btn-success" value="افزودن متن" @click="addText" data-toggle="modal" data-target="#Modal">
-        <input type="button" class="btn btn-success" value="افزودن تصویر" @click="addImage" data-toggle="modal" data-target="#Modal">
+        <input type="button" class="btn btn-success" value="افزودن تصویر" @click="browsefile3">
+        <input type="file" class="d-none" id="browse3" ref="image"
+               @change="selectimage2" accept=".jpg, .png, .jpeg">
 
 
         <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
@@ -22,9 +24,11 @@
                         {{item.article_type.type}}
                     </div>
                     <div class="col-6 icons">
-                        <i title="ویرایش" @click="editcontent(item.id, item.text, item.publish, item.article_type_id)"
+                        <i title="ویرایش" v-if="item.article_type_id != 3" @click="editcontent(item.id, item.text, item.publish, item.article_type_id)"
                            data-toggle="modal"
                            data-target="#Modal"
+                           class="fas fa-edit ml-2 fa-lg"></i>
+                        <i title="ویرایش" v-else @click="editcontent(item.id, item.text, item.publish, item.article_type_id)"
                            class="fas fa-edit ml-2 fa-lg"></i>
                         <i title="حذف" @click="deletecontent(item.id, item.article_type_id, item.text)" class="fas fa-times-circle ml-3 fa-lg"></i>
                         <i title="برو پایین"  @click="changeorder(item.id, item.ordered, 'down')"
@@ -92,26 +96,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-if="actionflag == 'image'">
-                            <div class="card">
-                                <div class="card-header row m-0 p-1 pt-2">
-                                    <div class="col-8">
-                                        تصویر مطلب
-                                    </div>
-                                    <div class="col-4 icons">
-                                        <button type="button" @click="browsefile3" class="btn btn-success btn-sm">
-                                            انتخاب تصویر
-                                        </button>
-                                    </div>
-                                    <input type="file" class="d-none" id="browse3" ref="image"
-                                           @change="selectimage2" accept=".jpg, .png, .jpeg">
-                                </div>
-                                <div class="card-body p-2">
-                                    <img :src="originalimage">
-                                </div>
-                            </div>
-                        </div>
-
 
                     </div>
 
@@ -122,7 +106,6 @@
                         <button type="button" class="btn btn-secondary"
                                 v-if="actionflag == 'title' || actionflag == 'text'" data-dismiss="modal">بستن
                         </button>
-                        <button type="button" class="btn btn-secondary" v-else @click="closegallerymodal">بستن</button>
                     </div>
                 </div>
             </div>
@@ -167,7 +150,6 @@
                 filemanagerids: [],
 
                 image: null,
-                originalimage: null,
 
 
             }
@@ -178,14 +160,12 @@
         methods: {
 
             contentimage(text){
-                return '/media/content/'+this.articleid + '_' + text +'_medium.png?123456';
-
-            },
-            closeimagemodal(){
-                //
+            var random = Math.floor(Math.random() * (9999 - 1000)) + 1000;
+            return '/media/article/'+this.articleid + '/content/' + text +'_medium.png?'+ random;
             },
             browsefile3() {
                 document.getElementById("browse3").click();
+
             },
 
             selectimage2() {
@@ -194,6 +174,7 @@
                 formData.append('image', this.$refs.image.files[0]);
                 formData.append('articleid', this.articleid);
                 formData.append('contentid', this.contentid);
+                formData.append('action', this.actionflag);
 
                 axios.post('/dashboard/savecontentimage'
                     , formData
@@ -203,25 +184,9 @@
                         }
                     })
                     .then(function (response) {
-
-                        that.originalimage = '/media/content/'+that.articleid+'_'+response.data+'_medium.png?'+ response.data;
+                        that.reloadPage();
                     });
             },
-
-            showpic(id, articlename, image){
-                this.articlename = articlename;
-                this.originalimage = null;
-                if (image == true){
-                    this.originalimage = '/media/article/'+ id +'_medium.png';
-                }
-
-                this.articleid = id;
-
-                $('#imagemodal').modal('show');
-
-
-            },
-
 
 
 
@@ -239,14 +204,6 @@
                     });
             },
 
-            closegallerymodal() {
-                $('#Modal').modal('toggle');
-                this.reloadPage();
-            },
-
-            creategalleryurl(id, image) {
-                return '/media/gallery/' + id + '/gallerysmall_' + image + '.png';
-            },
             selectImage(original) {
                 let Imagetag = '<img src="' + original + '" width="200px">';
                 this.text += Imagetag;
@@ -263,6 +220,7 @@
                 let that = this;
                 let formData = new FormData();
                 formData.append('image', this.$refs.imagetext.files[0]);
+                formData.append('articleid', this.articleid);
                 axios.post('/dashboard/savefile'
                     , formData
                     , {
@@ -273,8 +231,8 @@
                     })
                     .then(function (response) {
                         let newfile = [];
-                        newfile['small'] = '/media/filemanager/itemsmall_' + response.data + '.png';
-                        newfile['original'] = '/media/filemanager/item_' + response.data + '.png';
+                        newfile['small'] = '/media/filemanager/'+ that.articleid +'/itemsmall_' + response.data + '.png';
+                        newfile['original'] = '/media/filemanager/'+ that.articleid +'/item_' + response.data + '.png';
                         that.filemanagerids.push(newfile);
                     });
             },
@@ -326,10 +284,7 @@
                     this.actionflag = 'text';
                     this.modaltitle = 'ویرایش متن';
                 } else if (article_type_id == 3) {
-                    this.text = text;
-                    this.originalimage = '/media/content/'+this.articleid +'_'+ text +'_medium.png';
-                    this.actionflag = 'image';
-                    this.modaltitle = 'ویرایش تصویر';
+                    document.getElementById("browse3").click();
                 }
             },
 
@@ -357,6 +312,7 @@
                 });
 
             },
+
 
             deletecontent(id, type, text) {
                 let that = this;
@@ -395,16 +351,6 @@
                 this.contentid = null;
 
             },
-            addImage() {
-                this.error = [];
-                this.editflag = false;
-                this.actionflag = 'image';
-                this.modaltitle = 'افزودن تصویر جدید';
-                this.newtitle = null;
-                this.text = null;
-                this.originalimage = null;
-                this.contentid = null;
-            },
 
 
 
@@ -424,8 +370,8 @@
                         try {
                             for (var i = 0; i < response.data[1].length; i++) {
                                 let newfile = [];
-                                newfile['small'] = '/media/filemanager/itemsmall_' + response.data[1][i]['randomnum'] + '.png';
-                                newfile['original'] = '/media/filemanager/item_' + response.data[1][i]['randomnum'] + '.png';
+                                newfile['small'] = '/media/filemanager/'+ that.articleid +'/itemsmall_' + response.data[1][i]['randomnum'] + '.png';
+                                newfile['original'] = '/media/filemanager/'+ that.articleid +'/item_' + response.data[1][i]['randomnum'] + '.png';
                                 that.filemanagerids.push(newfile);
                             }
                         }catch (e) {

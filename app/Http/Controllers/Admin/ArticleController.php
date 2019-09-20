@@ -10,6 +10,7 @@ use App\Filemanager;
 use App\Gallery;
 use App\Http\Controllers\Permissions;
 use App\Keyword;
+use App\Pdf;
 use App\Tag;
 use App\Lang;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class ArticleController extends Controller
             $save = Article_group::where('id', $request->groupid)->first();
 
 
-            Article_keyword::where('article_group_id', $request->groupid)->delete();
+            Keyword::where('article_group_id', $request->groupid)->delete();
 
             foreach ($request->keywords as $key => $value) {
                 $keywords[$key]['article_group_id'] = $request->groupid;
@@ -79,6 +80,20 @@ class ArticleController extends Controller
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // article
@@ -194,7 +209,10 @@ class ArticleController extends Controller
         }
 
 
-        Storage::disk('media')->makeDirectory('gallery/' . $save['id']);
+        Storage::disk('media')->makeDirectory('article/' . $save['id']);
+        Storage::disk('media')->makeDirectory('article/' . $save['id'] . '/gallery');
+        Storage::disk('media')->makeDirectory('article/' . $save['id'] . '/pdf');
+        Storage::disk('media')->makeDirectory('article/' . $save['id'] . '/content');
 
         return $save['id'];
     }
@@ -205,9 +223,8 @@ class ArticleController extends Controller
         $articleid = $request->articleid;
 
         $image = new ImageManager();
-        $image->make($request->image->getRealPath())->save(public_path() . '/media/article/' . $articleid . '_original.png');
-        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/' . $articleid . '_medium.png');
-        $image->make($request->image->getRealPath())->resize('300', '220')->save(public_path() . '/media/article/' . $articleid . '_large.png');
+        $image->make($request->image->getRealPath())->save(public_path() . '/media/article/' . $articleid . '/original.png');
+        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/' . $articleid . '/medium.png');
 
         Article::where('id', $articleid)->update(['image' => true]);
 
@@ -221,23 +238,34 @@ class ArticleController extends Controller
         Article::where('id', $request->thisid)->update(['ordered' => $request->replaceorder]);
     }
 
-    public function deletearticle(Request $request)
+    public function deletearticle(Request $request)//////////////////////////////////////
     {
-        Article::where('id', $request->id)->delete();
+        $keys = array();
+        foreach ($request->articles as $key=>$article) {
+            if ($article == true){
+                array_push($keys, $key);
+                Storage::disk('media')->deleteDirectory('/article/' . $key);
+                Storage::disk('media')->deleteDirectory('/filemanager/' . $key);
+            }
+        }
+        Article::whereIn('id', $keys)->delete();
+
     }
+
 
     public function savearticlepdf(Request $request)
     {
-
+//        dd($request->all());
         $file = $request->file('pdf');
-        $file->move(public_path() . '/media/pdfs/', 'pdf_' . $request->articleid . '.pdf');
+        $rand = rand(1000, 9999);
+        $file->move(public_path() . '/media/article/' . $request->articleid . '/pdf/', $rand . '.pdf');
 
         $save = Pdf::where('article_id', $request->articleid)->first();
         if (is_null($save)) {
             $save = new Pdf();
             $save->article_id = $request->articleid;
         }
-        $save->name = 'pdf_' . $request->articleid . '.pdf';
+        $save->name = $rand . '.pdf';
         $save->save();
 
     }
@@ -265,6 +293,57 @@ class ArticleController extends Controller
             }
         }
     }
+    public function savegallery(Request $request)
+    {
+
+        $randomnum = rand(1000, 9999);
+        $image = new ImageManager();
+        $image->make($request->image->getRealPath())->save(public_path() . '/media/article/' . $request->articleid . '/gallery/gallery_' . $randomnum . '.png');
+        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/' . $request->articleid . '/gallery/gallerysmall_' . $randomnum . '.png');
+
+        $gallery = Gallery::create([
+            'article_id' => $request->articleid,
+            'image' => $randomnum,
+        ]);
+
+        return [$randomnum, $request->articleid, $gallery['id']];
+    }
+
+
+    public function deletegalleryimage(Request $request)
+    {
+        $gallery = Gallery::where('id', $request->id)->first();
+
+        Storage::disk('media')->delete('article/' . $request->articleid . '/gallery/gallery_' . $gallery['image'] . '.png');
+        Storage::disk('media')->delete('article/' . $request->articleid . '/gallery/gallerysmall_' . $gallery['image'] . '.png');
+
+        Gallery::where('id', $request->id)->delete();
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // article content
@@ -279,7 +358,6 @@ class ArticleController extends Controller
     public function getarticlecontent(Request $request)
     {
         $article = Article::where('id', $request->articleid)->with('contents.article_type')->first();
-
 
 
         $filemanager = Filemanager::all();
@@ -336,6 +414,10 @@ class ArticleController extends Controller
     {
         $content = Article_content::where('id', $request->contentid)->first();
 
+        if ($content['article_type_id'] == 3){
+            Storage::disk('media')->delete('article/'. $content['article_id'] . '/content/' . $content['text'] . '_medium.png');
+            Storage::disk('media')->delete('article/'. $content['article_id'] . '/content/' . $content['text'] . '_original.png');
+        }
         $content->delete();
     }
 
@@ -346,13 +428,13 @@ class ArticleController extends Controller
         $contentid = $request->contentid;
 
         $reterndata = null;
-        if ($contentid == 'null'){
+        if ($contentid == 'null') {
             $rand = rand(100000, 999999);
             $reterndata = $rand;
 
             $image = new ImageManager();
-            $image->make($request->image->getRealPath())->save(public_path() . '/media/content/' . $articleid . '_' . $rand . '_original.png');
-            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/content/' . $articleid . '_' . $rand . '_medium.png');
+            $image->make($request->image->getRealPath())->save(public_path() . '/media/article/'.$articleid.'/content/' . $rand . '_original.png');
+            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/'.$articleid.'/content/' . $rand . '_medium.png');
 
             $lastorder = Article_content::select('ordered')->orderBy('ordered', 'desc')->first();
 
@@ -360,18 +442,18 @@ class ArticleController extends Controller
             $save->text = $rand;
             $save->article_id = $articleid;
             $save->article_type_id = 3;
-            $save->ordered = $lastorder['ordered']+1;
+            $save->ordered = $lastorder['ordered'] + 1;
 
             $save->save();
 
 
-        }else{
+        } else {
             $content = Article_content::where('id', $contentid)->first();
             $reterndata = $content->text;
 
             $image = new ImageManager();
-            $image->make($request->image->getRealPath())->save(public_path() . '/media/content/' . $articleid . '_' . $content->text . '_original.png');
-            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/content/' . $articleid . '_' . $content->text . '_medium.png');
+            $image->make($request->image->getRealPath())->save(public_path() . '/media/article/'.$articleid.'/content/' . $content->text . '_original.png');
+            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/'.$articleid.'/content/' . $content->text . '_medium.png');
 
         }
 
@@ -390,8 +472,10 @@ class ArticleController extends Controller
     {
         $randomnum = rand(1000, 9999);
         $image = new ImageManager();
-        $image->make($request->image->getRealPath())->save(public_path() . '/media/filemanager/item_' . $randomnum . '.png');
-        $image->make($request->image->getRealPath())->resize('70', '70')->save(public_path() . '/media/filemanager/itemsmall_' . $randomnum . '.png');
+        Storage::disk('media')->makeDirectory('filemanager/'. $request->articleid);
+
+        $image->make($request->image->getRealPath())->save(public_path() . '/media/filemanager/'. $request->articleid .'/item_' . $randomnum . '.png');
+        $image->make($request->image->getRealPath())->resize('70', '70')->save(public_path() . '/media/filemanager/'. $request->articleid .'/itemsmall_' . $randomnum . '.png');
 
         Filemanager::insert([
             'randomnum' => $randomnum,
@@ -426,34 +510,7 @@ class ArticleController extends Controller
 //    }
 
 
-    public function savegallery(Request $request)
-    {
 
-        $randomnum = rand(1000, 9999);
-        $image = new ImageManager();
-        $image->make($request->image->getRealPath())->save(public_path() . '/media/gallery/' . $request->articleid . '/gallery_' . $randomnum . '.png');
-        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/gallery/' . $request->articleid . '/gallerysmall_' . $randomnum . '.png');
-
-        $gallery = Gallery::create([
-            'article_id' => $request->articleid,
-            'image' => $randomnum,
-        ]);
-
-        return [$randomnum, $request->articleid, $gallery['id']];
-    }
-
-
-    public function deletegalleryimage(Request $request)
-    {
-        $gallery = Gallery::where('id', $request->id)->first();
-
-        Storage::disk('media')->delete('gallery/' . $request->articleid . '/gallery_' . $gallery['image'] . '.png');
-        Storage::disk('media')->delete('gallery/' . $request->articleid . '/gallerysmall_' . $gallery['image'] . '.png');
-
-        Gallery::where('id', $request->id)->delete();
-
-
-    }
 
     public function changepublisharticle(Request $request)
     {

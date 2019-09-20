@@ -13,7 +13,7 @@
         html, body {
             background-color: #fff;
             color: #636b6f;
-            font-family:  sans-serif;
+            font-family:  Nunito;
             font-weight: 200;
             height: 100vh;
             margin: 0;
@@ -88,7 +88,9 @@
 
     <div class="content">
         <div class="title m-b-md">
-            <img src="/media/cite/somologo.png" width="300px">
+            <h4><strong>
+                    SOMO ENGINE
+                </strong></h4>
         </div>
     </div>
 </div>
