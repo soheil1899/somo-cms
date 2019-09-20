@@ -275,6 +275,8 @@
             return {
 
                 error: [],
+
+                productid: null,
                 product_faname: null,
                 product_enname: null,
                 categories: [],
@@ -318,6 +320,7 @@
                 let that = this;
                 let formData = new FormData();
                 formData.append('image', this.$refs.imagetext.files[0]);
+                formData.append('productid', this.productid);
                 axios.post('/dashboard/savefile'
                     , formData
                     , {
@@ -328,8 +331,8 @@
                     })
                     .then(function (response) {
                         let newfile = [];
-                        newfile['small'] = '/media/filemanager/itemsmall_' + response.data + '.png';
-                        newfile['original'] = '/media/filemanager/item_' + response.data + '.png';
+                        newfile['small'] = '/media/filemanager/product/'+ that.productid +'/itemsmall_' + response.data + '.png';
+                        newfile['original'] = '/media/filemanager/product/'+ that.productid +'/item_' + response.data + '.png';
                         that.filemanagerids.push(newfile);
                     });
             },
@@ -345,7 +348,7 @@
                 let that = this;
                 let formData = new FormData();
                 formData.append('image', this.$refs.image.files[0]);
-                formData.append('proid', 'null');
+                formData.append('proid', this.productid);
 
                 axios.post('/dashboard/saveproimage'
                     , formData
@@ -407,12 +410,13 @@
                     .then(function (response) {
                         window.location = 'http://127.0.0.1:8000/dashboard/addproduct';
                     });
+
             },
 
             getproductoptions() {
                 let that = this;
                 let data = {
-                    categoryid: this.category.id,
+                    categoryid: this.category['id'],
                 };
                 axios.post('/dashboard/getproductoptions', data)
                     .then(function (response) {
@@ -421,9 +425,29 @@
 
                     });
 
-
-
+                this.getfilemanager();
                 this.showcard = false;
+            },
+
+            getfilemanager(){
+                let that = this;
+                let data = {
+                    productid: this.productid,
+                };
+                axios.post('/dashboard/getfilemanager', data)
+                    .then(function (response) {
+                        try {
+                            that.filemanagerids = [];
+                            for (var i = 0; i < response.data.length; i++) {
+                                let newfile = [];
+                                newfile['small'] = '/media/filemanager/product/' + that.productid + '/itemsmall_' + response.data[i]['randomnum'] + '.png';
+                                newfile['original'] = '/media/filemanager/product/' + that.productid + '/item_' + response.data[i]['randomnum'] + '.png';
+                                that.filemanagerids.push(newfile);
+                            }
+                        }catch (e) {
+
+                        }
+                    });
             },
 
             saveproduct() {
@@ -433,7 +457,7 @@
                 if (this.category == null) {
                     categoryID = null;
                 } else {
-                    categoryID = this.category.id;
+                    categoryID = this.category['id'];
                 }
 
                 let data = {
@@ -452,6 +476,7 @@
                 };
                 axios.post('/dashboard/saveproduct', data)
                     .then(function (response) {
+                        that.productid = response.data;
                         that.getproductoptions();
                     }).catch((error) => {
                     that.error = error.response.data.errors;
@@ -474,13 +499,7 @@
                         that.brands = response.data[2];
                         that.guarantees = response.data[3];
 
-                        that.filemanagerids = [];
-                        for (var i = 0; i < response.data[4].length; i++) {
-                            let newfile = [];
-                            newfile['small'] = '/media/filemanager/itemsmall_' + response.data[4][i]['randomnum'] + '.png';
-                            newfile['original'] = '/media/filemanager/item_' + response.data[4][i]['randomnum'] + '.png';
-                            that.filemanagerids.push(newfile);
-                        }
+
                     });
             },
 

@@ -16,6 +16,8 @@ class CreateFilemanagersTable extends Migration
         Schema::create('filemanagers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('randomnum');
+            $table->bigInteger('product_id')->nullable();
+            $table->bigInteger('article_id')->nullable();
             $table->timestamps();
         });
     }

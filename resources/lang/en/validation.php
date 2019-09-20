@@ -111,7 +111,7 @@ return [
     'starts_with' => 'The :attribute must start with one of the following: :values',
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => 'The :attribute has already been taken.',
+    'unique' => ':attribute وارد شده تکراری می باشد.',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
@@ -165,6 +165,7 @@ return [
         'groupid' => 'نام گروه',
         'articletitle' => 'عنوان مطلب',
         'articlewriter' => 'نویسنده مطلب',
+        'url' => 'لینک',
     ],
 
 ];

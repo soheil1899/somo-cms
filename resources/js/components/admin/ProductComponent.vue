@@ -397,6 +397,7 @@
                 let that = this;
                 let formData = new FormData();
                 formData.append('image', this.$refs.imagetext.files[0]);
+                formData.append('productid', this.productid);
                 axios.post('/dashboard/savefile'
                     , formData
                     , {
@@ -407,17 +408,36 @@
                     })
                     .then(function (response) {
                         let newfile = [];
-                        newfile['small'] = '/media/filemanager/itemsmall_' + response.data + '.png';
-                        newfile['original'] = '/media/filemanager/item_' + response.data + '.png';
+                        newfile['small'] = '/media/filemanager/product/'+ that.productid +'/itemsmall_' + response.data + '.png';
+                        newfile['original'] = '/media/filemanager/product/'+ that.productid +'/item_' + response.data + '.png';
                         that.filemanagerids.push(newfile);
                     });
             },
 
             setnaghd(id, faname, naghd){
-                $('#naghdmodal').modal('show');
                 this.product_faname = faname;
                 this.productid = id;
                 this.text = naghd;
+                let that = this;
+                let data = {
+                    productid: this.productid,
+                };
+                axios.post('/dashboard/getfilemanager', data)
+                    .then(function (response) {
+                        try {
+                            that.filemanagerids = [];
+                            for (var i = 0; i < response.data.length; i++) {
+                                let newfile = [];
+                                newfile['small'] = '/media/filemanager/product/' + id + '/itemsmall_' + response.data[i]['randomnum'] + '.png';
+                                newfile['original'] = '/media/filemanager/product/' + id + '/item_' + response.data[i]['randomnum'] + '.png';
+                                that.filemanagerids.push(newfile);
+                            }
+                        }catch (e) {
+
+                        }
+                    });
+                $('#naghdmodal').modal('show');
+
             },
 
             savenaghd(){
@@ -677,13 +697,7 @@
                         that.brands = response.data[3];
                         that.guarantees = response.data[4];
 
-                        that.filemanagerids = [];
-                        for (var i = 0; i < response.data[5].length; i++) {
-                            let newfile = [];
-                            newfile['small'] = '/media/filemanager/itemsmall_' + response.data[5][i]['randomnum'] + '.png';
-                            newfile['original'] = '/media/filemanager/item_' + response.data[5][i]['randomnum'] + '.png';
-                            that.filemanagerids.push(newfile);
-                        }
+
                     });
             },
 

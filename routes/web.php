@@ -95,9 +95,9 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::get('article', 'ArticleController@index')->name('article.group.list');
         Route::post('getarticlegroups', 'ArticleController@getarticlegroups')->name('get.articlegroups');
         Route::post('savegroup', 'ArticleController@savegroup')->name('save.articlegroup');
+        Route::post('deletegroup', 'ArticleController@deletegroup')->name('delete.articlegroup');
         // article
         Route::get('articles/{id}', 'ArticleController@articles')->name('articles');
-        // Route::post('getarticle', 'ArticleController@getarticle')->name('get.article');
         Route::post('getarticles', 'ArticleController@getarticles')->name('get.articles');
         Route::post('savearticle', 'ArticleController@savearticle')->name('save.article');
         Route::post('savearticleimage', 'ArticleController@savearticleimage')->name('save.articleimage');
@@ -105,6 +105,7 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('deletearticle', 'ArticleController@deletearticle')->name('delete.article');
         Route::post('savearticlepdf', 'ArticleController@savearticlepdf')->name('save.articlepdf');
         Route::post('savearticleattr', 'ArticleController@savearticleattr')->name('save.articleattr');
+        Route::post('changepublisharticle', 'ArticleController@changepublisharticle')->name('changepublish.article');
 
         //content
         Route::get('articles/articles-content/{id}', 'ArticleController@articlecontent')->name('get.articlecontent');
@@ -115,8 +116,9 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('savefile', 'ArticleController@savefile')->name('save.file');
         Route::post('savegallery', 'ArticleController@savegallery')->name('save.gallery');
         Route::post('deletegalleryimage', 'ArticleController@deletegalleryimage')->name('delete.galleryimage');
-        Route::post('changepublisharticle', 'ArticleController@changepublisharticle')->name('changepublish.article');
+        Route::post('changepublishcontent', 'ArticleController@changepublishcontent')->name('changepublish.content');
         Route::post('savecontentimage', 'ArticleController@savecontentimage')->name('save.contentimage');
+        Route::post('editcol', 'ArticleController@editcol')->name('edit.col');
 
 
         // content new
@@ -181,6 +183,7 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('getprogallery', 'ProductController@getprogallery')->name('get.progallery');
         Route::post('deleteprogallery', 'ProductController@deleteprogallery')->name('delete.progallery');
         Route::post('savenaghd', 'ProductController@savenaghd')->name('save.naghd');
+        Route::post('getfilemanager', 'ProductController@getfilemanager')->name('get.filemanager');
 
 
         // comment

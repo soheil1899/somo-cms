@@ -4,25 +4,9 @@
         <h4 class="admin-title py-3 px-4">
 افزودن مطلب جدید
         </h4>
-        <div class="card" v-if="articleadd">
-            <div class="card-header row m-0 p-1 pt-2">
-                <div class="col-8">
-                    تصویر مطلب
-                </div>
-                <div class="col-4 icons">
-                    <button type="button" @click="browsefile" class="btn btn-success btn-sm">
-                        انتخاب تصویر
-                    </button>
-                </div>
-                <input type="file" class="d-none" id="browse" ref="image"
-                       @change="selectimage" accept=".jpg, .png, .jpeg">
-            </div>
-            <div class="card-body p-2">
-                <img :src="articleoriginalimage">
-            </div>
-        </div>
 
-        <div class="card mt-2" id="add-card" v-else>
+
+        <div class="card mt-2" id="add-card">
             <div class="card-header row m-0 px-3">
                 <strong>
                 اطلاعات مربوط به مطلب جدید
@@ -37,13 +21,13 @@
                 <div class="col-12 col-lg-6">
                     <v-select v-model="groupselect" :options="groups" label="name" class="select-group" :clearable="false"
                               placeholder="یکی از گروه ها را انتخاب کنید"></v-select>
-                    <input type="text" v-model="articletitle" class="form-control mt-2" placeholder="عنوان مطلب">
+                    <input type="text" v-model="articletitle" @keyup="changeurl" class="form-control mt-2" placeholder="عنوان مطلب">
                     <textarea v-model="articledescription" class="form-control mt-2" placeholder="توضیحات مربوط به مطلب..." rows="4"></textarea>
                     <div class="input-group mt-2" dir="ltr">
                         <div class="input-group-prepend">
                             <div class="input-group-text">/</div>
                         </div>
-                        <input type="url" v-model="articlelink" class="form-control" placeholder="لینک مطلب">
+                        <input type="url" v-model="articlelink" @keyup="changeurl2" class="form-control" placeholder="لینک مطلب">
                     </div>
                     <textarea v-model="articlesource" class="form-control mt-2 mb-2 mb-lg-0" placeholder="منابع مطلب..." rows="3"></textarea>
                 </div>
@@ -94,8 +78,6 @@
                 articlepublish: false,
                 mylink: null,
 
-                articleoriginalimage:null,
-                articleadd: false,
                 articleid: null,
 
             }
@@ -103,27 +85,13 @@
 
 
         methods: {
-            browsefile() {
-                document.getElementById("browse").click();
+            changeurl() {
+                this.articlelink = this.articletitle.replace(/\s+/g, '-').toLowerCase();
+            },
+            changeurl2() {
+                this.articlelink = this.articlelink.replace(/\s+/g, '-').toLowerCase();
             },
 
-            selectimage() {
-                let that = this;
-                let formData = new FormData();
-                formData.append('image', this.$refs.image.files[0]);
-                formData.append('articleid', this.articleid);
-
-                axios.post('/dashboard/savearticleimage'
-                    , formData
-                    , {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                    .then(function (response) {
-                        window.location="http://127.0.0.1:8001/dashboard/articles/articles-content/"+that.articleid;
-                    });
-            },
 
             cuntinue(){
                 let that = this;
@@ -138,7 +106,7 @@
 
                     groupid: groupid,
                     articletitle: this.articletitle,
-                    articleurl: this.articlelink,
+                    url: this.articlelink,
                     minitext: this.articlesubtext,
                     articlereference: this.articlesource,
                     description: this.articledescription,
@@ -150,11 +118,10 @@
                 axios.post('/dashboard/savearticle', data)
                     .then(function (response) {
                         that.articleid = response.data;
-                        that.articleadd = true;
+                        window.location="http://127.0.0.1:8000/dashboard/articles/articles-content/"+that.articleid;
                     }).catch((error) => {
                     that.error = error.response.data.errors;
                 });
-
             },
 
 

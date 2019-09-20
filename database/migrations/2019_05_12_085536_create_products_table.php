@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('faname');            
+            $table->string('faname');
             $table->string('enname')->nullable();
             $table->integer('price');
             $table->integer('discount')->default(0);
@@ -23,8 +23,8 @@ class CreateProductsTable extends Migration
             $table->boolean('publish')->default(false);
             $table->boolean('special')->default(false);
             $table->bigInteger('category_id')->unsigned();
-            $table->bigInteger('store_id')->unsigned();
-            $table->bigInteger('brand_id')->unsigned();
+            $table->bigInteger('store_id')->unsigned()->nullable();
+            $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->integer('tedad')->default(0);
             $table->bigInteger('sellcounter')->default(0);
             $table->bigInteger('seencounter')->default(0);

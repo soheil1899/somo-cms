@@ -53,9 +53,26 @@ html *{
 table th,td{
   text-align: center;
 }
-//#adminmaster{
-//  font-family:  !important;
-//}
+
+// fontasem
+.btn-info{
+    color: white;
+}
+.fa-edit{
+    color: #0a5ed4;
+}
+.fa-stream, .fa-clipboard-list, .fa-check-circle{
+    color: #28a343;
+}
+.fa-file-pdf, .fa-ban, .fa-times-circle{
+    color: #cf1c07;
+}
+.fa-steam{
+    color: #a126a6;
+}
+.fa-images{
+    color: #199aaa;
+}
 
 
 //-----------------login

@@ -39,25 +39,24 @@ class ProductController extends Controller
             }
         }
 
-        if ($getall){
+        if ($getall) {
             $product = Product::with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
-        }else{
+        } else {
             $store = Store::where('user_id', auth()->user()->id)->first();
             $product = Product::where('store_id', $store['id'])->with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
         }
 
 
-        $categories =  Category::where('last', 1)->with('parent')->get();
-        foreach ($categories as $category){
-            $category['parentname'] = $category['parent']['name'].' > '. $category['name'];
+        $categories = Category::where('last', 1)->with('parent')->get();
+        foreach ($categories as $category) {
+            $category['parentname'] = $category['parent']['name'] . ' > ' . $category['name'];
             unset($category['parent']);
         }
         $guarantees = Guarantee::all();
         $colors = Color::all();
         $brands = Brand::all();
-        $filemanager = Filemanager::all();
 
-        return [$product, $categories, $colors, $brands, $guarantees, $filemanager];
+        return [$product, $categories, $colors, $brands, $guarantees];
 
     }
 
@@ -110,16 +109,19 @@ class ProductController extends Controller
         }
 
 
-        if($request->editflag == false) {
+        if ($request->editflag == false) {
             Storage::disk('media')->makeDirectory('product/' . $save['id']);
             Storage::disk('media')->makeDirectory('product/' . $save['id'] . '/gallery');
         }
+
+
+        return $save->id;
     }
 
     public function deleteproduct(Request $request)
     {
         Product::where('id', $request->productid)->delete();
-        Storage::disk('media')->deleteDirectory('product/'. $request->productid);
+        Storage::disk('media')->deleteDirectory('product/' . $request->productid);
     }
 
     public function getattributes(Request $request)
@@ -138,39 +140,34 @@ class ProductController extends Controller
 
     public function saveproimage(Request $request)
     {
-        if ($request->proid == 'null'){
-            $lastproduct = Product::select('id')->orderBy('id', 'desc')->limit(1)->get();
-            $productid = $lastproduct[0]['id'];
-        }else{
-            $productid = $request->proid;
-        }
+        $productid = $request->proid;
 
         $image = new ImageManager();
-        $image->make($request->image->getRealPath())->save(public_path() . '/media/product/'.$productid.'/original.png');
-        $image->make($request->image->getRealPath())->resize('60', '60')->save(public_path() . '/media/product/'.$productid.'/small.png');
-        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/product/'.$productid.'/medium.png');
-        $image->make($request->image->getRealPath())->resize('200', '200')->save(public_path() . '/media/product/'.$productid.'/large.png');
+        $image->make($request->image->getRealPath())->save(public_path() . '/media/product/' . $productid . '/original.png');
+        $image->make($request->image->getRealPath())->resize('60', '60')->save(public_path() . '/media/product/' . $productid . '/small.png');
+        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/product/' . $productid . '/medium.png');
+        $image->make($request->image->getRealPath())->resize('200', '200')->save(public_path() . '/media/product/' . $productid . '/large.png');
 
         Product::where('id', $productid)->update(['image' => true]);
 
-        return [rand(100,999), $productid];
+        return [rand(100, 999), $productid];
     }
 
 
     public function saveprogallery(Request $request)
     {
 
-        if ($request->proid == 'null'){
+        if ($request->proid == 'null') {
             $lastproduct = Product::select('id')->orderBy('id', 'desc')->limit(1)->get();
             $productid = $lastproduct[0]['id'];
-        }else{
+        } else {
             $productid = $request->proid;
         }
-        $imagename = rand(10000,99999);
+        $imagename = rand(10000, 99999);
 
         $image = new ImageManager();
-        $image->make($request->image->getRealPath())->save(public_path() . '/media/product/'.$productid.'/gallery/original_'. $imagename .'.png');
-        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() .'/media/product/'.$productid. '/gallery/small_'. $imagename .'.png');
+        $image->make($request->image->getRealPath())->save(public_path() . '/media/product/' . $productid . '/gallery/original_' . $imagename . '.png');
+        $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/product/' . $productid . '/gallery/small_' . $imagename . '.png');
 
         $newimage = Gallery::create([
             'product_id' => $productid,
@@ -190,8 +187,8 @@ class ProductController extends Controller
     {
         $gallery = Gallery::where('id', $request->galleryid)->first();
 
-        Storage::disk('media')->delete('product/'. $gallery->product_id . '/gallery/original_'. $gallery->image . '.png');
-        Storage::disk('media')->delete('product/'. $gallery->product_id . '/gallery/small_'. $gallery->image . '.png');
+        Storage::disk('media')->delete('product/' . $gallery->product_id . '/gallery/original_' . $gallery->image . '.png');
+        Storage::disk('media')->delete('product/' . $gallery->product_id . '/gallery/small_' . $gallery->image . '.png');
 
         $gallery->delete();
 
@@ -209,18 +206,18 @@ class ProductController extends Controller
         return view('admin.addproduct');
     }
 
-    public function getproductinfo(){
-        $categories =  Category::where('last', 1)->with('parent')->get();
-        foreach ($categories as $category){
-            $category['parentname'] = $category['parent']['name'].' > '. $category['name'];
+    public function getproductinfo()
+    {
+        $categories = Category::where('last', 1)->with('parent')->get();
+        foreach ($categories as $category) {
+            $category['parentname'] = $category['parent']['name'] . ' > ' . $category['name'];
             unset($category['parent']);
         }
         $guarantees = Guarantee::all();
         $colors = Color::all();
         $brands = Brand::all();
-        $filemanager = Filemanager::all();
 
-        return [$categories, $colors, $brands, $guarantees, $filemanager];
+        return [$categories, $colors, $brands, $guarantees];
     }
 
     public function getproductoptions(Request $request)
@@ -243,7 +240,7 @@ class ProductController extends Controller
     {
         $values = $myvalues;
         for ($i = 0; $i < count($myvalues); $i++) {
-            if(isset($values[$i]['id'])) {
+            if (isset($values[$i]['id'])) {
                 unset($values[$i]['id']);
             }
             if ($myvalues[$i] == null) {
@@ -253,12 +250,12 @@ class ProductController extends Controller
 
         $sortedvalues = array();
         $counter = 0;
-        foreach ($values as $key=>$item) {
+        foreach ($values as $key => $item) {
             $sortedvalues[$counter]['product_id'] = $productid;
-            if(isset($item['subattribute_id'])){
+            if (isset($item['subattribute_id'])) {
                 $sortedvalues[$counter]['subattribute_id'] = $item['subattribute_id'];
                 $sortedvalues[$counter]['value'] = $item['value'];
-            }else{
+            } else {
                 $sortedvalues[$counter]['subattribute_id'] = $key;
                 $sortedvalues[$counter]['value'] = $item;
             }
@@ -271,13 +268,6 @@ class ProductController extends Controller
             Product_subattribute::insert($sortedvalues);
         }
     }
-
-
-
-
-
-
-
 
 
     //   comment
@@ -293,10 +283,10 @@ class ProductController extends Controller
 
         $basecomment = array();
         $childcomment = array();
-        foreach ($procomments[0]['comments'] as $comment){
-            if($comment['parent_id'] == 0){
+        foreach ($procomments[0]['comments'] as $comment) {
+            if ($comment['parent_id'] == 0) {
                 array_push($basecomment, $comment);
-            }else{
+            } else {
                 array_push($childcomment, $comment);
             }
         }
@@ -310,7 +300,7 @@ class ProductController extends Controller
 
     public function savecomment(Request $request)
     {
-        if ($request->answeredit == 'answer'){
+        if ($request->answeredit == 'answer') {
 
             Comment::where('id', $request->commentid)->update(['answer_flag' => true]);
             Comment::create([
@@ -320,8 +310,8 @@ class ProductController extends Controller
                 'user_id' => auth()->user()->id,
                 'product_id' => $request->productid,
             ]);
-        }else{
-            Comment::where('id', $request->commentid)->update(['title' => $request->title , 'comment' => $request->text]);
+        } else {
+            Comment::where('id', $request->commentid)->update(['title' => $request->title, 'comment' => $request->text]);
         }
     }
 
@@ -331,19 +321,19 @@ class ProductController extends Controller
 
         $childs = Comment::where('parent_id', $request->parentid)->get();
 
-        if (count($childs) == 0){
+        if (count($childs) == 0) {
             Comment::where('id', $request->parentid)->update(['answer_flag' => false]);
         }
     }
 
     public function changepublish(Request $request)
     {
-        if($request->publish == true){
+        if ($request->publish == true) {
             Comment::where('id', $request->commentid)->update(['publish' => false]);
-            if ($request->answerflag == true){
+            if ($request->answerflag == true) {
                 Comment::where('parent_id', $request->commentid)->update(['publish' => false]);
             }
-        }else{
+        } else {
             Comment::where('id', $request->commentid)->update(['publish' => true]);
         }
     }
@@ -361,10 +351,10 @@ class ProductController extends Controller
 
         $basecomment = array();
         $childcomment = array();
-        foreach ($comments as $comment){
-            if($comment['parent_id'] == 0){
+        foreach ($comments as $comment) {
+            if ($comment['parent_id'] == 0) {
                 array_push($basecomment, $comment);
-            }else{
+            } else {
                 array_push($childcomment, $comment);
             }
         }
@@ -375,21 +365,14 @@ class ProductController extends Controller
         return [$basecomment, $childcomment];
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public function getfilemanager(Request $request)
+    {
+        if (isset($request->productid)) {
+            return Filemanager::where('product_id', $request->productid)->get();
+        } else {
+            return Filemanager::where('article_id', $request->articleid)->get();
+        }
+    }
 
 
 }

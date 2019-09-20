@@ -5,15 +5,15 @@
             {{groupname}}
         </h4>
 
-        <input type="button" @click="addarticle" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="addarticle" class="btn btn-success btn-sm my-2" data-toggle="modal"
                data-target="#Modal" value="افزودن مطلب جدید">
-        <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
+        <input type="button" @click="reloadPage" class="btn btn-info btn-sm my-2 mr-1" value="بازخوانی">
         <v-select v-model="groupselect" class="select-group mr-3" :options="groups" label="name" @input="reloadPage"
                   :clearable="false" placeholder="یکی از گروه ها را انتخاب کنید"></v-select>
 
 
-        <a :href="'../article'" class="back-btn btn btn-dark my-2 mr-1">برگشت</a>
-        <input type="button" class="back-btn btn btn-danger my-2 mr-3" @click="deletearticle" value="حذف">
+        <a :href="'../article'" class="back-btn btn btn-sm btn-dark my-2 mr-1">برگشت</a>
+        <input type="button" class="back-btn btn btn-sm btn-danger my-2 mr-3" @click="deletearticle" value="حذف">
 
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
@@ -26,36 +26,47 @@
                 <th scope="col" class="p-0">
                     <i class="fas fa-cogs fa-2x mb-2"></i>
                 </th>
+                <th scope="col">محتوی</th>
                 <th scope="col" width="5%"></th>
                 <th scope="col" width="5%">حذف</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(item, index) in this.articlelist" :key="item.id">
-                <th class="py-2" scope="row">{{item.id}}</th>
+                <th class="py-2" scope="row">{{index+1}}</th>
                 <td class="py-2">{{item.title}}</td>
                 <td class="py-2" v-if="item.user.userinfo">{{item.user.userinfo.firstname + ' '+  item.user.userinfo.lastname}}</td>
                 <td class="py-2" v-else>{{item.user.name}}</td>
                 <td class="py-2" dir="ltr">{{item.url}}</td>
-                <td class="py-2" v-if="item.publish">بله</td>
-                <td class="py-2" v-else>خیر</td>
+
+                <td class="py-1 icons" v-if="item.publish">
+                    <i class="far fa-check-circle fa-lg pointer mt-2" title="انتشار"
+                       @click="changepublish(item.id ,false)"></i>
+                </td>
+                <td class="py-1 icons" v-else>
+                    <i class="fas fa-ban fa-lg pointer mt-2" title="عدم انتشار"
+                       @click="changepublish(item.id, true)"></i>
+                </td>
+
                 <td class="py-1 icons">
-                    <i title="ویژگی ها" class="fab fa-steam fa-2x m-1" @click="editattr(item.id, item.title, item.attributes)"></i>
-                    <i title="گالری تصاویر" class="far fa-images fa-2x m-1" @click="addGallery(item.id, item.title, item.galleries)"></i>
+                    <i title="ویژگی ها" class="fab fa-steam fa-lg mx-1 mt-2" @click="editattr(item.id, item.title, item.attributes)"></i>
+                    <i title="گالری تصاویر" class="far fa-images fa-lg mx-1 mt-2" @click="addGallery(item.id, item.title, item.galleries)"></i>
 
-                    <i title="فایل pdf" class="far fa-file-pdf fa-2x m-1" @click="browsepdf(item.id)"></i>
+                    <i title="فایل pdf" class="far fa-file-pdf fa-lg mx-1 mt-2" @click="browsepdf(item.id)"></i>
 
-                    <i title="تصویر مطلب" class="fas fa-camera fa-2x m-1" @click="showpic(item.id, item.title, item.image)"></i>
-                    <a :href="'articles-content/'+item.id">
-                        <i title="محتوی" class="fas fa-clipboard-list fa-2x m-1"></i>
-                    </a>
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" data-toggle="modal"
+                    <i title="تصویر مطلب" class="fas fa-camera fa-lg mx-1 mt-2" @click="showpic(item.id, item.title, item.image)"></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mx-1 mt-2" data-toggle="modal"
                        data-target="#Modal"
                        @click="editarticle(item.id, item.title, item.url, item.description, item.minitext, item.publish, item.reference, item.keywords, item.articlevideo)"></i>
-<!--                    <i title="حذف" @click="deletearticle(item.id)" class="fas fa-times-circle fa-2x m-1"></i>-->
+<!--                    <i title="حذف" @click="deletearticle(item.id)" class="fas fa-times-circle fa-lg mx-1 mt-2"></i>-->
 
                 </td>
-                <td class="pt-2">
+                <td class="py-1 icons">
+                    <a :href="'articles-content/'+item.id">
+                        <i title="محتوی" class="fas fa-clipboard-list fa-lg mx-1 mt-2"></i>
+                    </a>
+                </td>
+                <td class="py-1 icons">
                     <div class="row justify-content-center icons">
                         <i title="برو بالا" @click="changeorder(item.id, item.ordered, 'up')"
                            v-if="item.id != articlelist[0]['id']"
@@ -94,13 +105,13 @@
                         <form>
                             <div class="row">
                                 <div class="col-12 col-lg-6">
-                                    <input type="text" v-model="articletitle" class="form-control mt-2" placeholder="عنوان مطلب">
+                                    <input type="text" v-model="articletitle" @keyup="changeurl" class="form-control mt-2" placeholder="عنوان مطلب">
                                     <textarea v-model="description" class="form-control mt-2" placeholder="توضیحات مربوط به مطلب..." rows="4"></textarea>
                                     <div class="input-group mt-2" dir="ltr">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">/</div>
                                         </div>
-                                        <input type="url" v-model="articleurl" class="form-control" placeholder="لینک مطلب">
+                                        <input type="url" v-model="articleurl" @keyup="changeurl2" class="form-control" placeholder="لینک مطلب">
                                     </div>
                                     <textarea v-model="articlereference" class="form-control mt-2 mb-2 mb-lg-0" placeholder="منابع مطلب..." rows="3"></textarea>
                                     <input type="text" v-model="articlevideo" class="form-control mt-2" placeholder="لینک ویدئو آپارات">
@@ -322,7 +333,24 @@
         props: ['articlegroupid'],
 
         methods: {
+            changepublish(id, changeto) {
+                let that = this;
+                let data = {
+                    id: id,
+                    publish: changeto,
+                };
 
+                axios.post('/dashboard/changepublisharticle', data)
+                    .then(function (response) {
+                        that.reloadPage();
+                    });
+            },
+            changeurl() {
+                this.articleurl = this.articletitle.replace(/\s+/g, '-').toLowerCase();
+            },
+            changeurl2() {
+                this.articleurl = this.articleurl.replace(/\s+/g, '-').toLowerCase();
+            },
             savesubattrvalue() {
                 let that = this;
                 let data = {
@@ -614,7 +642,7 @@
                     articleid: this.articleid,
                     groupid: this.groupid,
                     articletitle: this.articletitle,
-                    articleurl: this.articleurl,
+                    url: this.articleurl,
                     minitext: this.minitext,
                     articlereference: this.articlereference,
                     description: this.description,

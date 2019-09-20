@@ -32,16 +32,23 @@ class ArticleController extends Controller
     public function getarticlegroups()
     {
         $langs = Lang::all();
-        $articlegroups = Article_group::with('keywords', 'lang')->get();
+        $articlegroups = Article_group::with('articles', 'keywords', 'lang')->get();
         return [$langs, $articlegroups];
     }
 
     public function savegroup(Request $request)
     {
+        if ($request->editflag != false) {
+            if ($request->groupname != null and $request->grouptitle != null) {
+                if ($request->url != null) {
+                    Article_group::where('id', $request->groupid)->update(['url' => '']);
+                }
+            }
+        }
         $this->validate($request, [
             'groupname' => 'required',
             'grouptitle' => 'required',
-            'groupurl' => 'required',
+            'url' => 'required | unique:article_groups',
         ]);
 
         $keywords = array();
@@ -66,7 +73,7 @@ class ArticleController extends Controller
         $save->name = $request->groupname;
         $save->title = $request->grouptitle;
         $save->lang_id = $request->lang['id'];
-        $save->url = $request->groupurl;
+        $save->url = $request->url;
         $save->description = $request->description;
 
         $save->save();
@@ -81,19 +88,16 @@ class ArticleController extends Controller
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public function deletegroup(Request $request)
+    {
+        $keys = array();
+        foreach ($request->groups as $key => $group) {
+            if ($group == true) {
+                array_push($keys, $key);
+            }
+        }
+        Article_group::whereIn('id', $keys)->delete();
+    }
 
 
     // article
@@ -143,11 +147,18 @@ class ArticleController extends Controller
 
     public function savearticle(Request $request)
     {
-
+        if ($request->editflag != false) {
+            if ($request->groupid != null and $request->articletitle != null) {
+                if ($request->url != null) {
+                    Article::where('id', $request->articleid)->update(['url' => '']);
+                }
+            }
+        }
 
         $this->validate($request, [
             'groupid' => 'required',
             'articletitle' => 'required',
+            'url' => 'required | unique:articles',
         ]);
 
         $keywords = array();
@@ -172,7 +183,7 @@ class ArticleController extends Controller
 
         $save->title = $request->articletitle;
         $save->user_id = auth()->user()->id;
-        $save->url = $request->articleurl;
+        $save->url = $request->url;
         $save->minitext = $request->minitext;
         $save->reference = $request->articlereference;
         $save->description = $request->description;
@@ -241,8 +252,8 @@ class ArticleController extends Controller
     public function deletearticle(Request $request)//////////////////////////////////////
     {
         $keys = array();
-        foreach ($request->articles as $key=>$article) {
-            if ($article == true){
+        foreach ($request->articles as $key => $article) {
+            if ($article == true) {
                 array_push($keys, $key);
                 Storage::disk('media')->deleteDirectory('/article/' . $key);
                 Storage::disk('media')->deleteDirectory('/filemanager/' . $key);
@@ -293,6 +304,7 @@ class ArticleController extends Controller
             }
         }
     }
+
     public function savegallery(Request $request)
     {
 
@@ -318,16 +330,12 @@ class ArticleController extends Controller
         Storage::disk('media')->delete('article/' . $request->articleid . '/gallery/gallerysmall_' . $gallery['image'] . '.png');
 
         Gallery::where('id', $request->id)->delete();
-
-
     }
 
-
-
-
-
-
-
+    public function changepublisharticle(Request $request)
+    {
+        Article::where('id', $request->id)->update(['publish' => $request->publish]);
+    }
 
 
 
@@ -359,10 +367,7 @@ class ArticleController extends Controller
     {
         $article = Article::where('id', $request->articleid)->with('contents.article_type')->first();
 
-
-        $filemanager = Filemanager::all();
-
-        return [$article, $filemanager];
+        return $article;
 
     }
 
@@ -414,9 +419,9 @@ class ArticleController extends Controller
     {
         $content = Article_content::where('id', $request->contentid)->first();
 
-        if ($content['article_type_id'] == 3){
-            Storage::disk('media')->delete('article/'. $content['article_id'] . '/content/' . $content['text'] . '_medium.png');
-            Storage::disk('media')->delete('article/'. $content['article_id'] . '/content/' . $content['text'] . '_original.png');
+        if ($content['article_type_id'] == 3) {
+            Storage::disk('media')->delete('article/' . $content['article_id'] . '/content/' . $content['text'] . '_medium.png');
+            Storage::disk('media')->delete('article/' . $content['article_id'] . '/content/' . $content['text'] . '_original.png');
         }
         $content->delete();
     }
@@ -433,8 +438,8 @@ class ArticleController extends Controller
             $reterndata = $rand;
 
             $image = new ImageManager();
-            $image->make($request->image->getRealPath())->save(public_path() . '/media/article/'.$articleid.'/content/' . $rand . '_original.png');
-            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/'.$articleid.'/content/' . $rand . '_medium.png');
+            $image->make($request->image->getRealPath())->save(public_path() . '/media/article/' . $articleid . '/content/' . $rand . '_original.png');
+            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/' . $articleid . '/content/' . $rand . '_medium.png');
 
             $lastorder = Article_content::select('ordered')->orderBy('ordered', 'desc')->first();
 
@@ -452,8 +457,8 @@ class ArticleController extends Controller
             $reterndata = $content->text;
 
             $image = new ImageManager();
-            $image->make($request->image->getRealPath())->save(public_path() . '/media/article/'.$articleid.'/content/' . $content->text . '_original.png');
-            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/'.$articleid.'/content/' . $content->text . '_medium.png');
+            $image->make($request->image->getRealPath())->save(public_path() . '/media/article/' . $articleid . '/content/' . $content->text . '_original.png');
+            $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() . '/media/article/' . $articleid . '/content/' . $content->text . '_medium.png');
 
         }
 
@@ -472,50 +477,45 @@ class ArticleController extends Controller
     {
         $randomnum = rand(1000, 9999);
         $image = new ImageManager();
-        Storage::disk('media')->makeDirectory('filemanager/'. $request->articleid);
+        if (isset($request->articleid)){
+            $path = 'filemanager/article/';
+            $newfolder = $request->articleid;
+        }else{
+            $path = 'filemanager/product/';
+            $newfolder = $request->productid;
+        }
+        Storage::disk('media')->makeDirectory($path . $newfolder);
 
-        $image->make($request->image->getRealPath())->save(public_path() . '/media/filemanager/'. $request->articleid .'/item_' . $randomnum . '.png');
-        $image->make($request->image->getRealPath())->resize('70', '70')->save(public_path() . '/media/filemanager/'. $request->articleid .'/itemsmall_' . $randomnum . '.png');
+        $image->make($request->image->getRealPath())->save(public_path() . '/media/'. $path . $newfolder . '/item_' . $randomnum . '.png');
+        $image->make($request->image->getRealPath())->resize('70', '70')->save(public_path() . '/media/'. $path . $newfolder . '/itemsmall_' . $randomnum . '.png');
 
-        Filemanager::insert([
-            'randomnum' => $randomnum,
-        ]);
+        $save = new Filemanager();
+        $save->randomnum = $randomnum;
+        if (isset($request->articleid)){
+            $save->article_id = $request->articleid;
+        }else{
+            $save->product_id = $request->productid;
+        }
+        $save->save();
 
         return $randomnum;
     }
 
 
-//    public function newgallery(Request $request)
-//    {
-//        $deleteids = array();
-//        $contents = Article_content::where([['article_id', $request->articleid], ['article_type_id', '3']])->with('galleries')->get();
-//        foreach ($contents as $content) {
-//            if (count($content['galleries']) == 0) {
-//                array_push($deleteids, $content['id']);
-//                Storage::disk('media')->deleteDirectory('gallery/' . $content['id']);
-//            }
-//        }
-//        Article_content::whereIn('id', $deleteids)->delete();
-//
-//
-//        $lastorder = Article_content::select('order')->orderBy('order', 'desc')->first();
-//
-//        $newgallery = Article_content::create([
-//            'order' => $lastorder['order'] + 1,
-//            'article_id' => $request->articleid,
-//            'article_type_id' => 3,
-//        ]);
-//
-//        Storage::disk('media')->makeDirectory('gallery/' . $newgallery['id']);
-//    }
-
-
-
-
-    public function changepublisharticle(Request $request)
+    public function changepublishcontent(Request $request)
     {
         Article_content::where('id', $request->id)->update(['publish' => $request->publish]);
     }
+
+
+
+
+
+
+
+
+
+
 
 
     // new content
@@ -530,6 +530,11 @@ class ArticleController extends Controller
         $groups = Article_group::all();
         $tags = Tag::all();
         return [$groups, $tags];
+    }
+
+    public function editcol(Request $request)
+    {
+        Article_content::where('id', $request->id)->update(['col' => $request->col]);
     }
 
 

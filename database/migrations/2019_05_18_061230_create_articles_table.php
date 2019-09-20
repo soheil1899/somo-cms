@@ -86,8 +86,9 @@ class CreateArticlesTable extends Migration
             $table->bigIncrements('id');
             $table->text('text')->nullable();
             $table->integer('ordered')->default(0);
-            $table->boolean('publish')->default(false);
+            $table->boolean('publish')->default(true);
             $table->bigInteger('article_id')->unsigned();
+            $table->integer('col')->default(1);
             $table->bigInteger('article_type_id')->unsigned();
             $table->timestamps();
 

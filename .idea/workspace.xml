@@ -2,35 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ee60588-2111-4862-9b2c-c805617f8039" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Article_group.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Article_group.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ArticleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ArticleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/SettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/SettingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_12_085536_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_12_085536_create_products_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_18_061230_create_articles_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_18_061230_create_articles_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_24_111823_create_filemanagers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_24_111823_create_filemanagers_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/cite/catalog/catalog_en.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/cite/catalog/catalog_fa.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/cite/logo/en_logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/cite/logo/fa_logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/cite/somologo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/content/1_295101_medium.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/content/1_295101_original.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/filemanager/item_7261.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/filemanager/itemsmall_7261.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/slider/1/original_81145.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/slider/1/original_96966.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/slider/1/small_81145.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/slider/1/small_96966.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/slider/2/original_73168.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/slider/2/small_73168.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/content/486286_medium.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/content/486286_original.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/gallery/gallery_7600.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/gallery/gallery_9276.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/gallery/gallerysmall_7600.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/gallery/gallerysmall_9276.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/medium.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/original.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/article/6/pdf/5024.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/filemanager/6/item_3596.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/filemanager/6/item_9565.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/filemanager/6/itemsmall_3596.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/media/filemanager/6/itemsmall_9565.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/AddProductComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/AddProductComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ArticleComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/PostComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/PostComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentNewComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentNewComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleGroupComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ArticleGroupComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ProductComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ProductComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/validation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -296,7 +297,8 @@
       <workItem from="1568441726194" duration="462000" />
       <workItem from="1568811198586" duration="611000" />
       <workItem from="1568868342907" duration="20331000" />
-      <workItem from="1568963114766" duration="778000" />
+      <workItem from="1568963114766" duration="10627000" />
+      <workItem from="1568987592085" duration="6023000" />
     </task>
     <servers />
   </component>
