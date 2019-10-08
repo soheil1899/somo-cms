@@ -1,7 +1,8 @@
 <template>
     <div>
         <h4 class="admin-title py-3 px-4"> مدیریت اسلایدر </h4>
-        <input type="button" class="btn btn-success my-2" @click="addslider" data-toggle="modal" data-target="#addModal" value="افزودن اسلایدر جدید">
+        <input type="button" class="btn btn-success btn-sm my-2 mr-1" @click="addslider" data-toggle="modal" data-target="#addModal" value="افزودن اسلایدر جدید">
+        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
 
 
         <div class="card mt-2" v-for="slider in sliderlist" :key="slider.id" >
@@ -72,7 +73,7 @@
                                     تصاویر مربوط به اسلایدر: {{slidertitle}}
                                 </div>
                                 <div class="col-4 icons">
-                                    <button type="button" @click="browsefile" class="btn btn-success btn-sm">افزودن
+                                    <button type="button" @click="browsefile" class="btn btn-success btn-sm px-4">افزودن
                                         تصویر
                                     </button>
                                 </div>
@@ -93,7 +94,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" @click="closeslidermodal">ذخیره</button>
+                        <button type="button" class="btn btn-success btn-sm px-4" @click="closeslidermodal">ذخیره</button>
                     </div>
                 </div>
             </div>
@@ -126,8 +127,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="saveimagedetails" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="saveimagedetails" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
@@ -312,9 +313,6 @@
                 this.langselect['id'] = 1;
                 this.langselect['title'] = 'فارسی';
                 this.langselect['lang'] = 'fa';
-
-                this.langselect['id'] = null;
-                this.langselect['lang'] = null;
 
             },
 

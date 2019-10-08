@@ -7,7 +7,7 @@
                data-target="#Modal" value="افزودن گروه جدید">
         <input type="button" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
 
-        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">برگشت</a>
+        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
         <input type="button" class="back-btn btn btn-danger btn-sm my-2 mr-3" @click="deletearticle" value="حذف">
 
 
@@ -42,7 +42,7 @@
                        @click="editgroup(item.id, item.name, item.title, item.url, item.description, item.keywords, item.lang)"
                        data-toggle="modal" data-target="#Modal"></i>
                 </td>
-                <td class="py-1">
+                <td class="py-1 text-center">
                     <input v-if="item.articles.length == 0" type="checkbox" v-model="deleteart[item.id]" class="form-check-input mx-auto">
                     <small v-else>
                         شامل مطلب
@@ -145,7 +145,7 @@
         },
 
         methods: {
-            deletearticle(id){
+            deletearticle(){
                 let that = this;
                 let data = {
                     groups: this.deleteart,

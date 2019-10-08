@@ -18,6 +18,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 
+
 class ArticleController extends Controller
 {
     use Permissions;
@@ -224,6 +225,7 @@ class ArticleController extends Controller
         Storage::disk('media')->makeDirectory('article/' . $save['id'] . '/gallery');
         Storage::disk('media')->makeDirectory('article/' . $save['id'] . '/pdf');
         Storage::disk('media')->makeDirectory('article/' . $save['id'] . '/content');
+        Storage::disk('media')->makeDirectory('article/' . $save['id'] . '/video');
 
         return $save['id'];
     }
@@ -256,7 +258,7 @@ class ArticleController extends Controller
             if ($article == true) {
                 array_push($keys, $key);
                 Storage::disk('media')->deleteDirectory('/article/' . $key);
-                Storage::disk('media')->deleteDirectory('/filemanager/' . $key);
+                Storage::disk('media')->deleteDirectory('/filemanager/article/' . $key);
             }
         }
         Article::whereIn('id', $keys)->delete();
@@ -336,6 +338,16 @@ class ArticleController extends Controller
     {
         Article::where('id', $request->id)->update(['publish' => $request->publish]);
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -506,6 +518,33 @@ class ArticleController extends Controller
     {
         Article_content::where('id', $request->id)->update(['publish' => $request->publish]);
     }
+
+    public function deletefilemanager(Request $request)
+    {
+        $path = explode('/', $request->original);
+        $folder = $path[count($path)-2];
+        $filename = substr($path[count($path)-1],5, 4);
+
+        if ($request->flag == 'article') {
+            Filemanager::where([['article_id', $folder], ['randomnum', $filename]])->delete();
+            Storage::disk('media')->delete('filemanager/article/'. $folder . '/item_' . $filename . '.png');
+            Storage::disk('media')->delete('filemanager/article/'. $folder . '/itemsmall_' . $filename . '.png');
+        }else{
+            Filemanager::where([['product_id', $folder], ['randomnum', $filename]])->delete();
+            Storage::disk('media')->delete('filemanager/product/'. $folder . '/item_' . $filename . '.png');
+            Storage::disk('media')->delete('filemanager/product/'. $folder . '/itemsmall_' . $filename . '.png');
+        }
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -3,19 +3,26 @@
     <div>
         <h4 class="admin-title py-3 px-4"> مدیریت دسته ها </h4>
 
-        <input type="button" @click="addcategory" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="addcategory" class="btn btn-success btn-sm my-2" data-toggle="modal"
                data-target="#Modal" value="افزودن دسته جدید">
-        <input type="button" @click="getsubcategorys(parentid)" class="btn btn-dark my-2 mr-1" value="بازخوانی">
-        <input v-if="this.backbtn" @click="goback" type="button" class="back-btn btn btn-dark my-2 mr-1" value="برگشت">
+        <input type="button" @click="getsubcategorys(parentid)" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
+
+        <input v-if="this.backbtn" @click="goback" type="button" class="back-btn btn btn-sm btn-dark my-2 mr-1" value="برگشت">
+
+        <input type="button" class="back-btn btn btn-danger btn-sm my-2 mr-3" @click="deletecategory" value="حذف">
+
+
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
-                <th scope="col" width="10%">#</th>
-                <th scope="col" width="15%">عنوان دسته</th>
-                <th scope="col" width="50%">توضیحات</th>
-                <th scope="col" class="p-0" width="25%">
+                <th scope="col" width="5%">#</th>
+                <th scope="col">عنوان دسته</th>
+                <th scope="col">توضیحات</th>
+                <th scope="col" class="p-0">
                     <i class="fas fa-cogs fa-2x mb-2"></i>
                 </th>
+                <th scope="col" width="10%">حذف</th>
             </tr>
             </thead>
             <tbody>
@@ -24,12 +31,18 @@
                 <td class="py-2">{{item.name}}</td>
                 <td class="py-2">{{item.description}}</td>
                 <td class="icons py-1">
-                    <i title="زیردسته" class="fas fa-sitemap fa-2x m-1" style="color: #EB3E37;" @click="getsubcategorys(item.id)"></i>
-                    <i title="ویژگی" class="fab fa-steam-square fa-2x m-1" style="color: #5BB760;" v-if="item.last == 1" @click="getattr(item.id)"></i>
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editcategory(item.id, item.name, item.description)" data-toggle="modal" data-target="#Modal"></i>
+                    <i title="زیردسته" class="fas fa-sitemap fa-lg mx-1 mt-2" @click="getsubcategorys(item.id)"></i>
+                    <i title="ویژگی" class="fab fa-steam-square fa-lg mx-1 mt-2" v-if="item.last == 1" @click="getattr(item.id)"></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mx-1 mt-2" @click="editcategory(item.id, item.name, item.description)" data-toggle="modal" data-target="#Modal"></i>
 
                     <!--<input type="button" @click="deletecategory(item.id)" class="btn-change btn btn-danger p-1 mb-1 ml-1"
                            value="حذف">-->
+                </td>
+                <td class="py-1 text-center">
+                    <input v-if="item.last == 1" type="checkbox" v-model="deletecat[item.id]" class="form-check-input mx-auto">
+                    <small v-else>
+                        شامل زیردسته
+                    </small>
                 </td>
             </tr>
             </tbody>
@@ -61,8 +74,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="savecategory" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="savecategory" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
@@ -85,7 +98,7 @@
                                 <div class="form-group mb-1">
                                     <label>گروه های ویژگی مربوط به این دسته بندی را انتخاب کنید:</label>
                                     <v-select @input="changeSelect" v-model="selected" :options="allattrgroups"
-                                              label="title" :clearable="false"></v-select>
+                                              label="title" :clearable="false" placeholder="انتخاب کنید"></v-select>
                                 </div>
                             </div>
                             <div class="col">
@@ -106,37 +119,13 @@
                     </div>
 
                     <div class="modal-footer row m-0">
-                        <button type="button" @click="saveattr" class="btn btn-success">ذخیره</button>
-                        <button type="button" @click="getattr(categoryid)" class="btn btn-secondary">بازخوانی</button>
-                        <button type="button" class="btn btn-secondary mr-1" data-dismiss="modal">بازگشت</button>
+                        <button type="button" @click="saveattr" class="btn btn-success btn-sm px-4">ذخیره</button>
+                        <button type="button" @click="getattr(categoryid)" class="btn btn-secondary btn-sm px-4">بازخوانی</button>
+                        <button type="button" class="btn btn-secondary mr-1 btn-sm px-4" data-dismiss="modal">بازگشت</button>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <!-- Delete Modal -->
-        <!--<div class="modal fade" id="errorDelete" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">اخطار</h5>
-                    </div>
-                    <div class="modal-body">
-                        <p>                     
-       قصد پاک کردن دسته را دارید که خود شامل زیردسته یا ویژگی می باشد.
-                        </p>     
-                        <p>
-                            آیا می خواهید این دسته را به همراه تمامی زیر دسته ها و وِیژگی هایش پاک کنید؟
-                        </p> 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر</button>
-                        <button type="button" @click="deleteall" class="btn btn-primary">بله</button>
-                    </div>
-                </div>
-            </div>
-        </div>-->
 
 
     </div>
@@ -165,6 +154,8 @@
                 backbtn: false,
                 backarray: [],
                 parentid: null,
+
+                deletecat: [],
             }
         },
         methods: {
@@ -248,27 +239,17 @@
                 });
             },
 
-            /* deletecategory(id){
-                 let that = this;
-                 this.deleteid = id;
-                 let data = {
-                     id: id,
-                     allowdelete: this.allowdelete,
-                     parentid: this.parentid,
-                 };
-                 axios.post('/dashboard/deletecategory', data)
-                     .then(function (response) {
-                         that.getsubcategorys(that.parentid, 'reload');
-                     }).catch((error) => {
-                         $('#errorDelete').modal('toggle');
-                 });
-             },
-
-             deleteall(){
-                 this.allowdelete = true;
-                 $('#errorDelete').modal('toggle');
-                 this.deletecategory(this.deleteid);
-             },*/
+            deletecategory(){
+                let that = this;
+                let data = {
+                    cats: this.deletecat,
+                    parentid: this.parentid,
+                };
+                axios.post('/dashboard/deletecategory', data)
+                    .then(function (response) {
+                        that.loadPage();
+                    });
+            },
 
             getsubcategorys(id, back = '') {
                 this.allowdelete = false;
@@ -301,13 +282,13 @@
 
             getattr(catid) {
                 let that = this;
+                this.selected = null;
                 this.categoryid = catid;
                 let data = {
                     categoryid: catid,
                 };
                 axios.post('/dashboard/getattributegroup', data)
                     .then(function (response) {
-                        console.log(response.data);
                         that.allattrgroups = response.data[0];
                         that.thisattrgroups = response.data[1]['group_attributes'];
                         $('#Attribute').modal('show');

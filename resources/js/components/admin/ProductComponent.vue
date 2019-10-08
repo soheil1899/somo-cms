@@ -3,21 +3,32 @@
     <div>
         <h4 class="admin-title py-3 px-4"> لیست محصولات </h4>
 
-        <input type="button" @click="addproduct" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="addproduct" class="btn btn-success btn-sm my-2" data-toggle="modal"
                data-target="#Modal" value="افزودن محصول جدید">
-        <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
+        <input type="button" @click="reloadPage" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <button data-toggle="modal" data-target="#Filter" class="btn btn-primary btn-sm my-2 mr-1">
+            <i class="fas fa-search ml-2"></i>
+            اعمال فیلتر
+        </button>
+
+        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
+        <input type="button" class="back-btn btn btn-danger btn-sm my-2 mr-3" @click="deleteproducts" value="حذف">
+
+
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
                 <th scope="col" width="5%">#</th>
-                <th scope="col" width="25%">نام محصول</th>
-                <th scope="col" width="10%">دسته بندی</th>
-                <th scope="col" width="15%">قیمت</th>
-                <th scope="col" width="5%">تخفیف</th>
-                <th scope="col" width="10%">موجودی</th>
-                <th scope="col" class="p-0" width="30%">
+                <th scope="col">نام محصول</th>
+                <th scope="col">دسته بندی</th>
+                <th scope="col">قیمت</th>
+                <th scope="col">تخفیف</th>
+                <th scope="col">موجودی</th>
+                <th scope="col" class="p-0">
                     <i class="fas fa-cogs fa-2x mb-2"></i>
                 </th>
+                <th scope="col" width="5%">حذف</th>
+
             </tr>
             </thead>
             <tbody>
@@ -25,26 +36,30 @@
                 <th class="py-2" scope="row">{{item.id}}</th>
                 <td class="py-2">{{item.faname}}</td>
                 <td class="py-2">{{item.category.name}}</td>
-                <td class="py-2">{{item.price}}</td>
+                <td class="py-2">{{item.price}}
+                    <small>
+                تومان
+                    </small>
+                </td>
                 <td class="py-2">{{item.discount}}%</td>
                 <td class="py-2">{{item.tedad}}</td>
                 <td class="py-1 icons">
-                    <i title="نقد و بررسی" class="fas fa-poll fa-2x m-1" style="color: #bb2f88;" @click="setnaghd(item.id, item.faname, item.naghd)"></i>
+                    <i title="نقد و بررسی" class="fas fa-poll fa-lg mx-1 mt-2" @click="setnaghd(item.id, item.faname, item.naghd)"></i>
 
                     <a :href="'productcomment/'+item.id">
-                        <i title="کامنت" class="far fa-envelope fa-2x m-1" style="color: #7241bb;"></i>
+                        <i title="کامنت" class="far fa-envelope fa-lg mx-1 mt-2"></i>
                     </a>
-                    <i title="گالری تصاویر" class="far fa-images fa-2x m-1" style="color: #5BB760;" @click="showpic(item.id, item.faname, item.image, item.gallery)"></i>
-                    <i title="ویژگی" class="fab fa-steam-square fa-2x m-1" style="color: #FF9201;" @click="getattrs(item.id, item.category.id, item.faname)"></i>
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" data-toggle="modal" data-target="#Modal" @click="editproduct(item.id, item.faname, item.enname, item.category, item.guarantees, item.price, item.discount, item.colors, item.brand, item.publish, item.special)"></i>
-                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" @click="deleteproduct(item.id)"></i>
+                    <i title="گالری تصاویر" class="far fa-images fa-lg mx-1 mt-2" @click="showpic(item.id, item.faname, item.image, item.gallery)"></i>
+                    <i title="ویژگی" class="fab fa-steam-square fa-lg mx-1 mt-2" @click="getattrs(item.id, item.category.id, item.faname)"></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mx-1 mt-2" data-toggle="modal" data-target="#Modal" @click="editproduct(item.id, item.faname, item.enname, item.category, item.guarantees, item.price, item.discount, item.colors, item.brand, item.publish, item.special)"></i>
+<!--                    <i title="حذف" class="fas fa-times-circle fa-lg mx-1 mt-2" style="color: #EB3E37;" @click="deleteproduct(item.id)"></i>-->
+                </td>
+                <td class="py-1">
+                    <input type="checkbox" v-model="deletepro[item.id]" class="form-check-input mx-auto">
                 </td>
             </tr>
             </tbody>
         </table>
-
-
-
 
 
 
@@ -134,15 +149,12 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="saveproduct" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="saveproduct" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
 
 
 
@@ -190,15 +202,137 @@
 
                     <div class="modal-footer">
 
-                        <button type="button" @click="savesubattrvalue" class="btn btn-success">ذخیره</button>
-                        <button type="button" class="btn btn-secondary">بازخوانی</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بازگشت</button>
+                        <button type="button" @click="savesubattrvalue" class="btn btn-success btn-sm px-4">ذخیره</button>
+                        <button type="button" @click="getattrs(productid, category, product_faname)" class="btn btn-secondary btn-sm px-4">بازخوانی</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بازگشت</button>
                     </div>
                 </div>
             </div>
         </div>
 
 
+
+        <!-- Filter Modal -->
+        <div class="modal fade" id="Filter" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            اعمال فیلتر
+                        </h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row mx-0">
+
+                            <div class="col-4 mt-1 mb-5">فیلتر براساس:</div>
+                            <div class="col-8 mt-1 mb-5">
+                                <select class="form-control form-control-sm" v-model="filteroption" @change="changefilter">
+                                    <option value="faname">نام فارسی محصول</option>
+                                    <option value="enname">نام محصول</option>
+                                    <option value="cat">دسته بندی</option>
+                                    <option value="price">بازه قیمت</option>
+                                    <option value="discount">بازه تخفیف</option>
+                                    <option value="mojod">بازه موجودی</option>
+                                    <option value="color">رنگ</option>
+                                    <option value="guarantee">گارانتی</option>
+                                    <option value="brand">برند</option>
+                                    <option value="publish">انتشار و عدم انشار</option>
+                                    <option value="special">محصولات ویژه</option>
+                                </select>
+                            </div>
+
+
+                            <div v-if="filteroptions.faname" class="col-4 my-1">نام فارسی محصول:</div>
+                            <div v-if="filteroptions.faname" class="col-8 my-1">
+                                <input type="text" class="form-control form-control-sm" v-model="filter.faname">
+                            </div>
+
+                            <div v-if="filteroptions.enname" class="col-4 my-1">نام محصول:</div>
+                            <div v-if="filteroptions.enname" class="col-8 my-1">
+                                <input type="text" class="form-control form-control-sm" v-model="filter.enname">
+                            </div>
+
+                            <div v-if="filteroptions.cat" class="col-4 my-1">دسته بندی:</div>
+                            <div v-if="filteroptions.cat" class="col-8 my-1">
+                                    <v-select v-model="filter.cat" :options="categories" label="parentname"
+                                              :clearable="false" dir="rtl"></v-select>
+                            </div>
+
+                            <div v-if="filteroptions.price" class="col-4 my-1">بازه قیمت:</div>
+                            <div v-if="filteroptions.price" class="col-4 my-1">
+                                <input type="number" class="form-control form-control-sm" placeholder="کف" v-model="filter.lessprice">
+                            </div>
+                            <div v-if="filteroptions.price" class="col-4 my-1">
+                                <input type="number" class="form-control form-control-sm" placeholder="سقف" v-model="filter.topprice">
+                            </div>
+
+                            <div v-if="filteroptions.discount" class="col-4 my-1">بازه تخفیف:</div>
+                            <div v-if="filteroptions.discount" class="col-4 my-1">
+                                <input type="text" inputmode="number" class="form-control form-control-sm" maxlength="2" placeholder="کف" v-model="filter.lessdiscount">
+                            </div>
+                            <div v-if="filteroptions.discount" class="col-4 my-1">
+                                <input type="text" inputmode="number" class="form-control form-control-sm" maxlength="2" placeholder="سقف" v-model="filter.topdiscount">
+                            </div>
+
+                            <div v-if="filteroptions.mojod" class="col-4 my-1">بازه موجودی:</div>
+                            <div v-if="filteroptions.mojod" class="col-4 my-1">
+                                <input type="number" class="form-control form-control-sm" placeholder="کف" v-model="filter.lessmojod">
+                            </div>
+                            <div v-if="filteroptions.mojod" class="col-4 my-1">
+                                <input type="number" class="form-control form-control-sm" placeholder="سقف" v-model="filter.topmojod">
+                            </div>
+
+
+                            <div v-if="filteroptions.color" class="col-4 my-1">رنگ :</div>
+                            <div v-if="filteroptions.color" class="col-8 my-1">
+                                <v-select v-model="filter.colors" :options="colors" label="name" dir="rtl"
+                                          :multiple="true" :clearable="false"></v-select>
+                            </div>
+
+                            <div v-if="filteroptions.guarantee" class="col-4 my-1">گارانتی :</div>
+                            <div v-if="filteroptions.guarantee" class="col-8 my-1">
+                                <v-select v-model="filter.guaranties" :options="guarantees" label="label"
+                                          :multiple="true" :clearable="false" dir="rtl"></v-select>
+                            </div>
+
+                            <div v-if="filteroptions.brand" class="col-4 my-1">برند :</div>
+                            <div v-if="filteroptions.brand" class="col-8 my-1">
+                                <v-select v-model="brand" :options="brands" label="name"
+                                          :clearable="false" dir="rtl"></v-select>
+                            </div>
+
+                            <div v-if="filteroptions.publish" class="col-4 my-2">
+                                <input type="radio" name="publish" class="form-check-input mr-2" v-model="filter.showall">
+                                <label class="form-check-label pr-2 mr-4">همه محصولات</label>
+                            </div>
+                            <div v-if="filteroptions.publish" class="col-4 my-2">
+                                <input type="radio" name="publish" class="form-check-input mr-2" v-model="filter.showpublish">
+                                <label class="form-check-label pr-2 mr-4">منتشر شده</label>
+                            </div>
+                            <div v-if="filteroptions.publish" class="col-4 my-2">
+                                <input type="radio" name="publish" class="form-check-input mr-2" v-model="filter.showdpublish">
+                                <label class="form-check-label pr-2 mr-4">منتشر نشده</label>
+                            </div>
+                            <div v-if="filteroptions.special" class="col-12 my-2">
+                                <input type="checkbox" class="form-check-input mr-2" v-model="filter.special">
+                                <label class="form-check-label pr-2 mr-4">فقط محصولات ویژه</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" @click="getbyfilter" class="btn btn-primary btn-sm px-4">اعمال فیلتر</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بازگشت</button>
+
+                        <input @click="clearfilter" type="button" class="btn btn-sm btn-warning mr-auto" value="پاک کردن تمام فیلترها">
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -219,7 +353,7 @@
                                     تصویر اصلی محصول
                                 </div>
                                 <div class="col-4 icons">
-                                    <button type="button" @click="browsefile1" class="btn btn-success btn-sm">
+                                    <button type="button" @click="browsefile1" class="btn btn-success btn-sm px-3">
                                         انتخاب تصویر
                                     </button>
                                 </div>
@@ -237,7 +371,7 @@
                                     تصاویر مربوط به گالری
                                 </div>
                                 <div class="col-4 icons">
-                                    <button type="button" @click="browsefile2" class="btn btn-success btn-sm">افزودن
+                                    <button type="button" @click="browsefile2" class="btn btn-success btn-sm px-3">افزودن
                                         تصویر
                                     </button>
                                 </div>
@@ -256,15 +390,11 @@
                     </div>
 
                     <div class="modal-footer py-2">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بازگشت</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بازگشت</button>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
 
 
 
@@ -302,10 +432,10 @@
                                            @change="selecttextimage">
                                 </div>
                                 <div class="card-body p-2">
-                                    <div v-for="file in filemanagerids" :key="file.id"
+                                    <div v-for="(file, index) in filemanagerids" :key="file.id"
                                          class="m-1 float-right position-relative icons">
                                         <img :src="file.small" @click="selectImage(file.original)">
-                                        <i title="پاک کردن" class="fas fa-trash position-absolute delete-filemanager"></i>
+                                        <i title="پاک کردن" class="fas fa-trash position-absolute delete-filemanager" @click="deletefilemanager(file.small, file.original, index)"></i>
                                     </div>
 
                                 </div>
@@ -314,8 +444,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" @click="savenaghd">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" class="btn btn-primary btn-sm px-4" @click="savenaghd">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
@@ -374,11 +504,102 @@
 
                 text: '',
                 filemanagerids: [],
+
+                deletepro: [],
+
+                filteroption: null,
+                filteroptions:{
+                    faname: false,
+                    enname: false,
+                    cat: false,
+                    price: false,
+                    discount: false,
+                    mojod: false,
+                    color: false,
+                    guarantee: false,
+                    brand: false,
+                    publish: false,
+                    special: false,
+                },
+                filter:{
+                    faname: null,
+                    enname: null,
+                    cat: null,
+                    topprice: null,
+                    lessprice: null,
+                    topdiscount: null,
+                    lessdiscount: null,
+                    topmojod: null,
+                    lessmojod: null,
+                    colors: [],
+                    guaranties: [],
+                    showall: true,
+                    showpublish: null,
+                    showdpublish: null,
+                    special: false,
+                    brand: null,
+                }
             }
         },
 
         methods: {
+            getbyfilter(){
+                let that = this;
+                let data = {
+                    'filteroptions' : this.filteroptions,
+                    'filtervalues' : this.filter,
+                };
+                axios.post('/dashboard/getprobyfilters', data)
+                    .then(function (response) {
 
+                    });
+
+            },
+            changefilter(){
+                this.filteroptions[this.filteroption] == false ? this.filteroptions[this.filteroption] = true : this.filteroptions[this.filteroption] = false;
+            },
+            clearfilter(){
+                this.filter['faname'] = null;
+                this.filter['enname'] = null;
+                this.filter['cat'] = null;
+                this.filter['topprice'] = null;
+                this.filter['lessprice'] = null;
+                this.filter['topdiscount'] = null;
+                this.filter['lessdiscount'] = null;
+                this.filter['topmojod'] = null;
+                this.filter['lessmojod'] = null;
+                this.filter['colors'] = [];
+                this.filter['guaranties'] = [];
+                this.filter['showall'] = null;
+                this.filter['showpublish'] = null;
+                this.filter['showdpublish'] = null;
+                this.filter['special'] = null;
+                this.filter['brand'] = null;
+            },
+            deleteproducts(){
+                let that = this;
+                let data = {
+                    products: this.deletepro,
+                };
+                axios.post('/dashboard/deleteproduct', data)
+                    .then(function (response) {
+                        that.reloadPage();
+                    });
+            },
+
+            deletefilemanager(small, original, index){
+                let that = this;
+                let data = {
+                    flag: 'product',
+                    small: small,
+                    original: original,
+                };
+                axios.post('/dashboard/deletefilemanager', data)
+                    .then(function (response) {
+                        that.filemanagerids.splice(index, 1);
+                        that.reloadPage();
+                    });
+            },
             seencomment(id, proname){
                 $('#commentmodal').modal('show');
                 this.product_faname = proname;
@@ -623,6 +844,7 @@
                 let that = this;
                 this.product_faname = faname;
                 this.productid = id;
+                this.category = catid;
                 this.selected = [];
                 let data = {
                     productid: id,

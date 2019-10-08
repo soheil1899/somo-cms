@@ -11,6 +11,7 @@
         <v-select v-model="groupselect" class="select-group mr-3" :options="groups" label="name" @input="reloadPage"
                   :clearable="false" placeholder="یکی از گروه ها را انتخاب کنید"></v-select>
 
+        <a :href="'../../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
 
         <a :href="'../article'" class="back-btn btn btn-sm btn-dark my-2 mr-1">برگشت</a>
         <input type="button" class="back-btn btn btn-sm btn-danger my-2 mr-3" @click="deletearticle" value="حذف">
@@ -35,7 +36,9 @@
             <tr v-for="(item, index) in this.articlelist" :key="item.id">
                 <th class="py-2" scope="row">{{index+1}}</th>
                 <td class="py-2">{{item.title}}</td>
-                <td class="py-2" v-if="item.user.userinfo">{{item.user.userinfo.firstname + ' '+  item.user.userinfo.lastname}}</td>
+                <td class="py-2" v-if="item.user.userinfo">{{item.user.userinfo.firstname + ' '+
+                    item.user.userinfo.lastname}}
+                </td>
                 <td class="py-2" v-else>{{item.user.name}}</td>
                 <td class="py-2" dir="ltr">{{item.url}}</td>
 
@@ -49,17 +52,20 @@
                 </td>
 
                 <td class="py-1 icons">
-                    <i title="ویژگی ها" class="fab fa-steam fa-lg mx-1 mt-2" @click="editattr(item.id, item.title, item.attributes)"></i>
-                    <i title="گالری تصاویر" class="far fa-images fa-lg mx-1 mt-2" @click="addGallery(item.id, item.title, item.galleries)"></i>
+                    <i title="ویژگی ها" class="fab fa-steam fa-lg mx-1 mt-2"
+                       @click="editattr(item.id, item.title, item.attributes)"></i>
+                    <i title="گالری تصاویر" class="far fa-images fa-lg mx-1 mt-2"
+                       @click="addGallery(item.id, item.title, item.galleries)"></i>
 
                     <i title="فایل pdf" class="far fa-file-pdf fa-lg mx-1 mt-2" @click="browsepdf(item.id)"></i>
 
-                    <i title="تصویر مطلب" class="fas fa-camera fa-lg mx-1 mt-2" @click="showpic(item.id, item.title, item.image)"></i>
+                    <i title="تصویر مطلب" class="fas fa-camera fa-lg mx-1 mt-2"
+                       @click="showpic(item.id, item.title, item.image)"></i>
+                    <i title="آپلود ویدئو" @click="showvideo(item.id, item.title)"
+                       class="fas fa-video fa-lg mx-1 mt-2"></i>
                     <i title="ویرایش" class="far fa-edit fa-lg mx-1 mt-2" data-toggle="modal"
                        data-target="#Modal"
                        @click="editarticle(item.id, item.title, item.url, item.description, item.minitext, item.publish, item.reference, item.keywords, item.articlevideo)"></i>
-<!--                    <i title="حذف" @click="deletearticle(item.id)" class="fas fa-times-circle fa-lg mx-1 mt-2"></i>-->
-
                 </td>
                 <td class="py-1 icons">
                     <a :href="'articles-content/'+item.id">
@@ -105,25 +111,34 @@
                         <form>
                             <div class="row">
                                 <div class="col-12 col-lg-6">
-                                    <input type="text" v-model="articletitle" @keyup="changeurl" class="form-control mt-2" placeholder="عنوان مطلب">
-                                    <textarea v-model="description" class="form-control mt-2" placeholder="توضیحات مربوط به مطلب..." rows="4"></textarea>
+                                    <input type="text" v-model="articletitle" @keyup="changeurl"
+                                           class="form-control mt-2" placeholder="عنوان مطلب">
+                                    <textarea v-model="description" class="form-control mt-2"
+                                              placeholder="توضیحات مربوط به مطلب..." rows="4"></textarea>
                                     <div class="input-group mt-2" dir="ltr">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">/</div>
                                         </div>
-                                        <input type="url" v-model="articleurl" @keyup="changeurl2" class="form-control" placeholder="لینک مطلب">
+                                        <input type="url" v-model="articleurl" @keyup="changeurl2" class="form-control"
+                                               placeholder="لینک مطلب">
                                     </div>
-                                    <textarea v-model="articlereference" class="form-control mt-2 mb-2 mb-lg-0" placeholder="منابع مطلب..." rows="3"></textarea>
-                                    <input type="text" v-model="articlevideo" class="form-control mt-2" placeholder="لینک ویدئو آپارات">
+                                    <textarea v-model="articlereference" class="form-control mt-2 mb-2 mb-lg-0"
+                                              placeholder="منابع مطلب..." rows="3"></textarea>
+                                    <input type="text" v-model="articlevideo" class="form-control mt-2"
+                                           placeholder="لینک ویدئو آپارات">
 
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <v-select class="mb-2" :multiple="true" v-model="keywords" :taggable="true" :no-drop="true"
+                                    <v-select class="mb-2" :multiple="true" v-model="keywords" :taggable="true"
+                                              :no-drop="true"
                                               :clearable="false" placeholder="کلمات کلیدی" dir="rtl"></v-select>
-                                    <v-select :multiple="true" v-model="articletags" :options="tags" label="tag" :clearable="false" placeholder="تگ" class="select-tag"></v-select>
-                                    <textarea v-model="minitext" class="form-control mt-2" placeholder="متن کوتاه..." rows="9"></textarea>
+                                    <v-select :multiple="true" v-model="articletags" :options="tags" label="tag"
+                                              :clearable="false" placeholder="تگ" class="select-tag"></v-select>
+                                    <textarea v-model="minitext" class="form-control mt-2" placeholder="متن کوتاه..."
+                                              rows="9"></textarea>
                                     <div class="form-group mt-1">
-                                        <input type="checkbox" v-model="publish" class="form-check-input publish-checkbox mr-2">
+                                        <input type="checkbox" v-model="publish"
+                                               class="form-check-input publish-checkbox mr-2">
                                         <label class="form-check-label pr-2 mt-1 mr-4">نمایش</label>
                                     </div>
                                 </div>
@@ -139,10 +154,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
 
 
         <!-- image Modal -->
@@ -183,8 +194,8 @@
         </div>
 
 
-
-
+        <!-- video Modal -->
+        <article-video :articleid="articleid" :articletitle="articletitle" v-if="videoflag" :key="componentid"></article-video>
 
 
         <!-- gallery Modal -->
@@ -227,14 +238,11 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"  @click="closegallerymodal">بستن</button>
+                        <button type="button" class="btn btn-secondary" @click="closegallerymodal">بستن</button>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
 
 
         <!-- SubAttr Modal -->
@@ -257,16 +265,18 @@
                                  :key="item.id">
                                 <div class="row mb-2 position-relative">
                                     <div class="col-6 pl-1">
-                                        <input type="text" class="form-control" v-model="item.title" placeholder="عنوان ویژگی">
+                                        <input type="text" class="form-control" v-model="item.title"
+                                               placeholder="عنوان ویژگی">
                                     </div>
                                     <div class="col-6 pr-1">
-                                        <input type="text" class="form-control" v-model="item.value" placeholder="مقدار ویژگی">
+                                        <input type="text" class="form-control" v-model="item.value"
+                                               placeholder="مقدار ویژگی">
                                     </div>
                                 </div>
 
 
-
-                                <i title="حذف ویژگی" class="fas fa-times-circle position-absolute fa-lg" @click="deleterow(item.id)"></i>
+                                <i title="حذف ویژگی" class="fas fa-times-circle position-absolute fa-lg"
+                                   @click="deleterow(item.id)"></i>
 
                             </div>
 
@@ -289,14 +299,12 @@
         </div>
 
 
-
     </div>
 
 
 </template>
 
 <script>
-
 
     export default {
         name: "ArticleComponent",
@@ -328,11 +336,20 @@
 
                 attrlist: [],
                 deleteart: [],
+
+                videoflag: false,
+                componentid: 0,
             }
         },
         props: ['articlegroupid'],
 
         methods: {
+            showvideo(id, title) {
+                this.componentid += 1;
+                this.videoflag = true;
+                this.articleid = id;
+                this.articletitle = title;
+            },
             changepublish(id, changeto) {
                 let that = this;
                 let data = {
@@ -380,7 +397,7 @@
                     }
                 }
             },
-            editattr(id, title, attributes){
+            editattr(id, title, attributes) {
                 this.articleid = id;
                 this.articletitle = title;
                 this.attrlist = attributes;
@@ -388,16 +405,16 @@
                 $('#subAttr').modal('toggle');
             },
 
-            addGallery(id, title, galleries){
+            addGallery(id, title, galleries) {
                 this.articleid = id;
                 this.articletitle = title;
 
                 this.gallerylist = [];
 
-                for (var i=0; i<galleries.length; i++) {
+                for (var i = 0; i < galleries.length; i++) {
                     let newfile = [];
                     newfile['id'] = galleries[i]['id'];
-                    newfile['url'] = '/media/article/' + id + '/gallery/gallerysmall_' + galleries[i]['image'] +'.png';
+                    newfile['url'] = '/media/article/' + id + '/gallery/gallerysmall_' + galleries[i]['image'] + '.png';
                     this.gallerylist.push(newfile);
                 }
 
@@ -455,11 +472,7 @@
             },
 
 
-
-
-
-
-            browsepdf(id){
+            browsepdf(id) {
                 this.articleid = id;
                 document.getElementById("browsepdf").click();
             },
@@ -481,7 +494,7 @@
 
             },
 
-            closeimagemodal(){
+            closeimagemodal() {
                 $('#imagemodal').modal('hide');
                 this.reloadPage();
             },
@@ -504,15 +517,15 @@
                     })
                     .then(function (response) {
 
-                        that.articleoriginalimage = '/media/article/'+that.articleid+'/medium.png?'+ response.data[0];
+                        that.articleoriginalimage = '/media/article/' + that.articleid + '/medium.png?' + response.data[0];
                     });
             },
 
-            showpic(id, articlename, image){
+            showpic(id, articlename, image) {
                 this.articlename = articlename;
                 this.articleoriginalimage = null;
-                if (image == true){
-                    this.articleoriginalimage = '/media/article/'+ id +'/medium.png';
+                if (image == true) {
+                    this.articleoriginalimage = '/media/article/' + id + '/medium.png';
                 }
 
                 this.articleid = id;
@@ -522,7 +535,7 @@
 
             },
 
-            deletearticle(id){
+            deletearticle(id) {
                 let that = this;
                 let data = {
                     articles: this.deleteart,
@@ -625,8 +638,8 @@
 
                         that.articlelistlength = that.articlelist.length;
 
-                        for (var i=0 ; i< response.data[1].length; i++){
-                            if(that.groupid == response.data[1][i]['id']){
+                        for (var i = 0; i < response.data[1].length; i++) {
+                            if (that.groupid == response.data[1][i]['id']) {
                                 that.groupselect = response.data[1][i];
                             }
                         }
@@ -675,8 +688,8 @@
 
 <style scoped>
 
-.select-group{
-    width: 250px;
-    display: inline-block;
-}
+    .select-group {
+        width: 250px;
+        display: inline-block;
+    }
 </style>

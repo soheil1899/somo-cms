@@ -3,9 +3,12 @@
     <div>
         <h4 class="admin-title py-3 px-4"> لیست وظایف </h4>
 
-        <input type="button" class="btn btn-success my-2" data-toggle="modal" @click="addRole"
+        <input type="button" class="btn btn-success btn-sm my-2" data-toggle="modal" @click="addRole"
                data-target="#Modal" value="افزودن وظیفه جدید">
-        <input type="button" class="btn btn-dark my-2 mr-1" value="بازخوانی">
+        <input type="button" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <a :href="'../dashboard/user'" class="btn btn-sm btn-primary my-2 mr-1">کاربران</a>
+
+        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
@@ -22,9 +25,9 @@
                 <td class="py-2">{{item.title}}</td>
                 <td class="py-2">{{item.role}}</td>
                 <td class="py-1 icons">
-                    <i title="دسترسی" class="fas fa-universal-access fa-2x m-1" style="color: #12c908;" @click="permissionchange(item.id, item.title, item.permissions)"></i>
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editRole(item.id, item.title, item.role)"  data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" @click="deleteRole(item.id)" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" ></i>
+                    <i title="دسترسی" class="fas fa-universal-access fa-lg mt-2 mx-1" @click="permissionchange(item.id, item.title, item.permissions)"></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mt-2 mx-1" @click="editRole(item.id, item.title, item.role)"  data-toggle="modal" data-target="#Modal"></i>
+                    <i title="حذف" @click="deleteRole(item.id)" class="fas fa-times-circle fa-lg mt-2 mx-1"></i>
                 </td>
             </tr>
             </tbody>
@@ -54,13 +57,13 @@
                             <div class="form-group mb-1">
                                 <input type="text" v-model="role" placeholder="عنوان وظیفه" class="form-control" name="title">
                             </div>
-                            
+
                         </form>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="saverole" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="saverole" class="btn btn-sm btn-primary px-4">ذخیره</button>
+                        <button type="button" class="btn btn-sm btn-secondary px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
@@ -119,8 +122,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="savepermission" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="savepermission" class="btn btn-sm btn-primary px-4">ذخیره</button>
+                        <button type="button" class="btn btn-sm btn-secondary px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>

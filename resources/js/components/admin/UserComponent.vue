@@ -3,18 +3,26 @@
     <div>
         <h4 class="admin-title py-3 px-4"> لیست کاربران </h4>
 
-        <input type="button" @click="adduser" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="adduser" class="btn btn-success btn-sm my-2" data-toggle="modal"
                data-target="#Modal" value="افزودن کاربر جدید">
-        <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
+        <input type="button" @click="reloadPage" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <a :href="'../dashboard/role'" class="btn btn-sm btn-primary my-2 mr-1">دسترسی ها</a>
+
+        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
+        <input type="button" class="back-btn btn btn-danger btn-sm my-2 mr-3" @click="deleteuser" value="حذف">
+
+
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
                 <th scope="col" width="5%">#</th>
-                <th scope="col" width="30%">نام کاربر</th>
-                <th scope="col" width="35%">ایمیل</th>
-                <th scope="col" class="p-0" width="30%">
+                <th scope="col">نام کاربر</th>
+                <th scope="col">ایمیل</th>
+                <th scope="col" class="p-0">
                     <i class="fas fa-cogs fa-2x mb-2"></i>
                 </th>
+                <th scope="col" width="5%">حذف</th>
+
             </tr>
             </thead>
             <tbody>
@@ -24,13 +32,17 @@
                 <td class="py-2">{{item.email}}</td>
                 <td class="py-1 icons">
                     <a :href="'user/'+item.id">
-                        <i title="جزئیات" class="fas fa-info-circle fa-2x m-1" style="color: #b721c9;"></i>
+                        <i title="جزئیات" class="fas fa-info-circle fa-lg mt-2 mx-1"></i>
                     </a>
-                    <i title="دسترسی" class="fas fa-universal-access fa-2x m-1" style="color: #12c908;" @click="rolechange(item.id, item.name, item.roles)" v-if="accessshow"></i>
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" data-toggle="modal" data-target="#Modal" @click="edituser(item.id, item.name, item.email)"></i>
-                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" @click="deleteuser(item.id)"></i>
+                    <i title="دسترسی" class="fas fa-universal-access fa-lg mt-2 mx-1" @click="rolechange(item.id, item.name, item.roles)" v-if="accessshow"></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mt-2 mx-1" data-toggle="modal" data-target="#Modal" @click="edituser(item.id, item.name, item.email)"></i>
+<!--                    <i title="حذف" class="fas fa-times-circle fa-lg mt-2 mx-1" style="color: #EB3E37;" @click="deleteuser(item.id)"></i>-->
+                </td>
+                <td class="py-1">
+                    <input type="checkbox" v-model="deletemyuser[item.id]" class="form-check-input mx-auto">
                 </td>
             </tr>
+
             </tbody>
         </table>
 
@@ -77,8 +89,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button @click="saveuser" type="button" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button @click="saveuser" type="button" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
@@ -116,8 +128,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="saveuseraccess" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="saveuseraccess" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
@@ -149,6 +161,7 @@
                 passwordflag: false,
                 passwordfalsediv: false,
 
+                deletemyuser: [],
 
                 accessshow: true,
                 accessflag: {0 : false, 1 : false, 2 : false, 3 : false, 4 : false, 5 : false, 6 : false, 7 : false, 8 : false, 9 : false,
@@ -244,7 +257,6 @@
                         } else{
                             that.accessshow = false;
                         }
-                        // console.log(that.accessflag.length);
                     });
             },
 
@@ -268,6 +280,7 @@
                 this.username = name;
                 this.email = email;
                 this.passwordedit = false;
+                this.passwordfalsediv = false;
             },
 
 
@@ -316,15 +329,15 @@
 
             },
 
-            deleteuser(id){
+            deleteuser(){
                 let that = this;
                 let data = {
-                    id: id,
+                    users: this.deletemyuser,
                 };
                 axios.post('/dashboard/deleteuser', data)
                     .then(function (response) {
                         that.reloadPage();
-                    })
+                    });
             },
 
             checkpassword() {

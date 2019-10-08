@@ -40,7 +40,7 @@
         "vue-select": "^3.1.0",
         "vue-select2": "^0.2.6",
         "vue-tinymce-editor": "^1.6.2",
-        "vue2-dropzone": "^3.5.9",
+        "vue2-dropzone": "^3.6.0",
         "vue2-editor": "^2.6.6"
     }
 }

@@ -3,9 +3,11 @@
     <div>
         <h4 class="admin-title py-3 px-4"> لیست مشتریان ها </h4>
 
-        <input type="button" @click="addcustomer" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="addcustomer" class="btn btn-success btn-sm my-2 mr-1" data-toggle="modal"
                data-target="#Modal" value="افزودن مشتری جدید">
-        <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
+        <input type="button" @click="reloadPage" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <a :href="'../dashboard'" class="back-btn btn btn-dark btn-sm my-2 mr-1">داشبورد</a>
+
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
@@ -23,8 +25,8 @@
                 <td class="py-2">{{item.company_name}}</td>
                 <td class="py-2">{{item.company_name_en}}</td>
                 <td class="py-1 icons">
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" @click="editcustomer(item.id, item.company_name, item.company_name_en, item.logo, item.address, item.description)"  data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" @click="deletecustomer(item.id)" class="fas fa-times-circle fa-2x m-1" ></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mt-2 mx-1" @click="editcustomer(item.id, item.company_name, item.company_name_en, item.logo, item.address, item.description)"  data-toggle="modal" data-target="#Modal"></i>
+                    <i title="حذف" @click="deletecustomer(item.id)" class="fas fa-times-circle fa-lg mt-2 mx-1" ></i>
                 </td>
             </tr>
             </tbody>
@@ -61,13 +63,13 @@
                                 <textarea class="form-control" rows="3" v-model="description" placeholder="توضیحات"></textarea>
                             </div>
 
-                            
+
                         </form>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="savecustomer" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="savecustomer" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>

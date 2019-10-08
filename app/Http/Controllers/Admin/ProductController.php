@@ -47,7 +47,7 @@ class ProductController extends Controller
         }
 
 
-        $categories = Category::where('last', 1)->with('parent')->get();
+        $categories = Category::where([['last', 1],['hidden', 0]])->with('parent')->get();
         foreach ($categories as $category) {
             $category['parentname'] = $category['parent']['name'] . ' > ' . $category['name'];
             unset($category['parent']);
@@ -120,8 +120,15 @@ class ProductController extends Controller
 
     public function deleteproduct(Request $request)
     {
-        Product::where('id', $request->productid)->delete();
-        Storage::disk('media')->deleteDirectory('product/' . $request->productid);
+        $keys = array();
+        foreach ($request->products as $key => $product) {
+            if ($product == true) {
+                array_push($keys, $key);
+                Storage::disk('media')->deleteDirectory('/product/' . $key);
+                Storage::disk('media')->deleteDirectory('/filemanager/product/' . $key);
+            }
+        }
+        Product::whereIn('id', $keys)->delete();
     }
 
     public function getattributes(Request $request)
@@ -208,7 +215,7 @@ class ProductController extends Controller
 
     public function getproductinfo()
     {
-        $categories = Category::where('last', 1)->with('parent')->get();
+        $categories = Category::where([['last', 1],['hidden', 0]])->with('parent')->get();
         foreach ($categories as $category) {
             $category['parentname'] = $category['parent']['name'] . ' > ' . $category['name'];
             unset($category['parent']);
@@ -373,6 +380,96 @@ class ProductController extends Controller
             return Filemanager::where('article_id', $request->articleid)->get();
         }
     }
+
+
+    public function getprobyfilters(Request $request)
+    {
+        dd($request->all());
+
+        $getall = false;
+
+        $per = $this->getpermission(auth()->user()->roles()->get());
+        for ($i = 0; $i < count($per); $i++) {
+            if ($per[$i] == 'permission_access') {
+                $getall = true;
+            }
+        }
+
+        if ($getall) {
+            $product = Product::where([
+                ['faname', 'like', '%'.$request->filtervalues['faname'].'%'],
+                ['enname', 'like', '%'.$request->filtervalues['enname'].'%'],
+                ['special', $request->filtervalues['special']],
+            ])->with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
+        } else {
+            $store = Store::where('user_id', auth()->user()->id)->first();
+            $product = Product::where([
+                ['store_id', $store['id']],
+                ['faname', 'like', '%'.$request->filtervalues['faname'].'%'],
+                ['enname', 'like', '%'.$request->filtervalues['enname'].'%'],
+                ['special', $request->filtervalues['special']],
+                ])->with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
+        }
+
+
+        if (isset($request->filtervalues['cat'])){
+            foreach ($product as $key=>$pro){
+                if($pro['category_id'] != $request->filtervalues['cat']['id']){
+                    unset($product[$key]);
+                }
+            }
+            dd($product);
+        }
+//        if ()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $categories = Category::where([['last', 1],['hidden', 0]])->with('parent')->get();
+        foreach ($categories as $category) {
+            $category['parentname'] = $category['parent']['name'] . ' > ' . $category['name'];
+            unset($category['parent']);
+        }
+        $guarantees = Guarantee::all();
+        $colors = Color::all();
+        $brands = Brand::all();
+
+        return [$product, $categories, $colors, $brands, $guarantees];
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -31,6 +31,14 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
     Route::post('savemyinfo', 'AdminController@savemyinfo')->name('savemy.info');
 
 
+    Route::post('upload/{id}/{flag}', 'VideoController@uploadvideo')->name('upload.video');
+    Route::post('getvideos', 'VideoController@getvideos')->name('get.video');
+    Route::post('deletevideo', 'VideoController@deletevideo')->name('delete.video');
+    Route::post('deletefilemanager', 'ArticleController@deletefilemanager')->name('delete.filemanager');
+
+
+
+
     Route::group(['middleware' => 'CheckUseradmin'], function () {
         // user
         Route::get('user', 'UserController@index')->name('user.list');
@@ -137,6 +145,7 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('getsubcategorys', 'CategoryController@getsubcategorys')->name('get.subcategories');
         Route::post('getattributegroup', 'CategoryController@getattributegroup')->name('get.attribute.group');
         Route::post('saveattrgroup', 'CategoryController@saveattrgroup')->name('save.attribute.group');
+        Route::post('deletecategory', 'CategoryController@deletecategory')->name('delete.category');
 
 
         // Attribute
@@ -175,6 +184,7 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::get('product', 'ProductController@index')->name('product.list');
         Route::post('getproducts', 'ProductController@getproducts')->name('get.products');
         Route::post('saveproduct', 'ProductController@saveproduct')->name('save.product');
+//        Route::post('deleteproduct', 'ProductController@deleteproduct')->name('delete.product');
         Route::post('deleteproduct', 'ProductController@deleteproduct')->name('delete.product');
         Route::post('getattributes', 'ProductController@getattributes')->name('get.attributes');
         Route::post('saveattrvalue', 'ProductController@saveattrvalue')->name('save.attributes');
@@ -184,6 +194,7 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('deleteprogallery', 'ProductController@deleteprogallery')->name('delete.progallery');
         Route::post('savenaghd', 'ProductController@savenaghd')->name('save.naghd');
         Route::post('getfilemanager', 'ProductController@getfilemanager')->name('get.filemanager');
+        Route::post('getprobyfilters', 'ProductController@getprobyfilters')->name('get.probyfilters');
 
 
         // comment

@@ -3,9 +3,11 @@
     <div>
         <h4 class="admin-title py-3 px-4"> لیست تگ ها </h4>
 
-        <input type="button" @click="addtag" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="addtag" class="btn btn-success btn-sm my-2 mr-1" data-toggle="modal"
                data-target="#Modal" value="افزودن تگ جدید">
-        <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
+        <input type="button" @click="reloadPage" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <a :href="'../dashboard'" class="back-btn btn btn-dark btn-sm my-2 mr-1">داشبورد</a>
+
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
@@ -21,8 +23,8 @@
                 <th class="py-2" scope="row">{{item.id}}</th>
                 <td class="py-2">{{item.tag}}</td>
                 <td class="py-1 icons">
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editTag(item.id, item.tag)"  data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" ></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mt-2 mx-1" style="color: #00B2C9;" @click="editTag(item.id, item.tag)"  data-toggle="modal" data-target="#Modal"></i>
+                    <i title="حذف" class="fas fa-times-circle fa-lg mt-2 mx-1" style="color: #EB3E37;" ></i>
                 </td>
             </tr>
             </tbody>
@@ -49,13 +51,13 @@
                             <div class="form-group mb-1">
                                 <input type="text" v-model="tag" class="form-control" name="title" placeholder="نام تگ">
                             </div>
-                            
+
                         </form>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="savetag" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="savetag" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>

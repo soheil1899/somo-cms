@@ -18,7 +18,8 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->bigInteger('parent_id')->default(0);
-            $table->integer('last')->default(1);     
+            $table->integer('last')->default(1);
+            $table->integer('hidden')->default(0);
             $table->timestamps();
         });
 

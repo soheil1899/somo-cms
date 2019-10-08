@@ -13,10 +13,19 @@ Vue.component('myinfo-component', require('./components/admin/MyinfoComponent.vu
 Vue.component('user-component', require('./components/admin/UserComponent.vue').default);
 Vue.component('userinfo-component', require('./components/admin/UserInfoComponent.vue').default);
 Vue.component('role-component', require('./components/admin/RoleComponent.vue').default);
+
+
+
+
 Vue.component('articlegroup-component', require('./components/admin/ArticleGroupComponent.vue').default);
 Vue.component('article-component', require('./components/admin/ArticleComponent.vue').default);
 Vue.component('article-contents-component', require('./components/admin/ArticleContentComponent.vue').default);
 Vue.component('article-content-new-component', require('./components/admin/ArticleContentNewComponent.vue').default);
+Vue.component('article-video', require('./components/admin/article/modals/ArticleVideo.vue').default);
+
+
+
+
 Vue.component('category-component', require('./components/admin/CategoryComponent.vue').default);
 Vue.component('myattribute-component', require('./components/admin/AttributeComponent.vue').default);
 Vue.component('color-component', require('./components/admin/ColorComponent.vue').default);

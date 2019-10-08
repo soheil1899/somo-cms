@@ -7,10 +7,13 @@
         </h4>
 
 
-        <input type="button" @click="addattr" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="addattr" class="btn btn-success btn-sm my-2 mr-1" data-toggle="modal"
                data-target="#Modal" value="افزودن ویژگی جدید">
-        <input type="button" @click="loadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
-        <input v-if="backbtn" @click="goback" type="button" class="back-btn btn btn-dark my-2 mr-1" value="برگشت">
+        <input type="button" @click="loadPage" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
+
+        <input v-if="backbtn" @click="goback" type="button" class="back-btn btn btn-dark btn-sm my-2 mr-1" value="برگشت">
+
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
@@ -29,10 +32,10 @@
                 <td class="py-2">{{item.title}}</td>
                 <td class="py-2">{{item.description}}</td>
                 <td class="py-1 icons">
-                    <i title="زیر ویژگی" class="fab fa-steam fa-2x m-1" style="color: #FF9201;" @click="showsubattr(item.id, item.title)" v-if="subbutton"></i>
-                    <i title="تعریف مقادیر" class="fas fa-th-list fa-2x m-1" style="color: #5BB760;" v-if="backbtn" @click="getsubvalue(item.id, item.title)"></i>
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editattr(item.id, item.title, item.description)" data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" v-if="backbtn" @click="deleteattr(item.id)" style="color: #EB3E37;" ></i>
+                    <i title="زیر ویژگی" class="fab fa-steam fa-lg mt-2 mx-1"  @click="showsubattr(item.id, item.title)" v-if="subbutton"></i>
+                    <i title="تعریف مقادیر" class="fas fa-th-list fa-lg mt-2 mx-1"  v-if="backbtn" @click="getsubvalue(item.id, item.title)"></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mt-2 mx-1"  @click="editattr(item.id, item.title, item.description)" data-toggle="modal" data-target="#Modal"></i>
+                    <i title="حذف" class="fas fa-times-circle fa-lg mt-2 mx-1" v-if="backbtn" @click="deleteattr(item.id)"  ></i>
 
                 </td>
             </tr>
@@ -66,8 +69,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="saveattr" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="saveattr" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
@@ -104,13 +107,13 @@
 
                     <div class="modal-footer my-modal-footer m-0">
                         <div class="row">
-                            <div class="col-7 m-0">
-                                <button type="button" @click="savesubattrvalue" class="btn btn-success">ذخیره</button>
-                                <button type="button" @click="refresh" class="btn btn-secondary">بازخوانی</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">بازگشت</button>
+                            <div class="col-8 m-0">
+                                <button type="button" @click="savesubattrvalue" class="btn btn-success btn-sm px-3">ذخیره</button>
+                                <button type="button" @click="refresh" class="btn btn-secondary btn-sm px-3">بازخوانی</button>
+                                <button type="button" class="btn btn-secondary btn-sm px-3" data-dismiss="modal">بازگشت</button>
                             </div>
-                            <div class="col-3 m-0 push-2">
-                                <button type="button" @click="newrow" class="btn btn-outline-primary p-1 float-left">سطر
+                            <div class="col-4 m-0">
+                                <button type="button" @click="newrow" class="btn btn-outline-primary float-left btn-sm px-3">سطر
                                     جدید
                                 </button>
                             </div>

@@ -14,6 +14,8 @@
 
 
         <input type="button" @click="reloadPage" class="btn btn-sm btn-info my-2 mr-1" value="بازخوانی">
+        <a :href="'../../../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
+
         <a :href="'../'+ articlegroup" class="back-btn btn-sm btn btn-dark my-2 mr-1">برگشت</a>
 
         <!--        < class="row mx-0">-->
@@ -95,10 +97,10 @@
                                                @change="selectimage" accept=".jpg, .png, .jpeg">
                                     </div>
                                     <div class="card-body p-2">
-                                        <div v-for="file in filemanagerids" :key="file.id"
+                                        <div v-for="(file, index) in filemanagerids" :key="file.id"
                                              class="m-1 float-right position-relative">
                                             <img :src="file.small" @click="selectImage(file.original)">
-                                            <i class="fas fa-trash position-absolute delete-filemanager"></i>
+                                            <i class="fas fa-trash position-absolute delete-filemanager" @click="deletefilemanager(file.small, file.original, index)"></i>
                                         </div>
 
                                     </div>
@@ -171,6 +173,19 @@
 
 
         methods: {
+            deletefilemanager(small, original, index){
+                let that = this;
+                let data = {
+                    flag: 'article',
+                    small: small,
+                    original: original,
+                };
+                axios.post('/dashboard/deletefilemanager', data)
+                    .then(function (response) {
+                        that.filemanagerids.splice(index, 1);
+                        that.reloadPage();
+                    });
+            },
             contentclass(col) {
                 if (col == 1) {
                     return 'col-12 card my-2 px-0';

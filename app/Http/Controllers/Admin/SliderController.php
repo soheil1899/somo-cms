@@ -35,11 +35,10 @@ class SliderController extends Controller
             'title' => 'required',
         ]);
 
-        $find =  Slider::where('title', $request->title)->first();
+        $find =  Slider::where([['title', $request->title], ['lang_id', $request->lang]])->first();
+
 
         if ($find == null){
-
-
             if ($request->sliderid == 'null'){
                 $slider = Slider::create([
                     'title' => $request->title,
@@ -67,17 +66,29 @@ class SliderController extends Controller
 
             return [$slider['id'], $imagename, $image['id']];
 
-
-
-
         }else{
+            if ($request->sliderid == 'null') {
+                abort('422', "you can't add a new slider with same name");
+            }else{
+                $slider = Slider::where('id', $request->sliderid)->first();
+                $slider->title = $request->title;
+                $slider->lang_id = $request->lang;
+                $slider->save();
 
+                $imagename = rand(10000,99999);
 
-            abort('422', "you can't add a new slider with same name");
+                $image = new ImageManager();
+                $image->make($request->image->getRealPath())->save(public_path() . '/media/slider/'.$slider['id'].'/original_'. $imagename .'.png');
+                $image->make($request->image->getRealPath())->resize('120', '120')->save(public_path() .'/media/slider/'.$slider['id'].'/small_'. $imagename .'.png');
 
+                $image = Image::create([
+                    'image' => $imagename,
+                    'slider_id' => $slider['id'],
+                ]);
 
+                return [$slider['id'], $imagename, $image['id']];
+            }
         }
-
     }
 
 

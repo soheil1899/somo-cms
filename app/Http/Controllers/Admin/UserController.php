@@ -100,7 +100,13 @@ class UserController extends Controller
 
     public function deleteuser(Request $request)
     {
-        User::where('id', $request->id)->delete();
+        $keys = array();
+        foreach ($request->users as $key => $user) {
+            if ($user == true) {
+                array_push($keys, $key);
+            }
+        }
+        User::whereIn('id', $keys)->delete();
     }
 
     public function saveuseraccess(Request $request)

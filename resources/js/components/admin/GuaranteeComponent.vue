@@ -3,9 +3,11 @@
     <div>
         <h4 class="admin-title py-3 px-4"> لیست گارانتی ها </h4>
 
-        <input type="button" @click="addguarantee" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="addguarantee" class="btn btn-success btn-sm my-2 mr-1" data-toggle="modal"
                data-target="#Modal" value="افزودن گارانتی جدید">
-        <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
+        <input type="button" @click="reloadPage" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <a :href="'../dashboard'" class="back-btn btn btn-dark btn-sm my-2 mr-1">داشبورد</a>
+
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
@@ -25,8 +27,8 @@
                 <td class="py-2">{{item.time}} ماه</td>
                 <td class="py-2">{{item.description}}</td>
                 <td class="py-1 icons">
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editguarantee(item.id, item.companyname, item.description, item.time)"   data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" style="color: #EB3E37;" ></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mt-2 mx-1" style="color: #00B2C9;" @click="editguarantee(item.id, item.companyname, item.description, item.time)"   data-toggle="modal" data-target="#Modal"></i>
+                    <i title="حذف" class="fas fa-times-circle fa-lg mt-2 mx-1" style="color: #EB3E37;" ></i>
 
                 </td>
             </tr>
@@ -48,7 +50,7 @@
 
                     <div class="modal-body">
                         <error :error="error"></error>
-                       
+
                         <form>
                             <div class="form-group mb-1">
                                 <input type="text" v-model="companyname" placeholder="نام شرکت" class="form-control" name="username">
@@ -65,20 +67,20 @@
                             <div class="form-group mb-1">
                                 <textarea name="description" v-model="description" placeholder="توضیحات..." class="form-control" cols="30" rows="3"></textarea>
                             </div>
-                            
+
                         </form>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" @click="saveguarantee" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" @click="saveguarantee" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        
+
 
     </div>
 

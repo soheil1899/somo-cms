@@ -11,12 +11,39 @@
                     </div>
                 </div>
 
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="useraccess == 1">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/role'">
+                            <i class="fas fa-user-shield fa-3x mb-2 d-block"></i>
+                            دسترسی
+                        </a>
+                    </div>
+                </div>
+
 
                 <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="writeraccess == 1">
                     <div >
                         <a class="py-4" :href="'/dashboard/article'">
+                            <i class="fas fa-layer-group fa-3x mb-2 d-block"></i>
+                            گروه مطالب
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="writeraccess == 1">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/articles/1'">
                             <i class="far fa-keyboard fa-3x mb-2 d-block"></i>
-                            مطالب
+                                لیست مطالب
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="writeraccess == 1">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/newcontent'">
+                            <i class="far fa-file-alt fa-3x mb-2 d-block"></i>
+                            مطلب جدید
                         </a>
                     </div>
                 </div>
@@ -37,6 +64,15 @@
                         </a>
                     </div>
                 </div>
+
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="storeaccess == 1">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/brand'">
+                            <i class="fab fa-apple fa-3x mb-2 d-block"></i>
+                            برندها
+                        </a>
+                    </div>
+                </div>
                 <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="storeaccess == 1">
                     <div >
                         <a class="py-4" :href="'/dashboard/category'">
@@ -53,30 +89,6 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-6 col-md-3 box-item py-3 px-4 text-center">
-                    <div >
-                        <a class="py-4" :href="'/dashboard/slider'">
-                            <i class="fas fa-camera fa-3x mb-2 d-block"></i>
-                            اسلایدر
-                        </a>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="storeaccess == 1">
-                    <div >
-                        <a class="py-4" :href="'/dashboard/comment'">
-                            <i class="far fa-envelope fa-3x mb-2 d-block"></i>
-                            کامنت ها
-                        </a>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="storeaccess == 1">
-                    <div >
-                        <a class="py-4" :href="'/dashboard/brand'">
-                            <i class="fab fa-apple fa-3x mb-2 d-block"></i>
-                            برندها
-                        </a>
-                    </div>
-                </div>
                 <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="storeaccess == 1">
                     <div>
                         <a class="py-4" :href="'/dashboard/product'">
@@ -85,6 +97,68 @@
                         </a>
                     </div>
                 </div>
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="storeaccess == 1">
+                    <div>
+                        <a class="py-4" :href="'/dashboard/addproduct'">
+                            <i class="fas fa-cart-plus fa-3x mb-2 d-block"></i>
+                                افزودن محصول
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center" v-if="storeaccess == 1">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/comment'">
+                            <i class="far fa-comments fa-3x mb-2 d-block"></i>
+                            کامنت ها
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/setting'">
+                            <i class="fas fa-cogs fa-3x mb-2 d-block"></i>
+                            تنظیمات
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/posts'">
+                            <i class="far fa-envelope fa-3x mb-2 d-block"></i>
+                            پیام ها
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/slider'">
+                            <i class="fas fa-film fa-3x mb-2 d-block"></i>
+                            اسلایدر
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/customer'">
+                            <i class="fas fa-store fa-3x mb-2 d-block"></i>
+                            مشتریان
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 box-item py-3 px-4 text-center">
+                    <div >
+                        <a class="py-4" :href="'/dashboard/tag'">
+                            <i class="fas fa-tags fa-3x mb-2 d-block"></i>
+                            تگ ها
+                        </a>
+                    </div>
+                </div>
+
+
+
             </div>
 
         </div>

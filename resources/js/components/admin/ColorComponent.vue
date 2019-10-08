@@ -3,9 +3,11 @@
     <div>
         <h4 class="admin-title py-3 px-4"> لیست رنگ ها </h4>
 
-        <input type="button" @click="addcolor" class="btn btn-success my-2" data-toggle="modal"
+        <input type="button" @click="addcolor" class="btn btn-success btn-sm my-2 mr-1" data-toggle="modal"
                data-target="#Modal" value="افزودن رنگ جدید">
-        <input type="button" @click="reloadPage" class="btn btn-dark my-2 mr-1" value="بازخوانی">
+        <input type="button" @click="reloadPage" class="btn btn-dark btn-sm my-2 mr-1" value="بازخوانی">
+        <a :href="'../dashboard'" class="back-btn btn btn-sm btn-dark my-2 mr-1">داشبورد</a>
+
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
             <tr>
@@ -27,8 +29,8 @@
                     <span class="color-circle" :style="{'background-color': item.hexcode}"></span>
                 </td>
                 <td class="py-1 icons">
-                    <i title="ویرایش" class="far fa-edit fa-2x m-1" style="color: #00B2C9;" @click="editcolor(item.id, item.name, item.hexcode)"  data-toggle="modal" data-target="#Modal"></i>
-                    <i title="حذف" class="fas fa-times-circle fa-2x m-1" @click="deletecolor(item.id)" style="color: #EB3E37;" ></i>
+                    <i title="ویرایش" class="far fa-edit fa-lg mt-2 mx-1"  @click="editcolor(item.id, item.name, item.hexcode)"  data-toggle="modal" data-target="#Modal"></i>
+                    <i title="حذف" class="fas fa-times-circle fa-lg mt-2 mx-1" @click="deletecolor(item.id)" ></i>
                 </td>
             </tr>
             </tbody>
@@ -49,7 +51,7 @@
 
                     <div class="modal-body">
                         <error :error="error"></error>
-                       
+
                         <form>
                             <div class="form-group mb-1">
                                 <input type="text" v-model="colorname" placeholder="نام رنگ" class="form-control" name="username">
@@ -61,20 +63,20 @@
                                     <verte menuPosition="right" :enableAlpha="false" model="hex" v-model="colorhex" ></verte>
                                 </div>
                             </div>
-                            
+
                         </form>
                     </div>
 
                     <div class="modal-footer">
-                        <button @click="savecolor" type="button" class="btn btn-primary">ذخیره</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button @click="savecolor" type="button" class="btn btn-primary btn-sm px-4">ذخیره</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-4" data-dismiss="modal">بستن</button>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        
+
 
     </div>
 
@@ -150,7 +152,7 @@
                         that.reloadPage();
                     })
             },
-            
+
         },
 
         mounted() {
