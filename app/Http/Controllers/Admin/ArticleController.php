@@ -492,9 +492,12 @@ class ArticleController extends Controller
         if (isset($request->articleid)){
             $path = 'filemanager/article/';
             $newfolder = $request->articleid;
-        }else{
+        }else if (isset($request->productid)){
             $path = 'filemanager/product/';
             $newfolder = $request->productid;
+        }else{
+            $path = 'filemanager/setting/';
+            $newfolder = $request->settingid;
         }
         Storage::disk('media')->makeDirectory($path . $newfolder);
 

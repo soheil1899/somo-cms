@@ -2,45 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ee60588-2111-4862-9b2c-c805617f8039" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/somo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/somo.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ArticleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ArticleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CategoryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/SliderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/SliderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_11_151838_create_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_11_151838_create_categories_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_24_111823_create_filemanagers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_24_111823_create_filemanagers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/SettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/SettingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_15_110344_create_settings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_15_110344_create_settings_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/filemanager/article/1/item_1787.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/filemanager/article/1/item_4508.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/filemanager/article/1/itemsmall_1787.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/filemanager/article/1/itemsmall_4508.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ArticleComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleGroupComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ArticleGroupComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/AttributeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/AttributeComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/BrandComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/BrandComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/CategoryComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/CategoryComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ColorComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ColorComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/CustomerComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/CustomerComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/DashboardComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/DashboardComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/GuaranteeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/GuaranteeComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/PostComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/PostComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ProductComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/ProductComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/RoleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/RoleComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/SliderComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/SliderComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/TagComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/TagComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/UserComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/UserComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/ExampleComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/AddProductComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/ArticleComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/ArticleContentComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentNewComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/ArticleContentNewComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleGroupComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/ArticleGroupComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/AttributeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/AttributeComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/BrandComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/BrandComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/CategoryComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/CategoryComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ColorComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/ColorComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/CommentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/product/CommentComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/CustomerComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/CustomerComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/GuaranteeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/GuaranteeComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/MyinfoComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/users/MyinfoComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/PostComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/PostComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ProductCommentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/product/ProductCommentComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ProductComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/product/ProductComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/RoleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/users/RoleComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/SettingComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/SettingComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/SliderComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/SliderComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/TagComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/TagComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/UserComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/users/UserComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/UserInfoComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/users/UserInfoComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/article/modals/ArticleVideo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/video/ArticleVideo.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -230,6 +222,13 @@
     <property name="ts.external.directory.path" value="F:\installed programs\PhpStorm 2019.2.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\web\2-98\somo\public\media\filemanager\setting" />
+      <recent name="F:\web\2-98\somo\resources\js\components\admin\users" />
+      <recent name="F:\web\2-98\somo\resources\js\components\admin\setting" />
+      <recent name="F:\web\2-98\somo\resources\js\components\admin\product" />
+      <recent name="F:\web\2-98\somo\resources\js\components\admin\store" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\web\2-98\somo\public\media\cite" />
       <recent name="D:\web\somo\resources\views\layouts\clientside" />
@@ -320,6 +319,7 @@
       <workItem from="1570345994460" duration="569000" />
       <workItem from="1570532645522" duration="8346000" />
       <workItem from="1570559600802" duration="8257000" />
+      <workItem from="1570603599037" duration="18693000" />
     </task>
     <servers />
   </component>

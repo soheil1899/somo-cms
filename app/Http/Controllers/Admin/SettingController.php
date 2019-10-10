@@ -58,6 +58,17 @@ class SettingController extends Controller
         }
         $save->mobile = $setting['mobile'];
         $save->tellphone = $setting['tellphone'];
+        $save->site_title = $setting['site_title'];
+        $save->facebook = $setting['facebook'];
+        $save->instagram = $setting['instagram'];
+        $save->telegram = $setting['telegram'];
+        $save->googleplus = $setting['googleplus'];
+        $save->whatsup = $setting['whatsup'];
+        $save->linkedin = $setting['linkedin'];
+        $save->googlemap = $setting['googlemap'];
+        $save->twitter = $setting['twitter'];
+        $save->youtube = $setting['youtube'];
+        $save->aparat = $setting['aparat'];
         $save->fax = $setting['fax'];
         $save->email = $setting['email'];
         $save->address = $setting['address'];
@@ -65,7 +76,6 @@ class SettingController extends Controller
         $save->company_name = $setting['company_name'];
         $save->flag = $setting['flag'];
         $save->header_description = $setting['header_description'];
-        $save->aboutus_all = $setting['aboutus_all'];
         $save->lang = $request->langselect['lang'];
 
         $save->save();

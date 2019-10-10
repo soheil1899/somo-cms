@@ -47,7 +47,7 @@ class ProductController extends Controller
         }
 
 
-        $categories = Category::where([['last', 1],['hidden', 0]])->with('parent')->get();
+        $categories = Category::where([['last', 1], ['hidden', 0]])->with('parent')->get();
         foreach ($categories as $category) {
             $category['parentname'] = $category['parent']['name'] . ' > ' . $category['name'];
             unset($category['parent']);
@@ -215,7 +215,7 @@ class ProductController extends Controller
 
     public function getproductinfo()
     {
-        $categories = Category::where([['last', 1],['hidden', 0]])->with('parent')->get();
+        $categories = Category::where([['last', 1], ['hidden', 0]])->with('parent')->get();
         foreach ($categories as $category) {
             $category['parentname'] = $category['parent']['name'] . ' > ' . $category['name'];
             unset($category['parent']);
@@ -384,8 +384,6 @@ class ProductController extends Controller
 
     public function getprobyfilters(Request $request)
     {
-        dd($request->all());
-
         $getall = false;
 
         $per = $this->getpermission(auth()->user()->roles()->get());
@@ -397,79 +395,107 @@ class ProductController extends Controller
 
         if ($getall) {
             $product = Product::where([
-                ['faname', 'like', '%'.$request->filtervalues['faname'].'%'],
-                ['enname', 'like', '%'.$request->filtervalues['enname'].'%'],
+                ['faname', 'like', '%' . $request->filtervalues['faname'] . '%'],
+                ['enname', 'like', '%' . $request->filtervalues['enname'] . '%'],
                 ['special', $request->filtervalues['special']],
             ])->with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
         } else {
             $store = Store::where('user_id', auth()->user()->id)->first();
             $product = Product::where([
                 ['store_id', $store['id']],
-                ['faname', 'like', '%'.$request->filtervalues['faname'].'%'],
-                ['enname', 'like', '%'.$request->filtervalues['enname'].'%'],
+                ['faname', 'like', '%' . $request->filtervalues['faname'] . '%'],
+                ['enname', 'like', '%' . $request->filtervalues['enname'] . '%'],
                 ['special', $request->filtervalues['special']],
-                ])->with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
+            ])->with('category', 'colors', 'guarantees', 'brand', 'gallery')->get();
+        }
+
+        // filter by category, brand
+        $received = ['cat', 'brand'];
+        $database = ['category_id', 'brand_id'];
+        for ($i = 0; $i < 2; $i++) {
+            if (isset($request->filtervalues[$received[$i]])) {
+                foreach ($product as $key => $pro) {
+                    if ($pro[$database[$i]] != $request->filtervalues[$received[$i]]['id']) {
+                        unset($product[$key]);
+                    }
+                }
+            }
         }
 
 
-        if (isset($request->filtervalues['cat'])){
-            foreach ($product as $key=>$pro){
-                if($pro['category_id'] != $request->filtervalues['cat']['id']){
+        // filter by price , discount , mojodi
+        $received1 = ['price', 'discount', 'mojod'];
+        $database1 = ['price', 'discount', 'tedad'];
+        for ($i = 0; $i < 3; $i++) {
+            if (isset($request->filtervalues['top' . $received1[$i]]) or isset($request->filtervalues['less' . $received1[$i]])) {
+                if (isset($request->filtervalues['top' . $received1[$i]]) and isset($request->filtervalues['less' . $received1[$i]])) {
+                    foreach ($product as $key => $pro) {
+                        if ($pro[$database1[$i]] > $request->filtervalues['top' . $received1[$i]] or $pro[$database1[$i]] < $request->filtervalues['less' . $received1[$i]]) {
+                            unset($product[$key]);
+                        }
+                    }
+                } else if (isset($request->filtervalues['top' . $received1[$i]])) {
+                    foreach ($product as $key => $pro) {
+                        if ($pro[$database1[$i]] > $request->filtervalues['top' . $received1[$i]]) {
+                            unset($product[$key]);
+                        }
+                    }
+                } else {
+                    foreach ($product as $key => $pro) {
+                        if ($pro[$database1[$i]] < $request->filtervalues['less' . $received1[$i]]) {
+                            unset($product[$key]);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // filter by color, guarantee
+        $received2 = ['colors', 'guaranties'];
+        $database2 = ['colors', 'guarantees'];
+        for ($z = 0; $z < 2; $z++) {
+            if (count($request->filtervalues[$received2[$z]]) > 0) {
+                $itemsid = array();
+                foreach ($request->filtervalues[$received2[$z]] as $filter) {
+                    array_push($itemsid, $filter['id']);
+                }
+                foreach ($product as $i => $pro) {
+                    $find = false;
+                    foreach ($pro[$database2[$z]] as $prooption) {
+                        foreach ($itemsid as $itemid) {
+                            if ($prooption['id'] == $itemid) {
+                                $find = true;
+                            }
+                        }
+                    }
+                    if (!$find) {
+                        unset($product[$i]);
+                    }
+                }
+            }
+        }
+
+        // filter by publish
+        if ($request->filtervalues['show'] == 'publish'){
+            foreach ($product as $key => $pro) {
+                if (!$pro['publish']) {
                     unset($product[$key]);
                 }
             }
-            dd($product);
         }
-//        if ()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        $categories = Category::where([['last', 1],['hidden', 0]])->with('parent')->get();
-        foreach ($categories as $category) {
-            $category['parentname'] = $category['parent']['name'] . ' > ' . $category['name'];
-            unset($category['parent']);
+        if ($request->filtervalues['show'] == 'hide'){
+            foreach ($product as $key => $pro) {
+                if ($pro['publish']) {
+                    unset($product[$key]);
+                }
+            }
         }
-        $guarantees = Guarantee::all();
-        $colors = Color::all();
-        $brands = Brand::all();
 
-        return [$product, $categories, $colors, $brands, $guarantees];
+
+        return $product;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
