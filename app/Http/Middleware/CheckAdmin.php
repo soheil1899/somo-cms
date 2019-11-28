@@ -23,19 +23,11 @@ class CheckAdmin
         if (Auth::guard($guard)->check()) {
 
             $per = $this->getpermission(auth()->user()->roles()->get());
-
-            for ($i = 0; $i < count($per); $i++) {
-                if ($per[$i] == 'add_product' or
-                    $per[$i] == 'edit_product' or $per[$i] == 'delete_product' or
-                    $per[$i] == 'add_article' or $per[$i] == 'edit_article' or
-                    $per[$i] == 'delete_article' or $per[$i] == 'add_user' or
-                    $per[$i] == 'edit_user' or $per[$i] == 'delete_user') {
-                    return $next($request);
-                } else {
-                    return redirect('/');
-                }
+            if (count($per) > 0){
+                return $next($request);
+            }else{
+                return redirect('/home');
             }
-
 
         } else {
             return redirect('/');

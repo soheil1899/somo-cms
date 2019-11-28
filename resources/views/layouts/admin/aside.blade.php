@@ -142,6 +142,9 @@
                         <a href="{{route('tag.list')}}">مدیریت تگ</a>
                     </li>
                 @endif
+                    <li>
+                        <a href="{{route('menu.list')}}">مدیریت منو</a>
+                    </li>
             </ul>
         </div>
     </li>

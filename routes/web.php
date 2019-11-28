@@ -17,8 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
+Route::namespace('Client')->middleware('auth')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+});
 
 // dashboard
 Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'])->group(function () {
@@ -92,6 +93,12 @@ Route::prefix('dashboard')->namespace('Admin')->middleware(['auth', 'CheckAdmin'
         Route::post('changepublishslider', 'SliderController@changepublishslider')->name('changepublish.slider');
         Route::post('saveimagedetails', 'SliderController@saveimagedetails')->name('saveimage.details');
         Route::post('sliderchange', 'SliderController@sliderchange')->name('sliderchange');
+
+
+        Route::get('menugroup', 'MenuController@index')->name('menu.list');
+        Route::post('getmenugroups', 'MenuController@getmenugroups')->name('get.menugroups');
+        Route::post('getmenus', 'MenuController@getmenus')->name('get.menus');
+        Route::post('getsubmenus', 'MenuController@getsubmenus')->name('get.submenus');
 
 
     });

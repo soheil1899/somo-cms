@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
 
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
 
     public function keywords()
     {

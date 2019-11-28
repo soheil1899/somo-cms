@@ -42,6 +42,8 @@ Vue.component('setting-component', require('./components/admin/setting/SettingCo
 
 Vue.component('customer-component', require('./components/admin/setting/CustomerComponent.vue').default);
 Vue.component('post-component', require('./components/admin/setting/PostComponent.vue').default);
+Vue.component('menugroup-component', require('./components/admin/setting/MenugroupComponent.vue').default);
+Vue.component('menu-component', require('./components/admin/setting/MenuComponent.vue').default);
 
 
 

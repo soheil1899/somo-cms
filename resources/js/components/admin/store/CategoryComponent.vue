@@ -194,7 +194,7 @@
             },
 
             loadPage() {
-                this.allowdelete = false;
+                // this.allowdelete = false;
                 let that = this;
                 this.backarray = [];
                 axios.post('/dashboard/categories')
@@ -252,7 +252,7 @@
             },
 
             getsubcategorys(id, back = '') {
-                this.allowdelete = false;
+                // this.allowdelete = false;
                 let that = this;
                 if (back == '') {
                     this.backarray.push(this.parentid);

@@ -3,36 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="4ee60588-2111-4862-9b2c-c805617f8039" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ArticleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ArticleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/SettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/SettingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_15_110344_create_settings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_15_110344_create_settings_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Article.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Article_group.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Article_group.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Client/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/CheckAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/CheckAdmin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/ExampleComponent.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/AddProductComponent.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/ArticleComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/ArticleContentComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleContentNewComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/ArticleContentNewComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ArticleGroupComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/ArticleGroupComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/AttributeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/AttributeComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/BrandComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/BrandComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/CategoryComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/CategoryComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ColorComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/ColorComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/CommentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/product/CommentComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/CustomerComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/CustomerComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/GuaranteeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/GuaranteeComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/MyinfoComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/users/MyinfoComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/PostComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/PostComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ProductCommentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/product/ProductCommentComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/ProductComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/product/ProductComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/RoleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/users/RoleComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/SettingComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/SettingComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/SliderComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/SliderComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/TagComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/setting/TagComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/UserComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/users/UserComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/UserInfoComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/users/UserInfoComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/article/modals/ArticleVideo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/article/video/ArticleVideo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/DashboardComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/DashboardComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/store/CategoryComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/store/CategoryComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin/aside.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin/aside.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin/master.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -214,7 +196,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gitifanavari" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -223,17 +205,18 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\web\2-98\somo\app\Http\Controllers\Client" />
       <recent name="F:\web\2-98\somo\public\media\filemanager\setting" />
       <recent name="F:\web\2-98\somo\resources\js\components\admin\users" />
       <recent name="F:\web\2-98\somo\resources\js\components\admin\setting" />
       <recent name="F:\web\2-98\somo\resources\js\components\admin\product" />
-      <recent name="F:\web\2-98\somo\resources\js\components\admin\store" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\web\2-98\somo\resources\js\components\admin\setting" />
+      <recent name="F:\web\2-98\somo\resources\views\admin" />
       <recent name="F:\web\2-98\somo\public\media\cite" />
       <recent name="D:\web\somo\resources\views\layouts\clientside" />
       <recent name="D:\web\somo\resources\js\components\admin" />
-      <recent name="D:\web\somo\resources\views\admin" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -320,6 +303,11 @@
       <workItem from="1570532645522" duration="8346000" />
       <workItem from="1570559600802" duration="8257000" />
       <workItem from="1570603599037" duration="18693000" />
+      <workItem from="1570701537707" duration="1452000" />
+      <workItem from="1571985340104" duration="5411000" />
+      <workItem from="1572017230046" duration="439000" />
+      <workItem from="1572622125587" duration="14178000" />
+      <workItem from="1572678125858" duration="90000" />
     </task>
     <servers />
   </component>
