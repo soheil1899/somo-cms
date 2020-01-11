@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Filemanager;
-use App\Keyword;
-use App\Lang;
-use App\Setting;
+use App\Models\Filemanager;
+use App\Models\Keyword;
+use App\Models\Lang;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;

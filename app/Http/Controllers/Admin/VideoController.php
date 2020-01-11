@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Video;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\UploadedFile;
@@ -17,10 +17,8 @@ class VideoController extends Controller
     public function deletevideo(Request $request)
     {
         if (isset($request->articleid)){
-//            unlink('/media/article/'. $request->articleid . '/video/' . $request->videoname);
             Storage::disk('media')->delete('article/'. $request->articleid . '/video/' . $request->videoname);
         }else{
-//            unlink('product/'. $request->articleid . '/video/' . $request->videoname);
             Storage::disk('media')->delete('product/'. $request->articleid . '/video/' . $request->videoname);
         }
         Video::where('id', $request->videoid)->delete();

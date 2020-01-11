@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Attribute;
-use App\Subattribute;
-use App\Subattribute_value;
+use App\Models\Attribute;
+use App\Models\Subattribute;
+use App\Models\Subattribute_value;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -77,20 +77,20 @@ class AttributeController extends Controller
 
     }
 
-    
+
     public function deletesubattribute(Request $request)
     {
         return Subattribute::where('id', $request->id)->delete();
     }
 
-    
+
     public function getsubvalue(Request $request)
     {
         return Subattribute_value::where('subattribute_id', $request->id)->get();
     }
 
-    
-    
+
+
 
 
 }

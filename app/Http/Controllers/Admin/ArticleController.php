@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Article;
-use App\Article_content;
-use App\Article_group;
-use App\Articleattr;
-use App\Filemanager;
-use App\Gallery;
+use App\Models\Article;
+use App\Models\Article_content;
+use App\Models\Article_group;
+use App\Models\Articleattr;
+use App\Models\Filemanager;
+use App\Models\Gallery;
 use App\Http\Controllers\Permissions;
-use App\Keyword;
-use App\Pdf;
-use App\Tag;
-use App\Lang;
+use App\Models\Keyword;
+use App\Models\Pdf;
+use App\Models\Tag;
+use App\Models\Lang;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;

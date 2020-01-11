@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Brand;
-use App\Color;
-use App\Comment;
-use App\Filemanager;
-use App\Gallery;
-use App\Guarantee;
+use App\Models\Brand;
+use App\Models\Color;
+use App\Models\Comment;
+use App\Models\Filemanager;
+use App\Models\Gallery;
+use App\Models\Guarantee;
 use App\Http\Controllers\Permissions;
-use App\Product_subattribute;
-use App\Store;
+use App\Models\Product_subattribute;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Product;
-use App\Category;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 
@@ -187,6 +187,7 @@ class ProductController extends Controller
 
     public function getprogallery(Request $request)
     {
+
         return Gallery::where('product_id', $request->productid)->get();
     }
 

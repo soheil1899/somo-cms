@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Comment;
+use App\Models\Comment;
 use App\Http\Controllers\Permissions;
-use App\Role;
-use App\Store;
-use App\User;
-use App\Userinfo;
+use App\Models\Role;
+use App\Models\Store;
+use App\Models\User;
+use App\Models\Userinfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

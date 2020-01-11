@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Color;
+use App\Models\Color;
 
 class ColorController extends Controller
 {
@@ -41,9 +41,9 @@ class ColorController extends Controller
     {
         Color::where('id',$request->id)->delete();
     }
-    
 
 
 
-    
+
+
 }

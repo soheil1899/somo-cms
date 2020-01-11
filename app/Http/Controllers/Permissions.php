@@ -10,7 +10,6 @@ trait Permissions
     public function getpermission($roles)
     {
         $per = array();
-//        $roles = auth()->user()->roles()->get();
         $permissions = array();
         foreach ($roles as $role){
             array_push($permissions, $role->permissions()->get());

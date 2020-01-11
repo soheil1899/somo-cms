@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Article;
-use App\Gallery;
-use App\Image;
-use App\Lang;
-use App\Slider;
+use App\Models\Article;
+use App\Models\Image;
+use App\Models\Lang;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;

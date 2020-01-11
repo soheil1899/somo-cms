@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Guarantee;
+use App\Models\Guarantee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

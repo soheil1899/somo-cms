@@ -284,6 +284,7 @@
                 let that = this;
                 this.selected = null;
                 this.categoryid = catid;
+                this.thisattrgroups = [];
                 let data = {
                     categoryid: catid,
                 };

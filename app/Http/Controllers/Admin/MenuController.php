@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Article;
-use App\Article_group;
-use App\Menu;
-use App\Menu_group;
+use App\Models\Article;
+use App\Models\Article_group;
+use App\Models\Menu;
+use App\Models\Menu_group;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

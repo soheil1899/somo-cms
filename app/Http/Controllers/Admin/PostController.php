@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contactus;
-use Illuminate\Http\Request;
+use App\Models\Contactus;
 use App\Http\Controllers\Controller;
-use PhpParser\Comment;
 
 class PostController extends Controller
 {
