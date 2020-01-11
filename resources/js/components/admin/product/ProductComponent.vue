@@ -56,7 +56,6 @@
                        @click="getattrs(item.id, item.category.id, item.faname)"></i>
                     <i title="ویرایش" class="far fa-edit fa-lg mx-1 mt-2" data-toggle="modal" data-target="#Modal"
                        @click="editproduct(item.id, item.faname, item.enname, item.category, item.guarantees, item.price, item.discount, item.colors, item.brand, item.publish, item.special)"></i>
-                    <!--                    <i title="حذف" class="fas fa-times-circle fa-lg mx-1 mt-2" style="color: #EB3E37;" @click="deleteproduct(item.id)"></i>-->
                 </td>
                 <td class="py-1">
                     <input type="checkbox" v-model="deletepro[item.id]" class="form-check-input mx-auto">
