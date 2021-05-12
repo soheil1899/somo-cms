@@ -30,7 +30,7 @@
         "@tinymce/tinymce-vue": "^2.0.0",
         "@ttskch/select2-bootstrap4-theme": "^1.2.2",
         "jalali-moment": "^3.3.2",
-        "quill": "^1.3.6",
+        "quill": "^1.3.7",
         "select2-bootstrap-theme": "0.1.0-beta.10",
         "sweetalert2": "^8.15.3",
         "verte": "0.0.12",
